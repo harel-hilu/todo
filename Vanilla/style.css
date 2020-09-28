@@ -27,7 +27,7 @@ button {
     flex-flow: row;
 }
 
-.newTask {
+.newTaskInput {
     flex: 9;
 }
 
