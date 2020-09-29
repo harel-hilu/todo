@@ -2,12 +2,12 @@ window.addEventListener('load', function(){
     document.getElementById("newTaskInput").focus();
 
     document.getElementById("addItem").addEventListener("click", function(){
-        if (document.getElementById("newTaskInput").value != ""){
+        if (document.getElementById("newTaskInput").value !== ""){
             addTask();
     }});
 
     document.getElementById("newTaskInput").addEventListener("keydown", function(e){
-        if ((document.getElementById("newTaskInput").value != "") && (e.code == "Enter")) {
+        if ((document.getElementById("newTaskInput").value !== "") && (e.code === "Enter")) {
             addTask();
     }});
 });
