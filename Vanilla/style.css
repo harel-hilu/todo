@@ -27,7 +27,7 @@ button {
     flex-flow: row;
 }
 
-.newTask {
+.newTaskInput {
     flex: 9;
 }
 
@@ -54,11 +54,6 @@ button {
 
 .label {
     flex: 24;
-}
-
-.taskButtons{
-    flex: 1;
-    align-self: flex-end;
 }
 
 .task:hover {

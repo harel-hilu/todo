@@ -1,0 +1,2 @@
+# Todo (The Karate Kid)
+Harel moves to a new town where he is harassed by boys adept in frontend. He decides to learn frontend. When he starts his training, he learns that there is more to the art form than programming.
