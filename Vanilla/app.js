@@ -1,55 +1,42 @@
 window.addEventListener('load', function(){
-    newTaskInput = document.getElementById("newTaskInput");
-    tasksList = document.getElementById("tasksList");
-    newTaskInput.focus();
+    document.getElementById("newTaskInput").focus();
 
     document.getElementById("addItem").addEventListener("click", function(){
-        if (newTaskInput.value != ""){
-            addTask(tasksList, newTaskInput);
-        }});
+        if (document.getElementById("newTaskInput").value != ""){
+            addTask();
+    }});
 
     document.getElementById("newTaskInput").addEventListener("keydown", function(e){
-        if ((newTaskInput.value != "") && (e.code == "Enter")) {
-            addTask(tasksList, newTaskInput);
-        }});
+        if ((document.getElementById("newTaskInput").value != "") && (e.code == "Enter")) {
+            addTask();
+    }});
 });
     
-// Adds a new task and return the number of new tasks
-function addTask(tasksList, newTaskInput){
-    taskLine = createTaskLine();
+function addTask(){
+    let taskLine = document.createElement("div");
+    taskLine.setAttribute("class", "task");
     taskLine.appendChild(createCheckbox());
-    taskLine.appendChild(createLabelTask(newTaskInput.value));
+    taskLine.appendChild(createLabelTask(document.getElementById("newTaskInput").value));
     taskLine.appendChild(createEditButton());
     taskLine.appendChild(createDeleteButton()); 
-    tasksList.appendChild(taskLine);
-    
-    newTaskInput.value = '';
-    newTaskInput.focus();   
-}
-
-// taskLine represents a task, with: checkbox, label, edit button and delete button
-function createTaskLine(){
-    taskLine = document.createElement("div");
-    taskLine.setAttribute("class", "task");
-
-    // Show all buttons under task dic on mouse enter
     taskLine.addEventListener("mouseenter", function(e) { toggleButtonsHide(e.target) });
-
-    // Hide buttons
     taskLine.addEventListener("mouseleave", function(e) { toggleButtonsHide(e.target) });
 
-    return taskLine;
+    document.getElementById("tasksList").appendChild(taskLine);
+    document.getElementById("newTaskInput").value = '';
+    document.getElementById("newTaskInput").focus();   
 }
 
 function toggleButtonsHide(element){
     let buttons =  element.querySelectorAll("button");
+
     for (let i = 0; i < buttons.length; i++){
         buttons[i].classList.toggle("hideButtons");
     }
 }
 
 function createLabelTask(inputValue){
-    labelTask = document.createElement("label");
+    let labelTask = document.createElement("label");
     labelTask.appendChild(document.createTextNode(inputValue));
     labelTask.setAttribute("contenteditable", "true");
     labelTask.setAttribute("class", "label");
@@ -58,7 +45,7 @@ function createLabelTask(inputValue){
 }
 
 function createDeleteButton(){
-    deleteTaskButton = document.createElement("button");
+    let deleteTaskButton = document.createElement("button");
     deleteTaskButton.appendChild(document.createTextNode("Delete"));
     deleteTaskButton.addEventListener("click", function(e){ e.target.parentNode.remove() });
     deleteTaskButton.setAttribute("class", "taskButtons hideButtons");
@@ -67,7 +54,7 @@ function createDeleteButton(){
 }
 
 function createEditButton(){
-    editTaskButton = document.createElement("button");
+    let editTaskButton = document.createElement("button");
     editTaskButton.appendChild(document.createTextNode("Edit"));
     editTaskButton.addEventListener("click", function(e){ e.target.parentNode.querySelector("label").focus() });
     editTaskButton.setAttribute("class", "taskButtons hideButtons editButton");
@@ -76,7 +63,7 @@ function createEditButton(){
 }
 
 function createCheckbox(){
-    checkbox = document.createElement("input");
+    let checkbox = document.createElement("input");
     checkbox.setAttribute("type", "checkbox");
     checkbox.addEventListener("click", function(e){
         e.target.parentNode.querySelector("label").classList.toggle("labelStrike");
