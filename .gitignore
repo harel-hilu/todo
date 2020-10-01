@@ -1,2 +1,6 @@
 .vscode
 .DS_Store
+.Tries
+.dist
+node_modules/
+.webpack
