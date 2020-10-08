@@ -1,39 +1,56 @@
+import {saveTaskToStorage, getTasksFromStorage} from './localstorage.js'
+import {Task} from './task.js';
 import {getTaskToAddInputElem, getTaskToAddInputText, isEmptyTaskToAddInput, focusTaskToAddInput, clearTaskToAddInput} from "./taskToAddInput.js";
 
 window.addEventListener("load", () => {
-    focusTaskToAddInput();
-    document.getElementById("addTaskButton").addEventListener("click", addTaskHandler);
+    getTasksFromStorage().forEach(task => addTask(task));
     
+    document.getElementById("addTaskButton").addEventListener("click", addTaskHandler);
     getTaskToAddInputElem().addEventListener("keydown", (e) => { 
         if (e.code === "Enter"){
             addTaskHandler();
         }
     })
+
+    focusTaskToAddInput();
 });
 
 let addTaskHandler = () => {
     if (!isEmptyTaskToAddInput()){
-        addTask(getTaskToAddInputText());
+        let taskToAdd = new Task({taskText: getTaskToAddInputText()});
+        addTask(taskToAdd);
+        saveTaskToStorage(taskToAdd);
         clearTaskToAddInput();
-        focusTaskToAddInput();    
     }    
+    
+    focusTaskToAddInput();    
 };
 
-let addTask = (taskText) => {
+let addTask = (task) => {
     const newTaskDiv = document.createElement("div");
-    newTaskDiv.append(document.createTextNode(taskText));
+    newTaskDiv.setAttribute("id", task.id);
+    
+    newTaskDiv.append(createCheckbox(task.isComplete));
+    newTaskDiv.append(createLabel(task.text));
+
     document.getElementById("tasksList").append(newTaskDiv);
 };
 
-// import { v4 } from 'uuid';
-// const person = {
-//     name: "Vita",
-//     getFullName: function (lastname) {
-//         return this.name + " " + lastname;
-//     } 
-// }
-// let x = v4();
-// alert(x);
-// window.localStorage.setItem(x, "c");
-//alert(window.localStorage.getItem("a"));
-//alert(person.getFullName.bind({name: "Vita"}, "Bertman")("bertman"));
+let createLabel = (taskText) => {
+    const label = document.createElement("label");
+    label.setAttribute("contenteditable", "true");
+    label.append(document.createTextNode(taskText));
+
+    return label;
+}
+
+let createCheckbox = (isComplete) => {
+    const checkbox = document.createElement("input");
+    checkbox.setAttribute("type", "checkbox");
+
+    if(isComplete) {
+        checkbox.setAttribute("checked");
+    }
+
+    return checkbox;
+}
