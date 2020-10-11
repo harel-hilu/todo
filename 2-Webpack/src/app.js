@@ -1,4 +1,4 @@
-import {saveTaskToStorage, getTasksFromStorage} from './localstorage.js'
+import {saveTaskToStorage, getTasksFromStorage, removeTaskFromStorage} from './localstorage.js'
 import {Task} from './task.js';
 import {getTaskToAddInputElem, getTaskToAddInputText, isEmptyTaskToAddInput, focusTaskToAddInput, clearTaskToAddInput} from "./taskToAddInput.js";
 
@@ -29,9 +29,10 @@ let addTaskHandler = () => {
 let addTask = (task) => {
     const newTaskDiv = document.createElement("div");
     newTaskDiv.setAttribute("id", task.id);
-    
+
     newTaskDiv.append(createCheckbox(task.isComplete));
     newTaskDiv.append(createLabel(task.text));
+    newTaskDiv.append(createDeleteButton(newTaskDiv));
 
     document.getElementById("tasksList").append(newTaskDiv);
 };
@@ -53,4 +54,21 @@ let createCheckbox = (isComplete) => {
     }
 
     return checkbox;
+}
+
+let createEditButton = () => {
+
+}
+
+let createDeleteButton = (newTaskDiv) => {
+    
+    const deleteButton = document.createElement("button");
+    deleteButton.appendChild(document.createTextNode("Delete"));
+    deleteButton.setAttribute("name", newTaskDiv.id);
+    deleteButton.addEventListener("click", () => {
+        removeTaskFromStorage(newTaskDiv)
+        newTaskDiv.parentNode.removeChild(newTaskDiv);
+    });
+
+    return deleteButton;
 }
