@@ -3,6 +3,7 @@ import {Task} from './task.js';
 import {getTaskToAddInputElem, getTaskToAddInputText, isEmptyTaskToAddInput, focusTaskToAddInput, clearTaskToAddInput} from "./taskToAddInput.js";
 
 window.addEventListener("load", () => {
+    
     getTasksFromStorage().forEach(task => addTask(task));
     
     document.getElementById("addTaskButton").addEventListener("click", addTaskHandler);
@@ -63,7 +64,13 @@ let createEditButton = (newTaskDiv) => {
         removeTaskFromStorage(newTaskDiv);
         newTaskDiv.querySelector("label").focus();
     });
-    editButton.addEventListener("focusout", saveTaskToStorage(newTaskDiv));
+
+    newTaskDiv.querySelector("label").addEventListener("focusout", () => {
+        
+        saveTaskToStorage(new Task({ "taskId": newTaskDiv.id, 
+                                    "taskText": newTaskDiv.querySelector("label").innerHTML, 
+                                   "isTaskComplete": newTaskDiv.querySelector("input").checked }));
+    });
 
     return editButton;
 }
