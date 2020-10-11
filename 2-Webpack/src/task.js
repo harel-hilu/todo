@@ -8,7 +8,9 @@ class Task {
     
         this.text = taskText;
         this.isComplete = isTaskComplete;
+        this.getTaskById = () => alert();
     }
+
   }
 
 export {Task};
