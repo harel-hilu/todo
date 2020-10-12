@@ -17,6 +17,7 @@ window.addEventListener("load", () => {
 
 let addTaskHandler = () => {
     if (!isEmptyNewTaskInput()){
+        // can I not send this explicitly as undefined?
         let taskToAdd = new Task(undefined, getNewTaskInputText(), false);
         drawTask(taskToAdd);
         saveTaskToStorage(taskToAdd);
@@ -26,6 +27,8 @@ let addTaskHandler = () => {
     focusNewTaskInput();    
 };
 
+// is this a good idea to modify taskToAdd in the handlers? I can get a fresh object from
+// the localstorage or having dictionary of all tasks updated as a global updated variable
 let drawTask = (taskToAdd) => {
     const taskElement = createTaskElement(taskToAdd.id);
 
@@ -34,11 +37,6 @@ let drawTask = (taskToAdd) => {
 
     const taskLabel = createTaskLabel(taskToAdd.text);
     taskLabel.addEventListener("focusout", (e) => taskToAdd = taskLabelFocusOut(e, taskToAdd));
-    taskLabel.addEventListener("keydown", (e) => {
-        if (e.code === "Enter") {
-            focusNewTaskInput();
-        }
-    });
 
     const taskEditButton = createTaskEditButton(taskElement);
     taskEditButton.addEventListener("click", () => editTaskClicked(taskElement));
@@ -50,7 +48,6 @@ let drawTask = (taskToAdd) => {
     taskElement.append(taskLabel);
     taskElement.append(taskEditButton);
     taskElement.append(taskDeleteButton);
-
     document.getElementById("tasksList").append(taskElement);
 };
 
