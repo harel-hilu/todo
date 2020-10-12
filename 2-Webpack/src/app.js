@@ -1,49 +1,52 @@
 import {saveTaskToStorage, getTasksFromStorage, removeTaskFromStorage} from './saver/taskToLocalStorage.js'
 import {Task} from './objects/task.js';
-import {createTaskDiv, createCheckbox, createEditButton, createDeleteButton, createLabel} from './drawer/taskToDOM.js'
-import {getTaskToAddInputElem, getTaskToAddInputText, isEmptyTaskToAddInput, focusTaskToAddInput, clearTaskToAddInput} from "./DOMHelper/taskToAddInput.js";
+import {createTaskElement, createTaskCheckbox, createTaskDeleteButton, createTaskEditButton, createTaskLabel} from './drawer/taskToDOM.js'
+import {getNewTaskInputElement, getNewTaskInputText, isEmptyNewTaskInput, focusNewTaskInput, clearNewTaskInput} from "./DOMHelper/newTaskInput.js";
 
 window.addEventListener("load", () => {
-    
-    getTasksFromStorage().forEach(task => addTask(task));
-    
+    getTasksFromStorage().forEach(task => drawTask(task));
     document.getElementById("addTaskButton").addEventListener("click", addTaskHandler);
-    getTaskToAddInputElem().addEventListener("keydown", (e) => { 
+    getNewTaskInputElement().addEventListener("keydown", (e) => { 
         if (e.code === "Enter"){
             addTaskHandler();
         }
     })
 
-    focusTaskToAddInput();
+    focusNewTaskInput();
 });
 
 let addTaskHandler = () => {
-    if (!isEmptyTaskToAddInput()){
-        let taskToAdd = new Task(undefined, getTaskToAddInputText(), false);
-        addTask(taskToAdd);
+    if (!isEmptyNewTaskInput()){
+        let taskToAdd = new Task(undefined, getNewTaskInputText(), false);
+        drawTask(taskToAdd);
         saveTaskToStorage(taskToAdd);
-        clearTaskToAddInput();
+        clearNewTaskInput();
     }    
     
-    focusTaskToAddInput();    
+    focusNewTaskInput();    
 };
 
-let addTask = (taskToAdd) => {
-    const taskElement = createTaskDiv(taskToAdd.id);
+let drawTask = (taskToAdd) => {
+    const taskElement = createTaskElement(taskToAdd.id);
 
-    const isCompleteCheckbox = createCheckbox(taskToAdd.isComplete);
-    isCompleteCheckbox.addEventListener("click", (e) => taskCompletedClicked(e, taskToAdd));
+    const isDoneTaskCheckbox = createTaskCheckbox(taskToAdd.isComplete);
+    isDoneTaskCheckbox.addEventListener("click", (e) => taskToAdd = taskCheckboxClicked(e, taskToAdd));
 
-    const taskLabel = createLabel(taskToAdd.text);
-    taskLabel.addEventListener("focusout", (e) => labelFocusOut(e, taskToAdd));
+    const taskLabel = createTaskLabel(taskToAdd.text);
+    taskLabel.addEventListener("focusout", (e) => taskToAdd = taskLabelFocusOut(e, taskToAdd));
+    taskLabel.addEventListener("keydown", (e) => {
+        if (e.code === "Enter") {
+            focusNewTaskInput();
+        }
+    });
 
-    const taskEditButton = createEditButton(taskElement);
+    const taskEditButton = createTaskEditButton(taskElement);
     taskEditButton.addEventListener("click", () => editTaskClicked(taskElement));
 
-    const taskDeleteButton = createDeleteButton(taskElement);
+    const taskDeleteButton = createTaskDeleteButton(taskElement);
     taskDeleteButton.addEventListener("click", () => deleteTaskClicked(taskElement));
 
-    taskElement.append(isCompleteCheckbox);
+    taskElement.append(isDoneTaskCheckbox);
     taskElement.append(taskLabel);
     taskElement.append(taskEditButton);
     taskElement.append(taskDeleteButton);
@@ -51,14 +54,24 @@ let addTask = (taskToAdd) => {
     document.getElementById("tasksList").append(taskElement);
 };
 
-let taskCompletedClicked = (e, taskToAdd) => saveTaskToStorage(new Task(taskToAdd.id, taskToAdd.text, e.target.checked));
+let taskCheckboxClicked = (e, taskToAdd) => {
+    let taskAfterClick = new Task(taskToAdd.id, taskToAdd.text, e.target.checked);
+    saveTaskToStorage(taskAfterClick);
+
+    return taskAfterClick;
+};
 
 let deleteTaskClicked = (taskElement) => {
     removeTaskFromStorage(taskElement);
     taskElement.parentNode.removeChild(taskElement);
-    focusTaskToAddInput();
+    focusNewTaskInput();
 };
 
 let editTaskClicked = (taskElement) => taskElement.querySelector("label").focus();
 
-let labelFocusOut = (e, taskToAdd) => saveTaskToStorage(new Task(taskToAdd.id, e.target.innerHTML, taskToAdd.isComplete));
+let taskLabelFocusOut = (e, taskToAdd) => {
+    let taskAfterChange = new Task(taskToAdd.id, e.target.innerHTML, taskToAdd.isComplete);
+    saveTaskToStorage(taskAfterChange);
+
+    return taskAfterChange;
+};

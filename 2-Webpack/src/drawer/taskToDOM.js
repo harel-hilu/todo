@@ -1,21 +1,24 @@
-let createTaskDiv = (taskId) => {
+let createTaskElement = (taskId) => {
     const newTaskDiv = document.createElement("div");
     newTaskDiv.setAttribute("id", taskId);
+    newTaskDiv.setAttribute("class", "task");
 
     return newTaskDiv;
 };
 
-let createLabel = (taskText) => {
+let createTaskLabel = (taskText) => {
     const label = document.createElement("label");
     label.setAttribute("contenteditable", "true");
     label.append(document.createTextNode(taskText));
+    label.setAttribute("class", "task-label");
 
     return label;
 }
 
-let createCheckbox = (isComplete) => {
+let createTaskCheckbox = (isComplete) => {
     const checkbox = document.createElement("input");
     checkbox.setAttribute("type", "checkbox");
+    checkbox.setAttribute("class", "task-checkbox");
 
     if(isComplete) {
         checkbox.setAttribute("checked", "checked");
@@ -24,18 +27,20 @@ let createCheckbox = (isComplete) => {
     return checkbox;
 }
 
-let createEditButton = (newTaskDiv) => {
+let createTaskEditButton = (newTaskDiv) => {
     const editButton = document.createElement("button");
     editButton.appendChild(document.createTextNode("Edit"));
+    editButton.setAttribute("class", "task-buttons");
 
     return editButton;
 }
 
-let createDeleteButton = (newTaskDiv) => {
+let createTaskDeleteButton = (newTaskDiv) => {
     const deleteButton = document.createElement("button");
     deleteButton.appendChild(document.createTextNode("Delete"));
+    deleteButton.setAttribute("class", "task-buttons");
 
     return deleteButton;
 }
 
-export {createTaskDiv, createCheckbox, createDeleteButton, createEditButton, createLabel};
+export {createTaskElement, createTaskCheckbox, createTaskDeleteButton, createTaskEditButton, createTaskLabel};

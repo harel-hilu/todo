@@ -6,7 +6,6 @@ class Task {
         this.text = taskText;
         this.isComplete = isTaskComplete;
     }
-
   }
 
 export {Task};
