@@ -1,6 +1,7 @@
-import {saveTaskToStorage, getTasksFromStorage, removeTaskFromStorage} from './localstorage.js'
-import {Task} from './task.js';
-import {getTaskToAddInputElem, getTaskToAddInputText, isEmptyTaskToAddInput, focusTaskToAddInput, clearTaskToAddInput} from "./taskToAddInput.js";
+import {saveTaskToStorage, getTasksFromStorage, removeTaskFromStorage} from './saver/taskToLocalStorage.js'
+import {Task} from './objects/task.js';
+import {createTaskDiv, createCheckbox, createEditButton, createDeleteButton, createLabel} from './drawer/taskToDOM.js'
+import {getTaskToAddInputElem, getTaskToAddInputText, isEmptyTaskToAddInput, focusTaskToAddInput, clearTaskToAddInput} from "./DOMHelper/taskToAddInput.js";
 
 window.addEventListener("load", () => {
     
@@ -18,7 +19,7 @@ window.addEventListener("load", () => {
 
 let addTaskHandler = () => {
     if (!isEmptyTaskToAddInput()){
-        let taskToAdd = new Task({taskText: getTaskToAddInputText()});
+        let taskToAdd = new Task(undefined, getTaskToAddInputText(), false);
         addTask(taskToAdd);
         saveTaskToStorage(taskToAdd);
         clearTaskToAddInput();
@@ -27,62 +28,37 @@ let addTaskHandler = () => {
     focusTaskToAddInput();    
 };
 
-let addTask = (task) => {
-    const newTaskDiv = document.createElement("div");
-    newTaskDiv.setAttribute("id", task.id);
+let addTask = (taskToAdd) => {
+    const taskElement = createTaskDiv(taskToAdd.id);
 
-    newTaskDiv.append(createCheckbox(task.isComplete));
-    newTaskDiv.append(createLabel(task.text));
-    newTaskDiv.append(createDeleteButton(newTaskDiv));
-    newTaskDiv.append(createEditButton(newTaskDiv));
-    document.getElementById("tasksList").append(newTaskDiv);
+    const isCompleteCheckbox = createCheckbox(taskToAdd.isComplete);
+    isCompleteCheckbox.addEventListener("click", (e) => taskCompletedClicked(e, taskToAdd));
+
+    const taskLabel = createLabel(taskToAdd.text);
+    taskLabel.addEventListener("focusout", (e) => labelFocusOut(e, taskToAdd));
+
+    const taskEditButton = createEditButton(taskElement);
+    taskEditButton.addEventListener("click", () => editTaskClicked(taskElement));
+
+    const taskDeleteButton = createDeleteButton(taskElement);
+    taskDeleteButton.addEventListener("click", () => deleteTaskClicked(taskElement));
+
+    taskElement.append(isCompleteCheckbox);
+    taskElement.append(taskLabel);
+    taskElement.append(taskEditButton);
+    taskElement.append(taskDeleteButton);
+
+    document.getElementById("tasksList").append(taskElement);
 };
 
-let createLabel = (taskText) => {
-    const label = document.createElement("label");
-    label.setAttribute("contenteditable", "true");
-    label.append(document.createTextNode(taskText));
+let taskCompletedClicked = (e, taskToAdd) => saveTaskToStorage(new Task(taskToAdd.id, taskToAdd.text, e.target.checked));
 
-    return label;
-}
+let deleteTaskClicked = (taskElement) => {
+    removeTaskFromStorage(taskElement);
+    taskElement.parentNode.removeChild(taskElement);
+    focusTaskToAddInput();
+};
 
-let createCheckbox = (isComplete) => {
-    const checkbox = document.createElement("input");
-    checkbox.setAttribute("type", "checkbox");
+let editTaskClicked = (taskElement) => taskElement.querySelector("label").focus();
 
-    if(isComplete) {
-        checkbox.setAttribute("checked");
-    }
-
-    return checkbox;
-}
-
-let createEditButton = (newTaskDiv) => {
-    const editButton = document.createElement("button");
-    editButton.appendChild(document.createTextNode("Edit"));
-    editButton.addEventListener("click", () => {
-        removeTaskFromStorage(newTaskDiv);
-        newTaskDiv.querySelector("label").focus();
-    });
-
-    newTaskDiv.querySelector("label").addEventListener("focusout", () => {
-        
-        saveTaskToStorage(new Task({ "taskId": newTaskDiv.id, 
-                                    "taskText": newTaskDiv.querySelector("label").innerHTML, 
-                                   "isTaskComplete": newTaskDiv.querySelector("input").checked }));
-    });
-
-    return editButton;
-}
-
-let createDeleteButton = (newTaskDiv) => {
-    
-    const deleteButton = document.createElement("button");
-    deleteButton.appendChild(document.createTextNode("Delete"));
-    deleteButton.addEventListener("click", () => {
-        removeTaskFromStorage(newTaskDiv)
-        newTaskDiv.parentNode.removeChild(newTaskDiv);
-    });
-
-    return deleteButton;
-}
+let labelFocusOut = (e, taskToAdd) => saveTaskToStorage(new Task(taskToAdd.id, e.target.innerHTML, taskToAdd.isComplete));
