@@ -1,5 +1,5 @@
 let saveTaskToStorage = (task) => window.localStorage.setItem(task.id, JSON.stringify(task));
-let removeTaskFromStorage = (task) => window.localStorage.removeItem(task.id);
+let removeTaskFromStorage = (taskId) => window.localStorage.removeItem(taskId);
 
 let getTasksFromStorage = () => {
     const tasks = [];
