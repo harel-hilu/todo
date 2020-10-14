@@ -43,4 +43,10 @@ let createTaskDeleteButton = (newTaskDiv) => {
     return deleteButton;
 }
 
-export {createTaskElement, createTaskCheckbox, createTaskDeleteButton, createTaskEditButton, createTaskLabel};
+let updateTasksTitle = (numOfTasks) => {
+    const titleElement = document.getElementById("title");
+    const title = numOfTasks + " tasks:";
+    titleElement.innerHTML = title;
+}
+
+export {createTaskElement, createTaskCheckbox, createTaskDeleteButton, createTaskEditButton, createTaskLabel, updateTasksTitle};

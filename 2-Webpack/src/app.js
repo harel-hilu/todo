@@ -1,4 +1,4 @@
-import {createTaskElement, createTaskCheckbox, createTaskDeleteButton, createTaskEditButton, createTaskLabel} from './drawer/taskToDOM.js'
+import {createTaskElement, createTaskCheckbox, createTaskDeleteButton, createTaskEditButton, createTaskLabel, updateTasksTitle} from './drawer/taskToDOM.js'
 import {getNewTaskInputElement, getNewTaskInputText, isEmptyNewTaskInput, focusNewTaskInput, clearNewTaskInput} from "./DOMHelper/newTaskInput.js";
 import {todoList} from "./objects/todoList.js";
 
@@ -8,14 +8,15 @@ window.addEventListener("load", () => {
     for (const task of todo.tasks.values()) {
         drawTask(task);
     }
-
+    
     document.getElementById("addTaskButton").addEventListener("click", addTaskHandler);
     getNewTaskInputElement().addEventListener("keydown", (e) => { 
         if (e.code === "Enter"){
             addTaskHandler();
         }
     })
-
+    
+    updateTasksTitle(todo.tasks.size);
     focusNewTaskInput();
 });
 
@@ -23,6 +24,7 @@ let addTaskHandler = () => {
     if (!isEmptyNewTaskInput()){
         let taskToAdd = todo.addTask(undefined, getNewTaskInputText(), false);
         drawTask(taskToAdd);
+        updateTasksTitle(todo.tasks.size);
         clearNewTaskInput();
     }    
     
@@ -53,7 +55,6 @@ let drawTask = (taskToAdd) => {
 
 let taskCheckboxClicked = (e, taskToAdd) => todo.addTask(taskToAdd.id, taskToAdd.text, e.target.checked);
 
-
 let editTaskClicked = (taskElement) => taskElement.querySelector("label").focus();
 
 let taskLabelFocusOut = (e, taskToAdd) => todo.addTask(taskToAdd.id, e.target.innerHTML, taskToAdd.isComplete);
@@ -61,5 +62,6 @@ let taskLabelFocusOut = (e, taskToAdd) => todo.addTask(taskToAdd.id, e.target.in
 let deleteTaskClicked = (taskElement) => {
     taskElement.parentNode.removeChild(taskElement);
     todo.removeTask(taskElement.id);
+    updateTasksTitle(todo.tasks.size);
     focusNewTaskInput();
 };
