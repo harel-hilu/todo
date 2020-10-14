@@ -43,10 +43,16 @@ let createTaskDeleteButton = (newTaskDiv) => {
     return deleteButton;
 }
 
-let updateTasksTitle = (numOfTasks) => {
-    const titleElement = document.getElementById("title");
-    const title = numOfTasks + " tasks:";
-    titleElement.innerHTML = title;
+let updateTasksTitle = (numOfTasks, numOfDoneTasks) => {
+    let title = "";
+    
+    if (numOfTasks === 0 && numOfDoneTasks === 0) {
+       title = "Create your first task" 
+    } else {
+        title = numOfDoneTasks + "/" + numOfTasks + " tasks";
+    }
+
+    document.getElementById("title").innerHTML = title;
 }
 
 export {createTaskElement, createTaskCheckbox, createTaskDeleteButton, createTaskEditButton, createTaskLabel, updateTasksTitle};

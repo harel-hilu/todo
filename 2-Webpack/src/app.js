@@ -16,7 +16,7 @@ window.addEventListener("load", () => {
         }
     })
     
-    updateTasksTitle(todo.tasks.size);
+    updateTasksTitle(todo.countTasks(), todo.countDoneTasks());
     focusNewTaskInput();
 });
 
@@ -24,7 +24,7 @@ let addTaskHandler = () => {
     if (!isEmptyNewTaskInput()){
         let taskToAdd = todo.addTask(undefined, getNewTaskInputText(), false);
         drawTask(taskToAdd);
-        updateTasksTitle(todo.tasks.size);
+        updateTasksTitle(todo.countTasks(), todo.countDoneTasks());
         clearNewTaskInput();
     }    
     
@@ -35,10 +35,10 @@ let drawTask = (taskToAdd) => {
     const taskElement = createTaskElement(taskToAdd.id);
 
     const isDoneTaskCheckbox = createTaskCheckbox(taskToAdd.isComplete);
-    isDoneTaskCheckbox.addEventListener("click", (e) => taskToAdd = taskCheckboxClicked(e, taskToAdd));
+    isDoneTaskCheckbox.addEventListener("click", (e) => taskCheckboxClicked(e, taskToAdd.id));
 
     const taskLabel = createTaskLabel(taskToAdd.text);
-    taskLabel.addEventListener("focusout", (e) => taskToAdd = taskLabelFocusOut(e, taskToAdd));
+    taskLabel.addEventListener("focusout", (e) => taskToAdd = taskLabelFocusOut(e, taskToAdd.id));
 
     const taskEditButton = createTaskEditButton(taskElement);
     taskEditButton.addEventListener("click", () => editTaskClicked(taskElement));
@@ -53,15 +53,18 @@ let drawTask = (taskToAdd) => {
     document.getElementById("tasksList").append(taskElement);
 };
 
-let taskCheckboxClicked = (e, taskToAdd) => todo.addTask(taskToAdd.id, taskToAdd.text, e.target.checked);
+let taskCheckboxClicked = (e, taskId) => {
+    todo.addTask(taskId, todo.tasks.get(taskId).text, e.target.checked);
+    updateTasksTitle(todo.countTasks(), todo.countDoneTasks());
+}
 
 let editTaskClicked = (taskElement) => taskElement.querySelector("label").focus();
 
-let taskLabelFocusOut = (e, taskToAdd) => todo.addTask(taskToAdd.id, e.target.innerHTML, taskToAdd.isComplete);
+let taskLabelFocusOut = (e, taskId) => todo.addTask(taskId, e.target.innerHTML, todo.tasks.get(taskId).isComplete);
 
 let deleteTaskClicked = (taskElement) => {
     taskElement.parentNode.removeChild(taskElement);
     todo.removeTask(taskElement.id);
-    updateTasksTitle(todo.tasks.size);
+    updateTasksTitle(todo.countTasks(), todo.countDoneTasks());
     focusNewTaskInput();
 };

@@ -19,4 +19,20 @@ export class todoList {
 
         return newTask;
     };
+
+    countTasks() {
+        return this.tasks.size;
+    }
+
+    countDoneTasks() {
+        let numOfDoneTasks = 0;
+
+        for (const task of this.tasks.values()){
+            if (task.isComplete) {
+                numOfDoneTasks++;
+            }
+        }
+
+        return numOfDoneTasks;
+    }
 }
