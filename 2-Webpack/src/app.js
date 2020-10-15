@@ -3,7 +3,7 @@ import {getNewTaskInputElement, getNewTaskInputText, isEmptyNewTaskInput, focusN
 import {TodoList} from "./objects/todoList.js";
 
 let todo = new TodoList();
-
+let x = 1;
 window.addEventListener("load", () => {
     Object.values(todo.tasks).forEach(task => drawTask(task));
     document.getElementById("addTaskButton").addEventListener("click", addTaskHandler);
