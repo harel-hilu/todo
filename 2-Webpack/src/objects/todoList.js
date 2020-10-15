@@ -13,7 +13,7 @@ export class TodoList {
     }
 
     addTask(taskId, taskText, isTaskComplete) {
-        let newTask = new Task(taskId, taskText, isTaskComplete);
+        const newTask = new Task(taskId, taskText, isTaskComplete);
         saveTaskToStorage(newTask);
         this.tasks[newTask.id] = newTask;
 

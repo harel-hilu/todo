@@ -3,7 +3,7 @@ import {getNewTaskInputElement, getNewTaskInputText, isEmptyNewTaskInput, focusN
 import {TodoList} from "./objects/todoList.js";
 
 let todo = new TodoList();
-let x = 1;
+
 window.addEventListener("load", () => {
     Object.values(todo.tasks).forEach(task => drawTask(task));
     document.getElementById("addTaskButton").addEventListener("click", addTaskHandler);
@@ -19,8 +19,7 @@ window.addEventListener("load", () => {
 
 let addTaskHandler = () => {
     if (!isEmptyNewTaskInput()){
-        let taskToAdd = todo.addTask(undefined, getNewTaskInputText(), false);
-        drawTask(taskToAdd);
+        drawTask(todo.addTask(undefined, getNewTaskInputText(), false));
         updateTasksTitle(todo.countTasks(), todo.countDoneTasks());
         clearNewTaskInput();
     }    
