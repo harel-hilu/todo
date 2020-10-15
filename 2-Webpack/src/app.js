@@ -1,14 +1,11 @@
 import {createTaskElement, createTaskCheckbox, createTaskDeleteButton, createTaskEditButton, createTaskLabel, updateTasksTitle} from './drawer/taskToDOM.js'
 import {getNewTaskInputElement, getNewTaskInputText, isEmptyNewTaskInput, focusNewTaskInput, clearNewTaskInput} from "./DOMHelper/newTaskInput.js";
-import {todoList} from "./objects/todoList.js";
+import {TodoList} from "./objects/todoList.js";
 
-let todo = new todoList();
+let todo = new TodoList();
 
 window.addEventListener("load", () => {
-    for (const task of todo.tasks.values()) {
-        drawTask(task);
-    }
-    
+    Object.values(todo.tasks).forEach(task => drawTask(task));
     document.getElementById("addTaskButton").addEventListener("click", addTaskHandler);
     getNewTaskInputElement().addEventListener("keydown", (e) => { 
         if (e.code === "Enter"){
@@ -54,13 +51,13 @@ let drawTask = (taskToAdd) => {
 };
 
 let taskCheckboxClicked = (e, taskId) => {
-    todo.addTask(taskId, todo.tasks.get(taskId).text, e.target.checked);
+    todo.addTask(taskId, todo.tasks[taskId].text, e.target.checked);
     updateTasksTitle(todo.countTasks(), todo.countDoneTasks());
 }
 
 let editTaskClicked = (taskElement) => taskElement.querySelector("label").focus();
 
-let taskLabelFocusOut = (e, taskId) => todo.addTask(taskId, e.target.innerHTML, todo.tasks.get(taskId).isComplete);
+let taskLabelFocusOut = (e, taskId) => todo.addTask(taskId, e.target.innerHTML, todo.tasks[taskId].isComplete);
 
 let deleteTaskClicked = (taskElement) => {
     taskElement.parentNode.removeChild(taskElement);
