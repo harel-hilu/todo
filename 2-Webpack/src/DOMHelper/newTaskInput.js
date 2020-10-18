@@ -1,9 +1,7 @@
 const NEW_TASK_INPUT_ID = "taskToAddInput";
 
-let getNewTaskInputElement = () => document.getElementById(NEW_TASK_INPUT_ID);
-let getNewTaskInputText = () => document.getElementById(NEW_TASK_INPUT_ID).value;
-let isEmptyNewTaskInput = () => (getNewTaskInputElement().value === "");
-let focusNewTaskInput = () => getNewTaskInputElement().focus();
-let clearNewTaskInput = () => getNewTaskInputElement().value = "";
-
-export {getNewTaskInputElement, getNewTaskInputText, isEmptyNewTaskInput, focusNewTaskInput, clearNewTaskInput};
+export const getNewTaskInputElement = () => document.getElementById(NEW_TASK_INPUT_ID);
+export const getNewTaskInputText = () => document.getElementById(NEW_TASK_INPUT_ID).value;
+export const isEmptyNewTaskInput = () => (getNewTaskInputElement().value === "");
+export const focusNewTaskInput = () => getNewTaskInputElement().focus();
+export const clearNewTaskInput = () => getNewTaskInputElement().value = "";

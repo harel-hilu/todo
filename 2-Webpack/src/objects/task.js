@@ -1,11 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
 
-class Task {
-    constructor(taskId, taskText = "", isTaskComplete = false) {
-        taskId === undefined ? this.id = uuidv4() : this.id = taskId;    
+export class Task {
+    constructor(taskId = uuidv4(), taskText = "", isTaskComplete = false) {
+        this.id = taskId;
         this.text = taskText;
         this.isComplete = isTaskComplete;
     }
-  }
-
-export {Task};
+}

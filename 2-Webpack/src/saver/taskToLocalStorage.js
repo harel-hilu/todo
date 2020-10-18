@@ -1,5 +1,8 @@
-let saveTaskToStorage = (task) => window.localStorage.setItem(task.id, JSON.stringify(task));
-let removeTaskFromStorage = (taskId) => window.localStorage.removeItem(taskId);
-let getTasksFromStorage = () => Object.values(localStorage).map(task => JSON.parse(task));
+const todoPrefix = "TODOS_";
 
-export {saveTaskToStorage, getTasksFromStorage, removeTaskFromStorage};
+export const saveTaskToStorage = (task) => window.localStorage.setItem(todoPrefix + task.id, JSON.stringify(task));
+export const removeTaskFromStorage = (taskId) => window.localStorage.removeItem(todoPrefix + taskId);
+export const getTasksFromStorage =
+    () => Object.entries(localStorage)
+    .filter(([key, value]) => key.substring(0,6) === todoPrefix)
+    .map(([key, value]) => JSON.parse(value));

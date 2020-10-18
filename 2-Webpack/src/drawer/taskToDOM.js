@@ -1,4 +1,4 @@
-let createTaskElement = (taskId) => {
+export const createTaskElement = (taskId) => {
     const newTaskDiv = document.createElement("div");
     newTaskDiv.setAttribute("id", taskId);
     newTaskDiv.setAttribute("class", "task");
@@ -6,7 +6,7 @@ let createTaskElement = (taskId) => {
     return newTaskDiv;
 };
 
-let createTaskLabel = (taskText) => {
+export const createTaskLabel = (taskText) => {
     const label = document.createElement("label");
     label.setAttribute("contenteditable", "true");
     label.append(document.createTextNode(taskText));
@@ -15,7 +15,7 @@ let createTaskLabel = (taskText) => {
     return label;
 }
 
-let createTaskCheckbox = (isComplete) => {
+export const createTaskCheckbox = (isComplete) => {
     const checkbox = document.createElement("input");
     checkbox.setAttribute("type", "checkbox");
     checkbox.setAttribute("class", "task-checkbox");
@@ -27,7 +27,7 @@ let createTaskCheckbox = (isComplete) => {
     return checkbox;
 }
 
-let createTaskEditButton = (newTaskDiv) => {
+export const createTaskEditButton = () => {
     const editButton = document.createElement("button");
     editButton.appendChild(document.createTextNode("Edit"));
     editButton.setAttribute("class", "task-buttons");
@@ -35,7 +35,7 @@ let createTaskEditButton = (newTaskDiv) => {
     return editButton;
 }
 
-let createTaskDeleteButton = (newTaskDiv) => {
+export const createTaskDeleteButton = () => {
     const deleteButton = document.createElement("button");
     deleteButton.appendChild(document.createTextNode("Delete"));
     deleteButton.setAttribute("class", "task-buttons");
@@ -43,16 +43,8 @@ let createTaskDeleteButton = (newTaskDiv) => {
     return deleteButton;
 }
 
-let updateTasksTitle = (numOfTasks, numOfDoneTasks) => {
-    let title = "";
-    
-    if (numOfTasks === 0 && numOfDoneTasks === 0) {
-       title = "Create your first task" 
-    } else {
-        title = numOfDoneTasks + "/" + numOfTasks + " tasks";
-    }
-
-    document.getElementById("title").innerHTML = title;
+export const updateTasksTitle = (numOfTasks, numOfDoneTasks) => {
+    document.getElementById("title").innerHTML =
+        (numOfTasks === 0 && numOfDoneTasks === 0) ?
+        "Create your first task" : (numOfDoneTasks + "/" + numOfTasks + " tasks");
 }
-
-export {createTaskElement, createTaskCheckbox, createTaskDeleteButton, createTaskEditButton, createTaskLabel, updateTasksTitle};

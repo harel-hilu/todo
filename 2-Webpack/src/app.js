@@ -2,10 +2,24 @@ import {createTaskElement, createTaskCheckbox, createTaskDeleteButton, createTas
 import {getNewTaskInputElement, getNewTaskInputText, isEmptyNewTaskInput, focusNewTaskInput, clearNewTaskInput} from "./DOMHelper/newTaskInput.js";
 import {TodoList} from "./objects/todoList.js";
 
+
+function curry(f) { 
+    alert("outest");
+    return function(a) {
+        alert("middle");
+      return function(b) {
+        alert("inner");
+        return f(a, b);
+      };
+    };
+}
+
+curry((a,b)=>a+b)(1)(9);
+
 let todo = new TodoList();
 
 window.addEventListener("load", () => {
-    Object.values(todo.tasks).forEach(task => drawTask(task));
+    Object.values(todo.tasks).forEach(drawTask);
     document.getElementById("addTaskButton").addEventListener("click", addTaskHandler);
     getNewTaskInputElement().addEventListener("keydown", (e) => { 
         if (e.code === "Enter"){
