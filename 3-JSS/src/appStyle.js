@@ -1,16 +1,24 @@
 import jss from "jss";
 
+export const shared = {
+    mainColor: "#ff9500",
+    backgroundColor: "#282827",
+};
+
 const styles = {
     app: {
-        background: "#282827",
+        background: shared.backgroundColor,
         'font-family': "Helvetica",
         'max-width': '800px',
         'margin-left': 'auto',
         'margin-right': 'auto',
         'min-height': '400px',
-        'padding-left': '20px',
-        'padding-top': '1px',
+        'padding': '10px'
+        // 'padding-left': '20px',
+        // 'padding-top': '1px',
+        // 'padding-bottom': '10px',
     }
 }
+
 
 export const { classes } = jss.createStyleSheet(styles).attach();

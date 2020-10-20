@@ -8,7 +8,7 @@ export const createAddTaskArea = () => {
     insertTaskElement.classList.add(classes.insertTask);
     insertTaskElement.innerHTML = `
         <input id=${inputDomId} class=${classes.input} type="text" placeholder="Insert your task here">
-        <button id=${buttonDomId}>Add Task</button>`;
+        <button id=${buttonDomId} class=${classes.addButton}>Add Task</button>`;
     document.getElementById("app").append(insertTaskElement);
 
     focusNewTaskInput();

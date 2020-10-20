@@ -1,6 +1,6 @@
 import { classes } from "./appStyle.js";
 import {createAppHeader} from "./drawer/header/headerDom.js";
-import {createTaskElement, createTaskCheckbox, createTaskDeleteButton, createTaskEditButton, createTaskLabel, createTasksArea, appendTaskToArea} from './drawer/task/taskDom.js';
+import {createTaskElement, createTaskCheckbox, createTaskDeleteButton, createTaskEditButton, createTaskLabel, createTasksArea, appendTaskToArea, changeLabelColor} from './drawer/task/taskDom.js';
 import {getNewTaskInputElement, getNewTaskInputText, isEmptyNewTaskInput, focusNewTaskInput, clearNewTaskInput, createAddTaskArea, getAddTaskButton} from "./drawer/insertTask/insertTaskDom.js";
 import {TodoList} from "./objects/todoList.js";
 
@@ -39,7 +39,7 @@ const drawTask = (taskToAdd) => {
     const isDoneTaskCheckbox = createTaskCheckbox(taskToAdd.isComplete);
     isDoneTaskCheckbox.addEventListener("click", (e) => taskCheckboxClicked(e, taskToAdd.id));
 
-    const taskLabel = createTaskLabel(taskToAdd.text);
+    const taskLabel = createTaskLabel(taskToAdd);
     taskLabel.addEventListener("focusout", (e) => taskToAdd = taskLabelFocusOut(e, taskToAdd.id));
 
     const taskEditButton = createTaskEditButton(taskElement);
@@ -58,6 +58,7 @@ const drawTask = (taskToAdd) => {
 const taskCheckboxClicked = (e, taskId) => {
     todo.addTask(taskId, todo.tasks[taskId].text, e.target.checked);
     createAppHeader(todo.countTasks(), todo.countDoneTasks());
+    changeLabelColor(e.target.parentNode.querySelector("label"), todo.tasks[taskId].isComplete);
 }
 
 const editTaskClicked = (taskElement) => taskElement.querySelector("label").focus();

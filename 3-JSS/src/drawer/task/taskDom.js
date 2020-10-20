@@ -18,11 +18,12 @@ export const createTaskElement = (taskId) => {
     return newTaskDiv;
 };
 
-export const createTaskLabel = (taskText) => {
+export const createTaskLabel = (taskToAdd) => {
     const label = document.createElement("label");
     label.setAttribute("contenteditable", "true");
-    label.append(document.createTextNode(taskText));
+    label.append(document.createTextNode(taskToAdd.text));
     label.setAttribute("class", classes.label);
+    changeLabelColor(label, taskToAdd.isComplete);
 
     return label;
 }
@@ -54,3 +55,7 @@ export const createTaskDeleteButton = () => {
 
     return deleteButton;
 }
+
+export const changeLabelColor = (labelElement, isComplete) => isComplete ? 
+    labelElement.classList.add(classes.checkedLabel) : 
+    labelElement.classList.remove(classes.checkedLabel);

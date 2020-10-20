@@ -1,8 +1,9 @@
 import jss from "jss";
+import { shared } from "./../../appStyle.js";
 
 const styles = {
     title: {
-        color: "#ff9500",
+        color: shared.mainColor,
     }
 }
 
