@@ -13,10 +13,7 @@ const styles = {
         'margin-left': 'auto',
         'margin-right': 'auto',
         'min-height': '400px',
-        'padding': '10px'
-        // 'padding-left': '20px',
-        // 'padding-top': '1px',
-        // 'padding-bottom': '10px',
+        'padding': '10px',
     }
 }
 

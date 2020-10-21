@@ -22,6 +22,7 @@ const styles = {
         'width': '20px',
         'height': '20px',
         'cursor': 'pointer',
+        'background-color': 'black',
     },
     buttons: {
         'margin-left': '10px',
