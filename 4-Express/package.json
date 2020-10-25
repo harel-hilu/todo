@@ -1,0 +1,21 @@
+{
+  "name": "4-Express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jss": "^10.4.0",
+    "jss-camel-case": "^6.1.0",
+    "path": "^0.12.7",
+    "uuid": "^8.3.1",
+    "webpack": "^5.1.3",
+    "webpack-cli": "^4.1.0"
+  }
+}

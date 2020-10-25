@@ -1,19 +1,16 @@
 const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const app = express();
 const port = 3000;
+let todo = {};
+let i = 0;
 
-const sendInTheMiddle =  function(req, res, next) {
-    console.log("middle");
-    req.x = "Hello world!";
-    next();
-}
+app.use(cors());
+app.use(bodyParser.json());
 
-app.use(express.static('media'));
-app.use(sendInTheMiddle);
-app.get('/wow',  (req, res) => {
-    console.log(req.x);
-    res.send("req.x.toString()");
-});
+app.get('/get',  (req, res) =>  res.send(todo));
+app.post('/save',  (req, res) => todo = req.body);
 
 app.listen(port, () => console.log(`listening on port ${port}`));
