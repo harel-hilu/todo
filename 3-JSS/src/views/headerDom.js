@@ -1,6 +1,8 @@
-import {classes} from "./headerStyle.js";
+import jss from "jss";
+import { shared } from "../appStyle.js";
 
 const titleDomId = "title";
+const classes = getStyles();
 
 export const createAppHeader = (numOfTasks, numOfDoneTasks) => {
     let titleElement = document.getElementById(titleDomId);
@@ -21,3 +23,12 @@ const createTitleElement = () => {
     document.getElementById("app").append(titleElement);
 }
 
+function getStyles(){
+    const styles = {
+        title: {
+            color: shared.mainColor,
+        }
+    }
+    
+    return jss.createStyleSheet(styles).attach().classes;
+}

@@ -1,5 +1,9 @@
 import jss from 'jss';
 import { shared } from '../../sharedStyle';
+import camal from 'jss-plugin-camel-case';
+import extend from 'jss-plugin-extend';
+
+jss.use(extend(), camal());
 
 const style = {
     task: {
@@ -14,18 +18,21 @@ const style = {
         height: '20px',
         width: '20px',
     },
-    label: {
+    labelChecked: {
+        color: '3d3d3d',
+    },
+    labelNotChecked: {
         color: 'white',
+    },
+    label: {
         'flex-grow': 1,
         'margin-left': '5px',
         'font-size': '20px',
     },
     buttons: {
-        'margin-left': '5px',
-        border: 'none',
+        extend: shared.globalButton,
         'background-color': shared.background,
         color: shared.main,
-        cursor: 'pointer',
     }
 }
 

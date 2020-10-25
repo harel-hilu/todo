@@ -16,10 +16,12 @@ export class TodoList {
         };
         
         const taskDiv = this.createTaskDiv(task.id);
-
+        
         for (const iterator of Object.values(elements)) {
             taskDiv.append(iterator);
         }
+        
+        this.changeLabelColor(elements.label, task.isDone);
         
         return elements;
     }
@@ -60,5 +62,16 @@ export class TodoList {
         }
 
         return checkbox;
+    }
+
+    changeLabelColor(label, isDone) {
+        if (isDone) {
+            label.classList.add(classes.labelChecked);
+            label.classList.remove(classes.labelNotChecked);    
+        } else {
+            label.classList.add(classes.labelNotChecked);    
+            label.classList.remove(classes.labelChecked);
+        }
+        
     }
 }

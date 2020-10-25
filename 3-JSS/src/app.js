@@ -1,7 +1,7 @@
 import { classes } from "./appStyle.js";
-import {createAppHeader} from "./drawer/header/headerDom.js";
-import {createTaskElement, createTaskCheckbox, createTaskDeleteButton, createTaskEditButton, createTaskLabel, createTasksArea, appendTaskToArea, changeLabelColor} from './drawer/task/taskDom.js';
-import {getNewTaskInputElement, getNewTaskInputText, isEmptyNewTaskInput, focusNewTaskInput, clearNewTaskInput, createAddTaskArea, getAddTaskButton} from "./drawer/insertTask/insertTaskDom.js";
+import {createAppHeader} from "./views/headerDom.js";
+import {createTaskElement, createTaskCheckbox, createTaskDeleteButton, createTaskEditButton, createTaskLabel, createTasksArea, appendTaskToArea, changeLabelColor} from './views/taskDom.js';
+import {getNewTaskInputElement, getNewTaskInputText, isEmptyNewTaskInput, focusNewTaskInput, clearNewTaskInput, createAddTaskArea, getAddTaskButton} from "./views/insertTaskDom.js";
 import {TodoList} from "./objects/todoList.js";
 
 const todo = new TodoList();

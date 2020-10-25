@@ -1,15 +1,17 @@
 import jss from 'jss';
 import { shared } from '../../sharedStyle.js'
+import camal from 'jss-plugin-camel-case';
+import extend from 'jss-plugin-extend';
+
+jss.use(extend(), camal());
 
 const style = {
     input: {
         'flex-grow': 1,
     },
     addButton: {
-        'border-radius': '5px',
-        border: 'none',
+        extend: shared.globalButton,
         padding: '7px',
-        'margin-left': '10px',
         'background-color': shared.main,
         'color': 'white',
     },

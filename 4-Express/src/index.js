@@ -39,7 +39,7 @@ function drawTask(taskToAdd) {
     elements.editButton.addEventListener("click", 
         () => elements.editButton.parentNode.querySelector("label").focus());
     elements.checkbox.addEventListener("click", 
-        () => checkboxClicked(taskToAdd, elements.checkbox.checked));
+        () => checkboxClicked(taskToAdd, elements));
     elements.label.addEventListener("focusout", 
         () => labelChanged(elements.label, taskToAdd));
     elements.deleteButton.addEventListener("click", 
@@ -51,8 +51,9 @@ const setHeaderTitle = () => {
     header.setTitle(values.length, values.filter(task => task.isDone).length);
 }
 
-const checkboxClicked = (task, isDone) => {
-    task.isDone = isDone;
+const checkboxClicked = (task, elements) => {
+    task.isDone = elements.checkbox.checked;
+    tasksArea.changeLabelColor(elements.label, task.isDone)
     setHeaderTitle();
     saveTasksToServer(todo);
 };
