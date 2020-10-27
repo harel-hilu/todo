@@ -5,7 +5,7 @@ module.exports = {
   devtool: 'source-map',
   watch: true,
   output: {
-    filename: 'main.js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+    path: path.resolve("/Users/harelh/Documents/Code/todo-onboarding/todo/Server", 'public'),
   },
 };

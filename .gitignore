@@ -1,5 +1,7 @@
 .vscode
 .DS_Store
 .idea
+bundle.js
+bundle.js.map
 node_modules/
 dist/

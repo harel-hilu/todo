@@ -1,10 +1,14 @@
-import { classes } from "./todoStyle.js";
-import { shared } from '../../sharedStyle.js'
+import { shared } from '../sharedStyle.js'
+import jss from 'jss';
+import camal from 'jss-plugin-camel-case';
+import extend from 'jss-plugin-extend';
+
+const classes = getStyles();
 
 export class TodoList {
     constructor() {
-        this.todo = document.createElement("div");
-        document.body.append(this.todo);
+        this.tasks = document.createElement("div");
+        document.body.append(this.tasks);
     }
 
     addTaskToDom(task) {
@@ -47,7 +51,7 @@ export class TodoList {
         const taskDiv = document.createElement("div");
         taskDiv.setAttribute("id", id);
         taskDiv.setAttribute("class", classes.task);
-        this.todo.append(taskDiv);
+        this.tasks.append(taskDiv);
 
         return taskDiv;
     }
@@ -74,4 +78,42 @@ export class TodoList {
         }
         
     }
+}
+
+
+function getStyles() {
+    jss.use(extend(), camal());
+    const style = {
+        task: {
+            display: 'flex',
+            'max-width': shared.appWidth,
+            'margin-top': '5px',
+            'border-bottom-style': 'solid',
+            'border-bottom-color': '#3d3d3d',
+            'border-bottom-width': '1px',
+        },
+        checkbox: {
+            height: '20px',
+            width: '20px',
+        },
+        labelChecked: {
+            color: '#a0a0a0',
+            'text-decoration': 'line-through'
+        },
+        labelNotChecked: {
+            color: 'white',
+        },
+        label: {
+            'flex-grow': 1,
+            'margin-left': '5px',
+            'font-size': '20px',
+        },
+        buttons: {
+            extend: shared.globalButton,
+            'background-color': shared.background,
+            color: shared.main,
+        }
+    }
+
+    return jss.createStyleSheet(style).attach().classes;
 }

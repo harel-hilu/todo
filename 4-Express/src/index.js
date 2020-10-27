@@ -1,12 +1,12 @@
-import { Task } from "./model/Task";
-import { NumOfTasksHeader } from "./view/header/NumOfTasksHeader.js";
-import { AddTaskArea } from "./view/addTask/AddTaskArea.js";
-import { TodoList } from "./view/task/TodoList.js";
-import { getTasksFromServer, saveTasksToServer } from "./saver/saver.js";
-import { shared, classes } from "./sharedStyle.js";
+import { Task } from "./model/Task.js";
+import { NumOfTasksHeader } from "./views/NumOfTasksHeader.js";
+import { AddTaskArea } from "./views/AddTaskArea.js";
+import { TodoList } from "./views/TodoList.js";
+import { deleteTask, getAllTasksFromServer, saveTaskToServer } from "./dataAccess/serverAccess.js";
+import { classes } from "./sharedStyle.js";
 
-let todo = {};
-const header = new NumOfTasksHeader();
+let tasks = {};
+const headerArea = new NumOfTasksHeader();
 const addTaskArea = new AddTaskArea();
 const tasksArea = new TodoList();
 
@@ -14,19 +14,19 @@ document.body.classList.add(classes.body);
 addTaskArea.addButton.addEventListener("click", () => addTaskHandler(addTaskArea.input.value));
 addTaskArea.input.addEventListener("enterpressed", () => addTaskHandler(addTaskArea.input.value));
 
-getTasksFromServer().then((data) => {
-    todo = data;
-    Object.values(todo).forEach(task => drawTask(task));
+getAllTasksFromServer().then((data) => {
+    tasks = data;
+    Object.values(tasks).forEach(task => drawTask(task));
     setHeaderTitle();
 });
 
 const addTaskHandler = (text) => {
     if (text !== "") {
         const taskToAdd = new Task({taskText: text});
-        todo[taskToAdd.id] = taskToAdd;
+        tasks[taskToAdd.id] = taskToAdd;
         drawTask(taskToAdd);
         setHeaderTitle();
-        saveTasksToServer(todo);
+        saveTaskToServer(taskToAdd);
         addTaskArea.input.value = "";
     }
 
@@ -47,27 +47,27 @@ function drawTask(taskToAdd) {
 }
 
 const setHeaderTitle = () => {
-    const values = Object.values(todo);
-    header.setTitle(values.length, values.filter(task => task.isDone).length);
+    const values = Object.values(tasks);
+    headerArea.setTitle(values.length, values.filter(task => task.isDone).length);
 }
 
 const checkboxClicked = (task, elements) => {
     task.isDone = elements.checkbox.checked;
     tasksArea.changeLabelColor(elements.label, task.isDone)
     setHeaderTitle();
-    saveTasksToServer(todo);
+    saveTaskToServer(task);
 };
 
 const labelChanged = (label, task) => {
     task.text = label.textContent;
-    saveTasksToServer(todo);
+    saveTaskToServer(task);
 };
     
 const deleteClicked = (deleteButton, id) => {
-    delete todo[id];
+    delete tasks[id];
     const taskDiv = deleteButton.parentNode;
     taskDiv.parentNode.removeChild(taskDiv);
     setHeaderTitle();
     addTaskArea.input.focus();
-    saveTasksToServer(todo);
+    deleteTask(id);
 };
