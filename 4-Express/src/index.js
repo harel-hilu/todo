@@ -14,10 +14,15 @@ document.body.classList.add(classes.body);
 addTaskArea.addButton.addEventListener("click", () => addTaskHandler(addTaskArea.input.value));
 addTaskArea.input.addEventListener("enterpressed", () => addTaskHandler(addTaskArea.input.value));
 
-getAllTasksFromServer().then((data) => {
+getAllTasksFromServer()
+.then((data) => {
     tasks = data;
     Object.values(tasks).forEach(task => drawTask(task));
     setHeaderTitle();
+})
+.catch(err => {
+    console.log(err);
+    alert("cannot get tasks from server")
 });
 
 const addTaskHandler = (text) => {

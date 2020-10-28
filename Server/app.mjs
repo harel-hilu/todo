@@ -11,17 +11,18 @@ const tasks = {};
 app.use(express.static(serverPath + "/public"));
 app.use(express.json());
 
-app.get('/API/v1/tasks',  (req, res) =>  {
+app.get('/api/v1/tasks',  (req, res) =>  {
     res.status(200).send(tasks);
 });
 
-app.post('/API/v1/tasks/:taskId',  (req, res) => {
+app.post('/api/v1/tasks/:taskId',  (req, res) => {
+    throw 42;
     const taskToAdd = req.body;
     tasks[taskToAdd.id] = taskToAdd;
     res.status(201).send("task added");
 });
 
-app.delete('/API/v1/tasks/:taskId', (req, res) => {
+app.delete('/api/v1/tasks/:taskId', (req, res) => {
     delete tasks[req.params.taskId];
     res.status(200).send("task deleted");
 });
