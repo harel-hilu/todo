@@ -18,7 +18,7 @@ getAllTasksFromServer().then((data) => {
     tasks = data;
     Object.values(tasks).forEach(task => drawTask(task));
     setHeaderTitle();
-}).catch(err => catchHandler);
+}).catch(notifyError);
 
 const addTaskHandler = (text) => {
     if (text !== "") {
@@ -27,7 +27,7 @@ const addTaskHandler = (text) => {
             tasks[taskToAdd.id] = taskToAdd;
             drawTask(taskToAdd);
             setHeaderTitle();
-        }).catch(catchHandler);
+        }).catch(notifyError);
 
         addTaskArea.input.value = "";
     }
@@ -57,12 +57,12 @@ const checkboxClicked = (task, elements) => {
     task.isDone = elements.checkbox.checked;
     tasksArea.changeLabelColor(elements.label, task.isDone)
     setHeaderTitle();
-    saveTaskToServer(task).catch(catchHandler);
+    saveTaskToServer(task).catch(notifyError);
 };
 
 const labelChanged = (label, task) => {
-    saveTaskToServer(task).catch(catchHandler);
     task.text = label.textContent;
+    saveTaskToServer(task).catch(notifyError);
 };
     
 const deleteClicked = (deleteButton, id) => {
@@ -71,12 +71,12 @@ const deleteClicked = (deleteButton, id) => {
         const taskDiv = deleteButton.parentNode;
         taskDiv.parentNode.removeChild(taskDiv);
         setHeaderTitle();
-    }).catch(catchHandler);
+    }).catch(notifyError);
     
     addTaskArea.input.focus();
 };
 
-const catchHandler = (err) => {
+function notifyError (err) {
     console.log(err);
     alert("Server is not responding. Please try again later!");
 } 
