@@ -16,7 +16,6 @@ app.get('/api/v1/tasks',  (req, res) =>  {
 });
 
 app.post('/api/v1/tasks/:taskId',  (req, res) => {
-    throw 42;
     const taskToAdd = req.body;
     tasks[taskToAdd.id] = taskToAdd;
     res.status(201).send("task added");

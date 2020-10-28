@@ -2,7 +2,7 @@ import { Task } from "./model/Task.js";
 import { NumOfTasksHeader } from "./views/NumOfTasksHeader.js";
 import { AddTaskArea } from "./views/AddTaskArea.js";
 import { TodoList } from "./views/TodoList.js";
-import { deleteTask, getAllTasksFromServer, saveTaskToServer } from "./dataAccess/serverAccess.js";
+import { deleteTaskFromServer, getAllTasksFromServer, saveTaskToServer } from "./dataAccess/serverAccess.js";
 import { classes } from "./sharedStyle.js";
 
 let tasks = {};
@@ -14,24 +14,21 @@ document.body.classList.add(classes.body);
 addTaskArea.addButton.addEventListener("click", () => addTaskHandler(addTaskArea.input.value));
 addTaskArea.input.addEventListener("enterpressed", () => addTaskHandler(addTaskArea.input.value));
 
-getAllTasksFromServer()
-.then((data) => {
+getAllTasksFromServer().then((data) => {
     tasks = data;
     Object.values(tasks).forEach(task => drawTask(task));
     setHeaderTitle();
-})
-.catch(err => {
-    console.log(err);
-    alert("cannot get tasks from server")
-});
+}).catch(err => catchHandler);
 
 const addTaskHandler = (text) => {
     if (text !== "") {
         const taskToAdd = new Task({taskText: text});
-        tasks[taskToAdd.id] = taskToAdd;
-        drawTask(taskToAdd);
-        setHeaderTitle();
-        saveTaskToServer(taskToAdd);
+        saveTaskToServer(taskToAdd).then(() => {
+            tasks[taskToAdd.id] = taskToAdd;
+            drawTask(taskToAdd);
+            setHeaderTitle();
+        }).catch(catchHandler);
+
         addTaskArea.input.value = "";
     }
 
@@ -60,19 +57,26 @@ const checkboxClicked = (task, elements) => {
     task.isDone = elements.checkbox.checked;
     tasksArea.changeLabelColor(elements.label, task.isDone)
     setHeaderTitle();
-    saveTaskToServer(task);
+    saveTaskToServer(task).catch(catchHandler);
 };
 
 const labelChanged = (label, task) => {
+    saveTaskToServer(task).catch(catchHandler);
     task.text = label.textContent;
-    saveTaskToServer(task);
 };
     
 const deleteClicked = (deleteButton, id) => {
-    delete tasks[id];
-    const taskDiv = deleteButton.parentNode;
-    taskDiv.parentNode.removeChild(taskDiv);
-    setHeaderTitle();
+    deleteTaskFromServer(id).then(() => {
+        delete tasks[id];
+        const taskDiv = deleteButton.parentNode;
+        taskDiv.parentNode.removeChild(taskDiv);
+        setHeaderTitle();
+    }).catch(catchHandler);
+    
     addTaskArea.input.focus();
-    deleteTask(id);
 };
+
+const catchHandler = (err) => {
+    console.log(err);
+    alert("Server is not responding. Please try again later!");
+} 

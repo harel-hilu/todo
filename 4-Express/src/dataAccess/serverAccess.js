@@ -12,9 +12,9 @@ export const saveTaskToServer = (task) => {
 
 export const getAllTasksFromServer = () => 
     fetch("http://localhost:3000/api/v1/tasks")
-    .then(enrichFetchError);
+    .then(enrichFetchError).then(res => res.json());
 
-export const deleteTask = (id) => {
+export const deleteTaskFromServer = (id) => {
     return fetch("http://localhost:3000/api/v1/tasks/" + id, {
         method: 'DELETE',
         headers: {
@@ -24,9 +24,9 @@ export const deleteTask = (id) => {
 }
 
 const enrichFetchError = (res) => {
-    if (res.ok) {
-        return res.json();
-    } else {
+    if (!res.ok) {
         throw res.statusText;
     }
+
+    return res;
 };
