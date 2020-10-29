@@ -3,7 +3,7 @@ import path from 'path';
 import url from 'url';
 
 const app = express();
-const port = 3000;
+const port = (process.env.PORT || 5000);
 const appPath = url.fileURLToPath(import.meta.url);
 const serverPath = path.dirname(appPath);
 const tasks = {};

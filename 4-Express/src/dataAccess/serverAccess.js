@@ -1,7 +1,7 @@
-const errorMessage = "There was a problem accessing the server:";
+const url = window.location.href;
 
 export const saveTaskToServer = (task) => {
-    return fetch("http://localhost:3000/api/v1/tasks/" + task.id, {
+    return fetch(`${url}api/v1/tasks/` + task.id, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -11,11 +11,11 @@ export const saveTaskToServer = (task) => {
 }
 
 export const getAllTasksFromServer = () => 
-    fetch("http://localhost:3000/api/v1/tasks")
+    fetch(`${url}api/v1/tasks/`)
     .then(enrichFetchError).then(res => res.json());
 
 export const deleteTaskFromServer = (id) => {
-    return fetch("http://localhost:3000/api/v1/tasks/" + id, {
+    return fetch(`${url}api/v1/tasks/` + id, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
