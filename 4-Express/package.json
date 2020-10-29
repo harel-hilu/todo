@@ -6,7 +6,7 @@
     "start": "webpack"
   },
   "keywords": [],
-  "author": "",
+  "author": "Harel Hilu",
   "license": "ISC",
   "dependencies": {
     "jss": "^10.4.0",
