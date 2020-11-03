@@ -3,7 +3,7 @@ import path from 'path';
 import url from 'url';
 
 const app = express();
-const port = (process.env.PORT || 5000);
+const port = (process.env.PORT || 3000);
 const appPath = url.fileURLToPath(import.meta.url);
 const serverPath = path.dirname(appPath);
 const tasks = {};
@@ -15,10 +15,12 @@ app.get('/api/v1/tasks',  (req, res) =>  {
     res.status(200).send(tasks);
 });
 
-app.post('/api/v1/tasks/:taskId',  (req, res) => {
+app.put('/api/v1/tasks/:taskId',  (req, res) => {
     const taskToAdd = req.body;
+    const isNewTask = req.params.taskId in tasks;
     tasks[taskToAdd.id] = taskToAdd;
-    res.status(201).send("task added");
+    isNewTask ? res.status(201).send("Task created") :
+                res.status(200).send("Task updated");
 });
 
 app.delete('/api/v1/tasks/:taskId', (req, res) => {

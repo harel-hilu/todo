@@ -2,7 +2,7 @@ const url = window.location.href;
 
 export const saveTaskToServer = (task) => {
     return fetch(`${url}api/v1/tasks/` + task.id, {
-        method: 'POST',
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
