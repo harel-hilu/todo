@@ -4,7 +4,7 @@ import { AddTaskArea } from "./views/AddTaskArea.js";
 import { TodoList } from "./views/TodoList.js";
 import { deleteTaskFromServer, getAllTasksFromServer, saveTaskToServer } from "./dataAccess/serverAccess.js";
 import { classes } from "./sharedStyle.js";
-
+alert("Hello!");
 let tasks = {};
 const headerArea = new NumOfTasksHeader();
 const addTaskArea = new AddTaskArea();
