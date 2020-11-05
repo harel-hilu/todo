@@ -1,22 +1,20 @@
 {
-  "name": "Server",
+  "name": "5-Heroku",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon"
+    "start": "webpack"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.0",
-    "ejs": "^3.1.5",
-    "express": "^4.17.1",
-    "nodemon": "^2.0.6",
-    "path": "^0.12.7",
-    "url": "^0.11.0",
-    "uuid": "^8.3.1"
+    "jss": "^10.4.0",
+    "jss-plugin-camel-case": "^10.4.0",
+    "webpack": "^5.4.0",
+    "webpack-cli": "^4.1.0"
   }
 }

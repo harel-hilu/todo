@@ -48,10 +48,6 @@ function drawTask(taskToAdd) {
         () => deleteClicked(elements.deleteButton, taskToAdd.id));
 }
 
-const setHeaderTitle = () => {
-    const values = Object.values(tasks);
-    headerArea.setTitle(values.length, values.filter(task => task.isDone).length);
-}
 
 const checkboxClicked = (task, elements) => {
     task.isDone = elements.checkbox.checked;
@@ -59,6 +55,11 @@ const checkboxClicked = (task, elements) => {
     setHeaderTitle();
     saveTaskToServer(task).catch(notifyError);
 };
+
+const setHeaderTitle = () => {
+    const values = Object.values(tasks);
+    headerArea.setTitle(values.length, values.filter(task => task.isDone).length);
+}
 
 const labelChanged = (label, task) => {
     task.text = label.textContent;
@@ -76,7 +77,7 @@ const deleteClicked = (deleteButton, id) => {
     addTaskArea.input.focus();
 };
 
-function notifyError (err) {
+function notifyError(err) {
     console.log(err);
     alert("Server is not responding. Please try again later!");
-} 
+}
