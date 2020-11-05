@@ -26,6 +26,8 @@ function getStyles() {
     const style = {
         header: {
             color: sharedStyles.mainColor,
+            textAlign: "center",
+            textDecoration: "underline",
         }
     }
     

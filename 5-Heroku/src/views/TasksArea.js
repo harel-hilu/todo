@@ -1,4 +1,5 @@
 import jss from 'jss';
+import jssCamelCase from 'jss-plugin-camel-case';
 import { sharedStyles } from '../sharedStyles.js';
 
 const domId = "tasks";
@@ -14,13 +15,13 @@ export class TasksArea {
         const checked = task.isDone ? "checked" : "";
 
         this.tasks.insertAdjacentHTML("afterbegin",` 
-            <div id=${task.id}> 
-                <input class=task ${classes.checkbox} type=checkbox ${checked} />
-                <label class=task contenteditable=true ${classes.label}>
+            <div id=${task.id} class=${classes.task}> 
+                <input class="task ${classes.checkbox}" type=checkbox ${checked} />
+                <label class="task ${classes.label}" contenteditable=true>
                     ${task.text} 
                 </label>
-                <button class=task ${classes.buttons}> edit </button> 
-                <button class=task ${classes.buttons}> delete </button>
+                <button class="task ${classes.buttons}">Edit</button> 
+                <button class="task ${classes.buttons}">Delete</button>
             </div>
         `);
 
@@ -40,15 +41,28 @@ export class TasksArea {
 function getStyles() {
     const style = {
         checkbox: {
-            color: sharedStyles.mainColor,
+            height: "18px",
+            width: "18px",
         },
         label: {
-            color: "red",
+            color: sharedStyles.secondaryColor,
+            flexGrow: 1,
+            fontSize: "20px",
         },
         buttons: {
-            color: "red",
+            backgroundColor: sharedStyles.backgroundColor,
+            color: sharedStyles.mainColor,
+            border: "none",
+        },
+        task: {
+            display: "flex",
+            marginTop: "8px",
+            borderBottomStyle: 'solid',
+            borderBottomColor: '#3d3d3d',
+            borderBottomWidth: '1px',
         }
     }
-    
+    jss.use(jssCamelCase());
+
     return jss.createStyleSheet(style).attach().classes;
 }

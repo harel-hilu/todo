@@ -2,6 +2,9 @@ import { Task } from "./model/Task.js";
 import { AddTaskArea } from "./views/AddTaskArea.js";
 import { NumOfTasksHeader } from "./views/NumOfTasksHeader.js";
 import { TasksArea } from "./views/TasksArea.js";
+import jss from "jss";
+import jssCamelCase from 'jss-plugin-camel-case';
+import { sharedStyles } from "./sharedStyles.js";
 import { saveTaskToServer, getAllTasksFromServer, deleteTaskFromServer } from "./dataAccess/dataAccess.js";
 
 let tasks = {};
@@ -15,6 +18,8 @@ getAllTasksFromServer().then(res=>{
     Object.values(tasks).forEach(task => addTaskToDom(task));
     numOfTasksHeaderArea.setTitle(tasks);
 }).catch(err => alert("server error: " + err));
+
+setStyles();
 
 addTaskArea.buttonInputArea.addEventListener("enterPressedOrButtonClicked", () => {
     if (addTaskArea.inputAddTask.value !== "") {
@@ -58,3 +63,27 @@ const deleteButtonClicked = (taskDiv) => {
     }).catch(() => alert("cannot delete from server"));
 }
 
+function setStyles(){
+    const style = {
+        app: {
+            maxWidth: "600",
+            minHeight: "400px",
+            padding: "10px",
+            marginLeft: "auto",
+            marginRight: "auto",
+            fontFamily: "Helvetica",
+            borderStyle: 'solid',
+            borderColor: sharedStyles.mainColor,
+            borderBottomWidth: '1px',
+        },
+        body: {
+            backgroundColor: sharedStyles.backgroundColor,
+        }
+    }
+
+    jss.use(jssCamelCase());
+
+    const classes = jss.createStyleSheet(style).attach().classes;
+    document.getElementById("app").classList.add(classes.app);
+    document.body.classList.add(classes.body);
+}

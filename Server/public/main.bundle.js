@@ -2010,6 +2010,44 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/hyphenate-style-name/index.js":
+/*!****************************************************!*\
+  !*** ./node_modules/hyphenate-style-name/index.js ***!
+  \****************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* eslint-disable no-var, prefer-template */
+var uppercasePattern = /[A-Z]/g
+var msPattern = /^ms-/
+var cache = {}
+
+function toHyphenLower(match) {
+  return '-' + match.toLowerCase()
+}
+
+function hyphenateStyleName(name) {
+  if (cache.hasOwnProperty(name)) {
+    return cache[name]
+  }
+
+  var hName = name.replace(uppercasePattern, toHyphenLower)
+  return (cache[name] = msPattern.test(hName) ? '-' + hName : hName)
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (hyphenateStyleName);
+
+
+/***/ }),
+
 /***/ "./node_modules/is-in-browser/dist/module.js":
 /*!***************************************************!*\
   !*** ./node_modules/is-in-browser/dist/module.js ***!
@@ -2032,6 +2070,90 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 var isBrowser = (typeof window === "undefined" ? "undefined" : _typeof(window)) === "object" && (typeof document === "undefined" ? "undefined" : _typeof(document)) === 'object' && document.nodeType === 9;
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (isBrowser);
+
+
+/***/ }),
+
+/***/ "./node_modules/jss-plugin-camel-case/dist/jss-plugin-camel-case.esm.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/jss-plugin-camel-case/dist/jss-plugin-camel-case.esm.js ***!
+  \******************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var hyphenate_style_name__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! hyphenate-style-name */ "./node_modules/hyphenate-style-name/index.js");
+;
+
+/**
+ * Convert camel cased property names to dash separated.
+ *
+ * @param {Object} style
+ * @return {Object}
+ */
+
+function convertCase(style) {
+  var converted = {};
+
+  for (var prop in style) {
+    var key = prop.indexOf('--') === 0 ? prop : (0,hyphenate_style_name__WEBPACK_IMPORTED_MODULE_0__.default)(prop);
+    converted[key] = style[prop];
+  }
+
+  if (style.fallbacks) {
+    if (Array.isArray(style.fallbacks)) converted.fallbacks = style.fallbacks.map(convertCase);else converted.fallbacks = convertCase(style.fallbacks);
+  }
+
+  return converted;
+}
+/**
+ * Allow camel cased property names by converting them back to dasherized.
+ *
+ * @param {Rule} rule
+ */
+
+
+function camelCase() {
+  function onProcessStyle(style) {
+    if (Array.isArray(style)) {
+      // Handle rules like @font-face, which can have multiple styles in an array
+      for (var index = 0; index < style.length; index++) {
+        style[index] = convertCase(style[index]);
+      }
+
+      return style;
+    }
+
+    return convertCase(style);
+  }
+
+  function onChangeValue(value, prop, rule) {
+    if (prop.indexOf('--') === 0) {
+      return value;
+    }
+
+    var hyphenatedProp = (0,hyphenate_style_name__WEBPACK_IMPORTED_MODULE_0__.default)(prop); // There was no camel case in place
+
+    if (prop === hyphenatedProp) return value;
+    rule.prop(hyphenatedProp, value); // Core will ignore that property value we set the proper one above.
+
+    return null;
+  }
+
+  return {
+    onProcessStyle: onProcessStyle,
+    onChangeValue: onChangeValue
+  };
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (camelCase);
 
 
 /***/ }),
@@ -4400,8 +4522,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_AddTaskArea_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./views/AddTaskArea.js */ "./src/views/AddTaskArea.js");
 /* harmony import */ var _views_NumOfTasksHeader_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./views/NumOfTasksHeader.js */ "./src/views/NumOfTasksHeader.js");
 /* harmony import */ var _views_TasksArea_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./views/TasksArea.js */ "./src/views/TasksArea.js");
-/* harmony import */ var _dataAccess_dataAccess_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./dataAccess/dataAccess.js */ "./src/dataAccess/dataAccess.js");
+/* harmony import */ var jss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! jss */ "./node_modules/jss/dist/jss.esm.js");
+/* harmony import */ var jss_plugin_camel_case__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! jss-plugin-camel-case */ "./node_modules/jss-plugin-camel-case/dist/jss-plugin-camel-case.esm.js");
+/* harmony import */ var _sharedStyles_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./sharedStyles.js */ "./src/sharedStyles.js");
+/* harmony import */ var _dataAccess_dataAccess_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./dataAccess/dataAccess.js */ "./src/dataAccess/dataAccess.js");
 ;
+
+
+
 
 
 
@@ -4413,16 +4541,18 @@ const numOfTasksHeaderArea = new _views_NumOfTasksHeader_js__WEBPACK_IMPORTED_MO
 const addTaskArea = new _views_AddTaskArea_js__WEBPACK_IMPORTED_MODULE_1__.AddTaskArea();
 const tasksArea = new _views_TasksArea_js__WEBPACK_IMPORTED_MODULE_3__.TasksArea();
 
-(0,_dataAccess_dataAccess_js__WEBPACK_IMPORTED_MODULE_4__.getAllTasksFromServer)().then(res=>{
+(0,_dataAccess_dataAccess_js__WEBPACK_IMPORTED_MODULE_7__.getAllTasksFromServer)().then(res=>{
     tasks = res.data;
     Object.values(tasks).forEach(task => addTaskToDom(task));
     numOfTasksHeaderArea.setTitle(tasks);
 }).catch(err => alert("server error: " + err));
 
+setStyles();
+
 addTaskArea.buttonInputArea.addEventListener("enterPressedOrButtonClicked", () => {
     if (addTaskArea.inputAddTask.value !== "") {
         const taskToAdd = new _model_Task_js__WEBPACK_IMPORTED_MODULE_0__.Task(addTaskArea.inputAddTask.value, false);
-        (0,_dataAccess_dataAccess_js__WEBPACK_IMPORTED_MODULE_4__.saveTaskToServer)(taskToAdd).then(res => res.data).then(task => {
+        (0,_dataAccess_dataAccess_js__WEBPACK_IMPORTED_MODULE_7__.saveTaskToServer)(taskToAdd).then(res => res.data).then(task => {
             tasks[task.id] = task;
             addTaskToDom(task);
             numOfTasksHeaderArea.setTitle(tasks);
@@ -4444,16 +4574,16 @@ function addTaskToDom(taskToAdd) {
 const checkboxClicked = (taskAdded) => {
     taskAdded.isDone = !taskAdded.isDone;
     numOfTasksHeaderArea.setTitle(tasks);
-    (0,_dataAccess_dataAccess_js__WEBPACK_IMPORTED_MODULE_4__.saveTaskToServer)(taskAdded).catch(() => alert("cannot update task on server"));
+    (0,_dataAccess_dataAccess_js__WEBPACK_IMPORTED_MODULE_7__.saveTaskToServer)(taskAdded).catch(() => alert("cannot update task on server"));
 }
 
 const labelFocusOut = (taskAdded, newText) => {
     taskAdded.text = newText;
-    (0,_dataAccess_dataAccess_js__WEBPACK_IMPORTED_MODULE_4__.saveTaskToServer)(taskAdded).catch(() => alert("cannot update task on server"));
+    (0,_dataAccess_dataAccess_js__WEBPACK_IMPORTED_MODULE_7__.saveTaskToServer)(taskAdded).catch(() => alert("cannot update task on server"));
 }
 
 const deleteButtonClicked = (taskDiv) => {
-    ;(0,_dataAccess_dataAccess_js__WEBPACK_IMPORTED_MODULE_4__.deleteTaskFromServer)(taskDiv.id).then(()=>{
+    ;(0,_dataAccess_dataAccess_js__WEBPACK_IMPORTED_MODULE_7__.deleteTaskFromServer)(taskDiv.id).then(()=>{
         taskDiv.parentNode.removeChild(taskDiv);
         delete tasks[taskDiv.id];
         addTaskArea.inputAddTask.focus();
@@ -4461,7 +4591,30 @@ const deleteButtonClicked = (taskDiv) => {
     }).catch(() => alert("cannot delete from server"));
 }
 
+function setStyles(){
+    const style = {
+        app: {
+            maxWidth: "600",
+            minHeight: "400px",
+            padding: "10px",
+            marginLeft: "auto",
+            marginRight: "auto",
+            fontFamily: "Helvetica",
+            borderStyle: 'solid',
+            borderColor: _sharedStyles_js__WEBPACK_IMPORTED_MODULE_6__.sharedStyles.mainColor,
+            borderBottomWidth: '1px',
+        },
+        body: {
+            backgroundColor: _sharedStyles_js__WEBPACK_IMPORTED_MODULE_6__.sharedStyles.backgroundColor,
+        }
+    }
 
+    jss__WEBPACK_IMPORTED_MODULE_4__.default.use((0,jss_plugin_camel_case__WEBPACK_IMPORTED_MODULE_5__.default)());
+
+    const classes = jss__WEBPACK_IMPORTED_MODULE_4__.default.createStyleSheet(style).attach().classes;
+    document.getElementById("app").classList.add(classes.app);
+    document.body.classList.add(classes.body);
+}
 
 /***/ }),
 
@@ -4506,8 +4659,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "sharedStyles": () => /* binding */ sharedStyles
 /* harmony export */ });
 const sharedStyles = {
-    backgroundColor: "black",
-    mainColor: "red",
+    backgroundColor: "#303030",
+    mainColor: "#ff0083",
     secondaryColor: "white",
 }
 
@@ -4529,8 +4682,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "AddTaskArea": () => /* binding */ AddTaskArea
 /* harmony export */ });
 /* harmony import */ var jss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jss */ "./node_modules/jss/dist/jss.esm.js");
-/* harmony import */ var _sharedStyles_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../sharedStyles.js */ "./src/sharedStyles.js");
+/* harmony import */ var jss_plugin_camel_case__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jss-plugin-camel-case */ "./node_modules/jss-plugin-camel-case/dist/jss-plugin-camel-case.esm.js");
+/* harmony import */ var _sharedStyles_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../sharedStyles.js */ "./src/sharedStyles.js");
 ;
+
 
 
 const addTaskAreaDomId = "addTaskArea";
@@ -4564,16 +4719,32 @@ class AddTaskArea {
 
 function getStyles() {
     const style = {
-        addButton: {
-            color: _sharedStyles_js__WEBPACK_IMPORTED_MODULE_1__.sharedStyles.mainColor,
+        container: {
+            display: "flex",
+            color: _sharedStyles_js__WEBPACK_IMPORTED_MODULE_2__.sharedStyles.secondaryColor,
+            marginBottom: "20px",
         },
         taskInput: {
-            color: _sharedStyles_js__WEBPACK_IMPORTED_MODULE_1__.sharedStyles.mainColor,
+            flexGrow: 1,
+            maxWidth: "400px",
+            color: _sharedStyles_js__WEBPACK_IMPORTED_MODULE_2__.sharedStyles.backgroundColor,
+            borderRadius: "5px",
+            border: "none",
+            paddingLeft: "5px",
         },
-        container: {
-            color: _sharedStyles_js__WEBPACK_IMPORTED_MODULE_1__.sharedStyles.secondaryColor,
-        }
+        addButton: {
+            color: _sharedStyles_js__WEBPACK_IMPORTED_MODULE_2__.sharedStyles.backgroundColor,
+            alignSelf: "flex-end",
+            marginRight: "5px",
+            marginLeft: "auto",
+            border: "none",
+            backgroundColor: _sharedStyles_js__WEBPACK_IMPORTED_MODULE_2__.sharedStyles.mainColor,
+            borderRadius: "5px",
+            height: 24,
+        },
     }
+
+    jss__WEBPACK_IMPORTED_MODULE_0__.default.use((0,jss_plugin_camel_case__WEBPACK_IMPORTED_MODULE_1__.default)());
 
     return jss__WEBPACK_IMPORTED_MODULE_0__.default.createStyleSheet(style).attach().classes;
 }
@@ -4625,6 +4796,8 @@ function getStyles() {
     const style = {
         header: {
             color: _sharedStyles_js__WEBPACK_IMPORTED_MODULE_1__.sharedStyles.mainColor,
+            textAlign: "center",
+            textDecoration: "underline",
         }
     }
     
@@ -4649,8 +4822,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "TasksArea": () => /* binding */ TasksArea
 /* harmony export */ });
 /* harmony import */ var jss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jss */ "./node_modules/jss/dist/jss.esm.js");
-/* harmony import */ var _sharedStyles_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../sharedStyles.js */ "./src/sharedStyles.js");
+/* harmony import */ var jss_plugin_camel_case__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jss-plugin-camel-case */ "./node_modules/jss-plugin-camel-case/dist/jss-plugin-camel-case.esm.js");
+/* harmony import */ var _sharedStyles_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../sharedStyles.js */ "./src/sharedStyles.js");
 ;
+
 
 
 const domId = "tasks";
@@ -4666,13 +4841,13 @@ class TasksArea {
         const checked = task.isDone ? "checked" : "";
 
         this.tasks.insertAdjacentHTML("afterbegin",` 
-            <div id=${task.id}> 
-                <input class=task ${classes.checkbox} type=checkbox ${checked} />
-                <label class=task contenteditable=true ${classes.label}>
+            <div id=${task.id} class=${classes.task}> 
+                <input class="task ${classes.checkbox}" type=checkbox ${checked} />
+                <label class="task ${classes.label}" contenteditable=true>
                     ${task.text} 
                 </label>
-                <button class=task ${classes.buttons}> edit </button> 
-                <button class=task ${classes.buttons}> delete </button>
+                <button class="task ${classes.buttons}">Edit</button> 
+                <button class="task ${classes.buttons}">Delete</button>
             </div>
         `);
 
@@ -4692,16 +4867,29 @@ class TasksArea {
 function getStyles() {
     const style = {
         checkbox: {
-            color: _sharedStyles_js__WEBPACK_IMPORTED_MODULE_1__.sharedStyles.mainColor,
+            height: "18px",
+            width: "18px",
         },
         label: {
-            color: "red",
+            color: _sharedStyles_js__WEBPACK_IMPORTED_MODULE_2__.sharedStyles.secondaryColor,
+            flexGrow: 1,
+            fontSize: "20px",
         },
         buttons: {
-            color: "red",
+            backgroundColor: _sharedStyles_js__WEBPACK_IMPORTED_MODULE_2__.sharedStyles.backgroundColor,
+            color: _sharedStyles_js__WEBPACK_IMPORTED_MODULE_2__.sharedStyles.mainColor,
+            border: "none",
+        },
+        task: {
+            display: "flex",
+            marginTop: "8px",
+            borderBottomStyle: 'solid',
+            borderBottomColor: '#3d3d3d',
+            borderBottomWidth: '1px',
         }
     }
-    
+    jss__WEBPACK_IMPORTED_MODULE_0__.default.use((0,jss_plugin_camel_case__WEBPACK_IMPORTED_MODULE_1__.default)());
+
     return jss__WEBPACK_IMPORTED_MODULE_0__.default.createStyleSheet(style).attach().classes;
 }
 

@@ -1,4 +1,5 @@
 import jss from 'jss';
+import jssCamelCase from 'jss-plugin-camel-case'
 import { sharedStyles } from '../sharedStyles.js';
 
 const addTaskAreaDomId = "addTaskArea";
@@ -32,16 +33,32 @@ export class AddTaskArea {
 
 function getStyles() {
     const style = {
-        addButton: {
-            color: sharedStyles.mainColor,
+        container: {
+            display: "flex",
+            color: sharedStyles.secondaryColor,
+            marginBottom: "20px",
         },
         taskInput: {
-            color: sharedStyles.mainColor,
+            flexGrow: 1,
+            maxWidth: "400px",
+            color: sharedStyles.backgroundColor,
+            borderRadius: "5px",
+            border: "none",
+            paddingLeft: "5px",
         },
-        container: {
-            color: sharedStyles.secondaryColor,
-        }
+        addButton: {
+            color: sharedStyles.backgroundColor,
+            alignSelf: "flex-end",
+            marginRight: "5px",
+            marginLeft: "auto",
+            border: "none",
+            backgroundColor: sharedStyles.mainColor,
+            borderRadius: "5px",
+            height: 24,
+        },
     }
+
+    jss.use(jssCamelCase());
 
     return jss.createStyleSheet(style).attach().classes;
 }

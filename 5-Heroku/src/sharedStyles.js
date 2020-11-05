@@ -1,5 +1,5 @@
 export const sharedStyles = {
-    backgroundColor: "black",
-    mainColor: "red",
+    backgroundColor: "#303030",
+    mainColor: "#ff0083",
     secondaryColor: "white",
 }
