@@ -1,12 +1,12 @@
 import jss from 'jss';
 import { sharedStyles } from '../sharedStyles.js';
 
-const domId = "numOfTasksHeader";
+const headerDomId = "numOfTasksHeader";
 const classes = getStyles();
 
 export class NumOfTasksHeader {
     constructor() {
-        this.header = document.getElementById(domId); 
+        this.header = document.getElementById(headerDomId); 
         this.header.classList.add(classes.header);
     }
 

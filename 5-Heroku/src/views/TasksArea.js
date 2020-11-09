@@ -2,12 +2,12 @@ import jss from 'jss';
 import jssCamelCase from 'jss-plugin-camel-case';
 import { sharedStyles } from '../sharedStyles.js';
 
-const domId = "tasks";
+const tasksDomId = "tasks";
 const classes = getStyles();
 
 export class TasksArea {
     constructor() {
-        this.tasks = document.getElementById(domId);
+        this.tasks = document.getElementById(tasksDomId);
         this.tasks.classList.add(classes.tasks);
     }
 

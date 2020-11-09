@@ -11,22 +11,34 @@ export class AddTaskArea {
     constructor() {
         this.inputAddTask = document.getElementById(inputAddTaskDomId);
         this.buttonAddTask = document.getElementById(buttonAddTaskDomId);
-        this.buttonInputArea = document.getElementById(addTaskAreaDomId);
+        this.addAreaDiv = document.getElementById(addTaskAreaDomId);
         this.addTaskEvent = new Event("enterPressedOrButtonClicked");
 
         this.buttonAddTask.addEventListener("click", () => {
-            this.buttonInputArea.dispatchEvent(this.addTaskEvent);
+            this.addAreaDiv.dispatchEvent(this.addTaskEvent);
         });
         this.inputAddTask.addEventListener("keydown", (e) => {
             if (e.code === "Enter") {
-                this.buttonInputArea.dispatchEvent(this.addTaskEvent);    
+                this.addAreaDiv.dispatchEvent(this.addTaskEvent);    
             }
         });
         
         this.inputAddTask.classList.add(classes.taskInput);
         this.buttonAddTask.classList.add(classes.addButton);
-        this.buttonInputArea.classList.add(classes.container);
+        this.addAreaDiv.classList.add(classes.container);
 
+        this.inputAddTask.focus();
+    }
+
+    getInputValue() {
+        return this.inputAddTask.value;
+    }
+
+    clearInput() {
+        this.inputAddTask.value = "";
+    }
+
+    focusInput() {
         this.inputAddTask.focus();
     }
 }

@@ -17,20 +17,20 @@ getAllTasksFromServer().then(res=>{
     tasks = res.data;
     Object.values(tasks).forEach(task => addTaskToDom(task));
     numOfTasksHeaderArea.setTitle(tasks);
-}).catch(err => alert("server error: " + err));
+}).catch(err => notifyUserAndLogError("Cannot get your tasks.", err));
 
 setStyles();
 
-addTaskArea.buttonInputArea.addEventListener("enterPressedOrButtonClicked", () => {
-    if (addTaskArea.inputAddTask.value !== "") {
-        const taskToAdd = new Task(addTaskArea.inputAddTask.value, false);
+addTaskArea.addAreaDiv.addEventListener("enterPressedOrButtonClicked", () => {
+    if (addTaskArea.getInputValue() !== "") {
+        const taskToAdd = new Task(addTaskArea.getInputValue());
         saveTaskToServer(taskToAdd).then(res => res.data).then(task => {
             tasks[task.id] = task;
             addTaskToDom(task);
             numOfTasksHeaderArea.setTitle(tasks);
-            addTaskArea.inputAddTask.value = "";
-            addTaskArea.inputAddTask.focus();
-        }).catch(() => alert("cannot save task"))
+            addTaskArea.clearInput();
+            addTaskArea.focusInput();
+        }).catch((err) => notifyUserAndLogError("Cannot create your task", err));
     }
 });
 
@@ -46,21 +46,28 @@ function addTaskToDom(taskToAdd) {
 const checkboxClicked = (taskAdded) => {
     taskAdded.isDone = !taskAdded.isDone;
     numOfTasksHeaderArea.setTitle(tasks);
-    saveTaskToServer(taskAdded).catch(() => alert("cannot update task on server"));
+    saveTaskToServer(taskAdded)
+    .catch((err) => notifyUserAndLogError("Cannot update task on server", err));
 }
 
 const labelFocusOut = (taskAdded, newText) => {
     taskAdded.text = newText;
-    saveTaskToServer(taskAdded).catch(() => alert("cannot update task on server"));
+    saveTaskToServer(taskAdded).
+    catch((err) => notifyUserAndLogError("Cannot update task on server", err));
 }
 
 const deleteButtonClicked = (taskDiv) => {
     deleteTaskFromServer(taskDiv.id).then(()=>{
         taskDiv.parentNode.removeChild(taskDiv);
         delete tasks[taskDiv.id];
-        addTaskArea.inputAddTask.focus();
+        addTaskArea.focusInput();
         numOfTasksHeaderArea.setTitle(tasks);
-    }).catch(() => alert("cannot delete from server"));
+    }).catch((err) => notifyUserAndLogError("cannot delete from server: ", err));
+}
+
+function notifyUserAndLogError(errorToUser, errorToLog) {
+    alert(errorToUser);
+    console.log(errorToLog);
 }
 
 function setStyles(){

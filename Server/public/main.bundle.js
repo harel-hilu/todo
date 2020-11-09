@@ -169,6 +169,7 @@ module.exports = __webpack_require__(/*! ./lib/axios */ "./node_modules/axios/li
   \************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 12:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -361,6 +362,7 @@ module.exports = function xhrAdapter(config) {
   \*****************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 50:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -427,6 +429,7 @@ module.exports.default = axios;
   \*************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module */
+/*! CommonJS bailout: module.exports is used directly at 19:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -459,6 +462,7 @@ module.exports = Cancel;
   \******************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 57:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -529,6 +533,7 @@ module.exports = CancelToken;
   \***************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module */
+/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -547,6 +552,7 @@ module.exports = function isCancel(value) {
   \**********************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 95:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -655,6 +661,7 @@ module.exports = Axios;
   \***********************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 52:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -720,6 +727,7 @@ module.exports = InterceptorManager;
   \******************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 15:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -753,6 +761,7 @@ module.exports = function buildFullPath(baseURL, requestedURL) {
   \****************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 15:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -784,6 +793,7 @@ module.exports = function createError(message, config, code, request, response) 
   \********************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 23:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -876,6 +886,7 @@ module.exports = function dispatchRequest(config) {
   \*****************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module */
+/*! CommonJS bailout: module.exports is used directly at 13:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -931,6 +942,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
   \****************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 13:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1031,6 +1043,7 @@ module.exports = function mergeConfig(config1, config2) {
   \***********************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 12:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1069,6 +1082,7 @@ module.exports = function settle(resolve, reject, response) {
   \******************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 13:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1102,6 +1116,7 @@ module.exports = function transformData(data, headers, fns) {
   \********************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 98:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1213,6 +1228,7 @@ module.exports = defaults;
   \************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module */
+/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -1237,6 +1253,7 @@ module.exports = function bind(fn, thisArg) {
   \****************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 22:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1320,6 +1337,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
   \*******************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module */
+/*! CommonJS bailout: module.exports is used directly at 10:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -1347,6 +1365,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
   \***************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1413,6 +1432,7 @@ module.exports = (
   \*********************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module */
+/*! CommonJS bailout: module.exports is used directly at 9:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -1440,6 +1460,7 @@ module.exports = function isAbsoluteURL(url) {
   \***********************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1521,6 +1542,7 @@ module.exports = (
   \***************************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 5:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1546,6 +1568,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
   \********************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 27:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1612,6 +1635,7 @@ module.exports = function parseHeaders(headers) {
   \**************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module */
+/*! CommonJS bailout: module.exports is used directly at 23:0-14 */
 /***/ ((module) => {
 
 "use strict";
@@ -1652,6 +1676,7 @@ module.exports = function spread(callback) {
   \*****************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
+/*! CommonJS bailout: module.exports is used directly at 328:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -4489,9 +4514,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var jss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jss */ "./node_modules/jss/dist/jss.esm.js");
 ;
-
 
 const saveTaskToServer = async (task) => {
     return await axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/v1/tasks', task);
@@ -4545,20 +4568,20 @@ const tasksArea = new _views_TasksArea_js__WEBPACK_IMPORTED_MODULE_3__.TasksArea
     tasks = res.data;
     Object.values(tasks).forEach(task => addTaskToDom(task));
     numOfTasksHeaderArea.setTitle(tasks);
-}).catch(err => alert("server error: " + err));
+}).catch(err => notifyUserAndLogError("Cannot get your tasks.", err));
 
 setStyles();
 
-addTaskArea.buttonInputArea.addEventListener("enterPressedOrButtonClicked", () => {
-    if (addTaskArea.inputAddTask.value !== "") {
-        const taskToAdd = new _model_Task_js__WEBPACK_IMPORTED_MODULE_0__.Task(addTaskArea.inputAddTask.value, false);
+addTaskArea.addAreaDiv.addEventListener("enterPressedOrButtonClicked", () => {
+    if (addTaskArea.getInputValue() !== "") {
+        const taskToAdd = new _model_Task_js__WEBPACK_IMPORTED_MODULE_0__.Task(addTaskArea.getInputValue());
         (0,_dataAccess_dataAccess_js__WEBPACK_IMPORTED_MODULE_7__.saveTaskToServer)(taskToAdd).then(res => res.data).then(task => {
             tasks[task.id] = task;
             addTaskToDom(task);
             numOfTasksHeaderArea.setTitle(tasks);
-            addTaskArea.inputAddTask.value = "";
-            addTaskArea.inputAddTask.focus();
-        }).catch(() => alert("cannot save task"))
+            addTaskArea.clearInput();
+            addTaskArea.focusInput();
+        }).catch((err) => notifyUserAndLogError("Cannot create your task", err));
     }
 });
 
@@ -4574,21 +4597,28 @@ function addTaskToDom(taskToAdd) {
 const checkboxClicked = (taskAdded) => {
     taskAdded.isDone = !taskAdded.isDone;
     numOfTasksHeaderArea.setTitle(tasks);
-    (0,_dataAccess_dataAccess_js__WEBPACK_IMPORTED_MODULE_7__.saveTaskToServer)(taskAdded).catch(() => alert("cannot update task on server"));
+    (0,_dataAccess_dataAccess_js__WEBPACK_IMPORTED_MODULE_7__.saveTaskToServer)(taskAdded)
+    .catch((err) => notifyUserAndLogError("Cannot update task on server", err));
 }
 
 const labelFocusOut = (taskAdded, newText) => {
     taskAdded.text = newText;
-    (0,_dataAccess_dataAccess_js__WEBPACK_IMPORTED_MODULE_7__.saveTaskToServer)(taskAdded).catch(() => alert("cannot update task on server"));
+    (0,_dataAccess_dataAccess_js__WEBPACK_IMPORTED_MODULE_7__.saveTaskToServer)(taskAdded).
+    catch((err) => notifyUserAndLogError("Cannot update task on server", err));
 }
 
 const deleteButtonClicked = (taskDiv) => {
     ;(0,_dataAccess_dataAccess_js__WEBPACK_IMPORTED_MODULE_7__.deleteTaskFromServer)(taskDiv.id).then(()=>{
         taskDiv.parentNode.removeChild(taskDiv);
         delete tasks[taskDiv.id];
-        addTaskArea.inputAddTask.focus();
+        addTaskArea.focusInput();
         numOfTasksHeaderArea.setTitle(tasks);
-    }).catch(() => alert("cannot delete from server"));
+    }).catch((err) => notifyUserAndLogError("cannot delete from server: ", err));
+}
+
+function notifyUserAndLogError(errorToUser, errorToLog) {
+    alert(errorToUser);
+    console.log(errorToLog);
 }
 
 function setStyles(){
@@ -4697,22 +4727,34 @@ class AddTaskArea {
     constructor() {
         this.inputAddTask = document.getElementById(inputAddTaskDomId);
         this.buttonAddTask = document.getElementById(buttonAddTaskDomId);
-        this.buttonInputArea = document.getElementById(addTaskAreaDomId);
+        this.addAreaDiv = document.getElementById(addTaskAreaDomId);
         this.addTaskEvent = new Event("enterPressedOrButtonClicked");
 
         this.buttonAddTask.addEventListener("click", () => {
-            this.buttonInputArea.dispatchEvent(this.addTaskEvent);
+            this.addAreaDiv.dispatchEvent(this.addTaskEvent);
         });
         this.inputAddTask.addEventListener("keydown", (e) => {
             if (e.code === "Enter") {
-                this.buttonInputArea.dispatchEvent(this.addTaskEvent);    
+                this.addAreaDiv.dispatchEvent(this.addTaskEvent);    
             }
         });
         
         this.inputAddTask.classList.add(classes.taskInput);
         this.buttonAddTask.classList.add(classes.addButton);
-        this.buttonInputArea.classList.add(classes.container);
+        this.addAreaDiv.classList.add(classes.container);
 
+        this.inputAddTask.focus();
+    }
+
+    getInputValue() {
+        return this.inputAddTask.value;
+    }
+
+    clearInput() {
+        this.inputAddTask.value = "";
+    }
+
+    focusInput() {
         this.inputAddTask.focus();
     }
 }
@@ -4771,12 +4813,12 @@ __webpack_require__.r(__webpack_exports__);
 ;
 
 
-const domId = "numOfTasksHeader";
+const headerDomId = "numOfTasksHeader";
 const classes = getStyles();
 
 class NumOfTasksHeader {
     constructor() {
-        this.header = document.getElementById(domId); 
+        this.header = document.getElementById(headerDomId); 
         this.header.classList.add(classes.header);
     }
 
@@ -4828,12 +4870,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const domId = "tasks";
+const tasksDomId = "tasks";
 const classes = getStyles();
 
 class TasksArea {
     constructor() {
-        this.tasks = document.getElementById(domId);
+        this.tasks = document.getElementById(tasksDomId);
         this.tasks.classList.add(classes.tasks);
     }
 
