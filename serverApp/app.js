@@ -4,6 +4,8 @@ import { v4 } from 'uuid';
 import redis from 'redis';
 
 const client = redis.createClient(process.env.REDIS_URL);
+client.on("error", (error) => console.error(error));
+
 const app = express();
 app.set('views', './');
 const port = (process.env.PORT || 5000);
