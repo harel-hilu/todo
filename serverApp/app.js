@@ -37,7 +37,9 @@ app.get('/', (req, res) => {
 
 app.get('/api/v1/tasks',  (req, res) =>  {   
     client.hgetall(req.userId, 
-        (err, redisResponse) => res.status(200).send(redisResponse));
+        (err, redisResponse) => redisResponse ? 
+        res.status(200).send(redisResponse) :
+        res.status(200).send({}));
 });
 
 app.post('/api/v1/tasks',  (req, res) => {

@@ -4523,9 +4523,6 @@ const saveTaskToServer = async (task) => {
 const getAllTasksFromServer = async () => {
     const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/v1/tasks');
     let tasks = response.data;
-    if (tasks === "") {
-        return {};
-    }
 
     for (const key in tasks) {
         tasks[key] = JSON.parse(tasks[key]);
