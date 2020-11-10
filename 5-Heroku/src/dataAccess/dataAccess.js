@@ -7,6 +7,9 @@ export const saveTaskToServer = async (task) => {
 export const getAllTasksFromServer = async () => {
     const response = await axios.get('/api/v1/tasks');
     let tasks = response.data;
+    if (tasks === "") {
+        return {};
+    }
 
     for (const key in tasks) {
         tasks[key] = JSON.parse(tasks[key]);
