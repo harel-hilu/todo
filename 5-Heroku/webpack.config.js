@@ -5,7 +5,7 @@ module.exports = {
   devtool: "source-map",
   entry: './src/main.js',
   output: {
-    path: path.resolve(__dirname, '../Server/public/'),
+    path: path.resolve(__dirname, '../serverApp/public/'),
     filename: 'client.bundle.js'
   }
 };
