@@ -12,11 +12,11 @@ export class TasksArea {
     }
 
     addTask(task) {
-        const checked = task.isDone ? "checked" : "";
+        const checkedSignInDom = task.isDone ? "checked" : "";
 
         this.tasks.insertAdjacentHTML("afterbegin",` 
             <div id=${task.id} class=${classes.task}> 
-                <input class="task ${classes.checkbox}" type=checkbox ${checked} />
+                <input class="task ${classes.checkbox}" type=checkbox ${checkedSignInDom} />
                 <label class="task ${classes.label}" contenteditable=true>
                     ${task.text} 
                 </label>

@@ -8,18 +8,15 @@ import { sharedStyles } from "./sharedStyles.js";
 import { saveTaskToServer, getAllTasksFromServer, deleteTaskFromServer } from "./dataAccess/dataAccess.js";
 
 let tasks = {};
-
 const numOfTasksHeaderArea = new NumOfTasksHeader();
 const addTaskArea = new AddTaskArea();
 const tasksArea = new TasksArea();
-
-getAllTasksFromServer().then(res=>{
-    tasks = res.data;
-    Object.values(tasks).forEach(task => addTaskToDom(task));
+setStyles();
+getAllTasksFromServer().then(tasksResponse => {
+    tasks = tasksResponse;
+    Object.values(tasksResponse).forEach(task => addTaskToDom(task));
     numOfTasksHeaderArea.setTitle(tasks);
 }).catch(err => notifyUserAndLogError("Cannot get your tasks.", err));
-
-setStyles();
 
 addTaskArea.addAreaDiv.addEventListener("enterPressedOrButtonClicked", () => {
     if (addTaskArea.getInputValue() !== "") {
