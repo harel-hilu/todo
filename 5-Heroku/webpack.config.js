@@ -5,7 +5,7 @@ module.exports = {
   devtool: "source-map",
   entry: './src/main.js',
   output: {
-    path: path.resolve(__dirname, '../../2herokuServer/Server/public/'),
+    path: path.resolve(__dirname, '../Server/public/'),
     filename: 'client.bundle.js'
   }
 };
