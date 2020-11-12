@@ -1,0 +1,1 @@
+web: node ./serverApp/server.bundle.js
