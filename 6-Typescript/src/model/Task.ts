@@ -3,7 +3,7 @@ export class Task {
     isDone: boolean;
     id: string;
 
-    constructor (text="", isDone=false, id="") {
+    constructor (text="", isDone=false, id) {
         this.text = text;
         this.isDone = isDone;
         this.id = id;

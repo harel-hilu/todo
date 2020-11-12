@@ -9,17 +9,6 @@ export class NumOfTasksHeader {
         this.header = document.getElementById(headerDomId); 
         this.header.classList.add(classes.header);
     }
-
-    setTitle(tasks) {
-        const tasksValues = Object.values(tasks);
-
-        if (tasksValues.length === 0) {
-            this.header.innerHTML = 'Insert Your First Task';
-        } else {
-            const numOfDoneTasks = tasksValues.filter(task => task.isDone).length;
-            this.header.innerHTML = `${numOfDoneTasks}/${tasksValues.length} Tasks`;
-        }
-    }
 }
 
 function getStyles() {

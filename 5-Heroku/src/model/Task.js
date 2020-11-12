@@ -1,5 +1,5 @@
 export class Task {
-    constructor(text = "", isDone = false, id = -1) {
+    constructor(text = "", isDone = false, id) {
         this.id = id;
         this.text = text;
         this.isDone = isDone;

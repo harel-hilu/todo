@@ -5,29 +5,33 @@ import { TasksArea } from "./views/TasksArea.js";
 import jss from "jss";
 import jssCamelCase from 'jss-plugin-camel-case';
 import { sharedStyles } from "./sharedStyles.js";
-import { saveTaskToServer, getAllTasksFromServer, deleteTaskFromServer } from "./dataAccess/dataAccess.js";
+import { saveTaskToServer, getAllTasksFromServer, deleteTaskFromServer } from "./dataAccess/server-api.js";
 
-let tasks = {};
 const numOfTasksHeaderArea = new NumOfTasksHeader();
 const addTaskArea = new AddTaskArea();
 const tasksArea = new TasksArea();
 setStyles();
-getAllTasksFromServer().then(tasksResponse => {
-    tasks = tasksResponse;
-    Object.values(tasksResponse).forEach(task => addTaskToDom(task));
-    numOfTasksHeaderArea.setTitle(tasks);
-}).catch(err => notifyUserAndLogError("Cannot get your tasks.", err));
 
-addTaskArea.addAreaDiv.addEventListener("enterPressedOrButtonClicked", () => {
+(async function() {
+    try {
+        const tasks = await getAllTasksFromServer();
+        tasks.forEach(addTaskToDom)
+    } catch(err) {
+        notifyUserAndLogError("Cannot get your tasks.", err)
+    }
+}());
+
+addTaskArea.addAreaDiv.addEventListener("enterPressedOrButtonClicked", async () => {
     if (addTaskArea.getInputValue() !== "") {
         const taskToAdd = new Task(addTaskArea.getInputValue());
-        saveTaskToServer(taskToAdd).then(res => res.data).then(task => {
-            tasks[task.id] = task;
+        try {
+            const task = await saveTaskToServer(taskToAdd);
             addTaskToDom(task);
-            numOfTasksHeaderArea.setTitle(tasks);
             addTaskArea.clearInput();
             addTaskArea.focusInput();
-        }).catch((err) => notifyUserAndLogError("Cannot create your task", err));
+        } catch (error) {
+            notifyUserAndLogError("Cannot create your task", error);
+        }
     }
 });
 
@@ -42,7 +46,6 @@ function addTaskToDom(taskToAdd) {
 
 const checkboxClicked = (taskAdded) => {
     taskAdded.isDone = !taskAdded.isDone;
-    numOfTasksHeaderArea.setTitle(tasks);
     saveTaskToServer(taskAdded)
     .catch((err) => notifyUserAndLogError("Cannot update task on server", err));
 }
@@ -53,13 +56,14 @@ const labelFocusOut = (taskAdded, newText) => {
     catch((err) => notifyUserAndLogError("Cannot update task on server", err));
 }
 
-const deleteButtonClicked = (taskDiv) => {
-    deleteTaskFromServer(taskDiv.id).then(()=>{
-        taskDiv.parentNode.removeChild(taskDiv);
-        delete tasks[taskDiv.id];
-        addTaskArea.focusInput();
-        numOfTasksHeaderArea.setTitle(tasks);
-    }).catch((err) => notifyUserAndLogError("cannot delete from server: ", err));
+const deleteButtonClicked = async (taskDiv) => {
+    try {
+       await deleteTaskFromServer(taskDiv.id); 
+       taskDiv.parentNode.removeChild(taskDiv);
+       addTaskArea.focusInput();
+    } catch (error) {
+        notifyUserAndLogError("cannot delete from server: ", error);
+    }
 }
 
 function notifyUserAndLogError(errorToUser, errorToLog) {
