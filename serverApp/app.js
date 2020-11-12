@@ -7,7 +7,7 @@ import { deleteTask, createTask, getAllTasks } from "./dao/tasks.dao";
 const client = redis.createClient(process.env.REDIS_URL);
 
 const app = express();
-app.set('views', '../5-Heroku/');
+app.set('views', './');
 const port = (process.env.PORT || 3000);
 
 app.use(express.static(__dirname + "/public"));

@@ -1,9 +1,7 @@
 .vscode
 .DS_Store
 .idea
-server.bundle.js
 server.bundle.js.map
 node_modules/
 dist/
-serverApp/public/client.bundle.js
 serverApp/public/client.bundle.js.map
