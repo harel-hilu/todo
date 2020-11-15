@@ -8,11 +8,9 @@ const classes = getStyles();
 
 export class TasksView {
     private tasksElements : HTMLElement;
-    private mainView: MainView;
     
-    constructor(mainView: MainView) {
+    constructor() {
         this.tasksElements = document.getElementById("tasks");
-        this.mainView = mainView;
     }
 
     render(tasks: Task[]) : void {
@@ -26,8 +24,8 @@ export class TasksView {
         const labelId: string = "label" + task.id;
         const editButtonId: string = "editButton" + task.id;
         const deleteButtonId: string = "deleteButton" + task.id;
-        
         const checkedSignInDom: string = task.isDone ? "checked" : "";        
+
         this.tasksElements.insertAdjacentHTML("afterbegin",` 
             <div id=${taskAreaId} class=${classes.task}> 
                 <input id=${checkboxId} class=${classes.checkbox} type="checkbox" ${checkedSignInDom} />
@@ -40,15 +38,14 @@ export class TasksView {
         `);
 
         const taskArea = document.getElementById(taskAreaId);
-        const taskCheckbox = document.getElementById(checkboxId) as HTMLInputElement;
         const taskLabel = document.getElementById(labelId) as HTMLLabelElement;
-        const taskEditButton = document.getElementById(editButtonId) as HTMLButtonElement;
-        const taskDeleteButton = document.getElementById(deleteButtonId) as HTMLButtonElement;
 
-        taskCheckbox.addEventListener("click", () => this.checkboxClicked(task));
-        taskEditButton.addEventListener("click", () => taskLabel.focus());
-        taskDeleteButton.addEventListener("click", () => this.deleteButtonClicked(taskArea));
-        taskLabel.addEventListener("keydown", this.keyPressedInLabel);
+        document.getElementById(checkboxId).addEventListener("click", 
+            () => this.checkboxClicked(task));
+        document.getElementById(editButtonId).addEventListener("click", 
+            () => taskLabel.focus());
+        document.getElementById(deleteButtonId).addEventListener("click", 
+            () => this.deleteButtonClicked(taskArea));
         taskLabel.addEventListener("focusout", 
             () => this.labelUpdated(task, taskLabel.textContent));
     }
@@ -63,12 +60,6 @@ export class TasksView {
     
     private labelUpdated(taskRelated: Task, newText: string): void {
         taskRelated.text = newText;
-    }
-    
-    private keyPressedInLabel(e: KeyboardEvent): void {
-        if (e.code === "Enter") {
-            this.mainView.insertTaskView.focusOnInput();
-        }
     }
 }
 

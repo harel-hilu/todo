@@ -1,19 +1,23 @@
 import { sharedStyles } from "../sharedStyle";
 import jss from "jss";
 import jssCamelCase from "jss-plugin-camel-case";
+import { Task } from "../model/Task";
 
 export class InsertTaskView {
     private buttonAddTask: HTMLButtonElement;
     private inputInsertTask: HTMLInputElement;
+    private header: HTMLElement;
     insertTaskAreaElement: HTMLElement;
     userIntentAddTaskEvent: Event;
 
+
     constructor() {
+        setStyles();
         this.inputInsertTask = document.getElementById("inputInsertTask") as HTMLInputElement;
         this.buttonAddTask = document.getElementById("buttonAddTask") as HTMLButtonElement;
+        this.header = document.getElementById("numOfTasksHeader");
         this.insertTaskAreaElement = document.getElementById("insertTaskArea");
         this.userIntentAddTaskEvent = new Event("userintentaddtask");
-        setStyles();
 
         this.buttonAddTask.addEventListener("click", (): void => {
             if (this.inputInsertTask.value !== "") {
@@ -25,6 +29,11 @@ export class InsertTaskView {
                 this.insertTaskAreaElement.dispatchEvent(this.userIntentAddTaskEvent);
             }
         })
+    }
+
+    render(tasks: Task[]) {
+        this.header.innerHTML = (tasks.length === 0) ? "Insert Your First Task" :
+            tasks.filter((task) => task.isDone).length + "/" + tasks.length + " tasks";
     }
 
     getInputText(): string {

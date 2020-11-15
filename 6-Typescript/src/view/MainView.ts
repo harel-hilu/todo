@@ -8,10 +8,11 @@ export class MainView {
     constructor() {
         this.insertTaskView = new InsertTaskView();
         this.insertTaskView.focusOnInput();
-        this.tasksView = new TasksView(this);
+        this.tasksView = new TasksView();
     }
     
     render(tasks){
         this.tasksView.render(tasks);
+        this.insertTaskView.render(tasks);
     }
 }
