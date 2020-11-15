@@ -18,6 +18,6 @@ module.exports = {
   },
   output: {
     filename: 'client.bundle.js',
-    path: path.resolve(__dirname, '../serverApp/public'),
+    path: path.resolve(__dirname, '../../server/newServer/public'),
   },
 };

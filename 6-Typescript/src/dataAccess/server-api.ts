@@ -10,13 +10,13 @@ import { Task } from '../model/Task';
 
 // // }
 
-const createNewTask = async(): Promise<Task> => {
-    const x = axios.request<Task>({
-        url: '/api/v1/tasks',
-        method: 'post',
-        transformResponse: [(data) => JSON.parse(data.data)]
-    });
-}
+// const createNewTask = async(): Promise<Task> => {
+//     const x = axios.request<Task>({
+//         url: '/api/v1/tasks',
+//         method: 'post',
+//         transformResponse: [(data) => JSON.parse(data.data)]
+//     });
+// }
 
 // // const updateTask = (): void => {
 

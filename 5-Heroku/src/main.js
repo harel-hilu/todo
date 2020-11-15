@@ -7,7 +7,7 @@ import jssCamelCase from 'jss-plugin-camel-case';
 import { sharedStyles } from "./sharedStyles.js";
 import { saveTaskToServer, getAllTasksFromServer, deleteTaskFromServer } from "./dataAccess/server-api.js";
 
-const numOfTasksHeaderArea = new NumOfTasksHeader();
+new NumOfTasksHeader();
 const addTaskArea = new AddTaskArea();
 const tasksArea = new TasksArea();
 setStyles();

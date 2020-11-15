@@ -1,3 +1,7 @@
+import { sharedStyles } from "../sharedStyle";
+import jss from "jss";
+import jssCamelCase from "jss-plugin-camel-case";
+
 export class InsertTaskView {
     private buttonAddTask: HTMLButtonElement;
     private inputInsertTask: HTMLInputElement;
@@ -9,6 +13,7 @@ export class InsertTaskView {
         this.buttonAddTask = document.getElementById("buttonAddTask") as HTMLButtonElement;
         this.insertTaskAreaElement = document.getElementById("insertTaskArea");
         this.userIntentAddTaskEvent = new Event("userintentaddtask");
+        setStyles();
 
         this.buttonAddTask.addEventListener("click", (): void => {
             if (this.inputInsertTask.value !== "") {
@@ -35,4 +40,43 @@ export class InsertTaskView {
         this.clearInput();
         this.focusOnInput();
     }
+}
+
+function setStyles() {
+    const style = {
+        container: {
+            display: "flex",
+            color: sharedStyles.secondaryColor,
+            marginBottom: "20px",
+        },
+        taskInput: {
+            flexGrow: 1,
+            maxWidth: "400px",
+            color: sharedStyles.backgroundColor,
+            borderRadius: "5px",
+            border: "none",
+            paddingLeft: "5px",
+        },
+        addButton: {
+            color: sharedStyles.backgroundColor,
+            alignSelf: "flex-end",
+            marginRight: "5px",
+            marginLeft: "auto",
+            border: "none",
+            backgroundColor: sharedStyles.mainColor,
+            borderRadius: "5px",
+            height: 24,
+        },
+        header: {
+            color: sharedStyles.mainColor,
+            fontSize: "200%"
+        }
+    }
+
+    jss.use(jssCamelCase());
+    const classes = jss.createStyleSheet(style).attach().classes;
+    document.getElementById("inputInsertTask").classList.add(classes.taskInput);
+    document.getElementById("buttonAddTask").classList.add(classes.addButton);
+    document.getElementById("insertTaskArea").classList.add(classes.container);
+    document.getElementById("numOfTasksHeader").classList.add(classes.header);
 }
