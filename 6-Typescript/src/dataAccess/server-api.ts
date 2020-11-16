@@ -1,23 +1,20 @@
-import axios from 'axios';
-import { Task } from '../model/Task';
+import axios, { AxiosPromise, AxiosResponse } from 'axios';
+import { Task, TaskNoId } from '../intefaces/Tasks';
 
-// export const getAllTasksFromServer = async() => {
-//     const tasks = await axios.get('/api/v1/tasks');
-//     console.log(tasks);
-// }
+export const getAllTasksFromServer = async (): Promise<Task[]> => {
+    const response: AxiosResponse = await axios.get('/api/v1/tasks');
+    return response.data;
+}
 
-// // const deleteTask = (): void => {
+export const deleteTaskFromServer = async(taskId: string): Promise<void> => {
+    await axios.delete('/api/v1/tasks/' + taskId);
+}
 
-// // }
+export const addTaskToServer = async(task: TaskNoId): Promise<Task> => {
+    const response: AxiosResponse = await axios.post('/api/v1/tasks', task);
+    return response.data;
+}
 
-// const createNewTask = async(): Promise<Task> => {
-//     const x = axios.request<Task>({
-//         url: '/api/v1/tasks',
-//         method: 'post',
-//         transformResponse: [(data) => JSON.parse(data.data)]
-//     });
-// }
-
-// // const updateTask = (): void => {
-
-// // }
+export const updateTaskOnServer = async(task: Task): Promise<void> => {
+    await axios.post('/api/v1/tasks', task);
+}

@@ -1,8 +1,8 @@
-import { Task } from "../model/Task";
-import { MainView } from "./MainView";
+import { Task } from "../intefaces/Tasks";
 import { sharedStyles } from "../sharedStyle";
 import jss from "jss";
 import jssCamelCase from "jss-plugin-camel-case";
+import { updateTaskDoneStatus, updateTaskText, deleteTask } from "../index";
 
 const classes = getStyles();
 
@@ -41,25 +41,13 @@ export class TasksView {
         const taskLabel = document.getElementById(labelId) as HTMLLabelElement;
 
         document.getElementById(checkboxId).addEventListener("click", 
-            () => this.checkboxClicked(task));
+            () => updateTaskDoneStatus(task));
         document.getElementById(editButtonId).addEventListener("click", 
             () => taskLabel.focus());
         document.getElementById(deleteButtonId).addEventListener("click", 
-            () => this.deleteButtonClicked(taskArea));
+            () => deleteTask(taskArea));
         taskLabel.addEventListener("focusout", 
-            () => this.labelUpdated(task, taskLabel.textContent));
-    }
-
-    private checkboxClicked(taskRelated: Task): void {
-        taskRelated.isDone = !taskRelated.isDone;
-    }
-    
-    private deleteButtonClicked(taskArea: HTMLElement): void {
-        taskArea.parentNode.removeChild(taskArea);
-    }
-    
-    private labelUpdated(taskRelated: Task, newText: string): void {
-        taskRelated.text = newText;
+            () => updateTaskText(task, taskLabel.textContent));
     }
 }
 

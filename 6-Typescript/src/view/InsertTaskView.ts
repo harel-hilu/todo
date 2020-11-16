@@ -1,7 +1,7 @@
 import { sharedStyles } from "../sharedStyle";
 import jss from "jss";
 import jssCamelCase from "jss-plugin-camel-case";
-import { Task } from "../model/Task";
+import { Task } from "../intefaces/Tasks";
 
 export class InsertTaskView {
     private buttonAddTask: HTMLButtonElement;
@@ -9,7 +9,6 @@ export class InsertTaskView {
     private header: HTMLElement;
     insertTaskAreaElement: HTMLElement;
     userIntentAddTaskEvent: Event;
-
 
     constructor() {
         setStyles();
@@ -20,34 +19,29 @@ export class InsertTaskView {
         this.userIntentAddTaskEvent = new Event("userintentaddtask");
 
         this.buttonAddTask.addEventListener("click", (): void => {
-            if (this.inputInsertTask.value !== "") {
+            if (this.getInputText() !== "") {
                 this.insertTaskAreaElement.dispatchEvent(this.userIntentAddTaskEvent);
             }
         });
         this.inputInsertTask.addEventListener("keydown", (e): void => {
-            if (e.code === "Enter" && this.inputInsertTask.value !== "") {
+            if (e.code === "Enter" && this.getInputText() !== "") {
                 this.insertTaskAreaElement.dispatchEvent(this.userIntentAddTaskEvent);
             }
         })
     }
 
-    render(tasks: Task[]) {
-        this.header.innerHTML = (tasks.length === 0) ? "Insert Your First Task" :
-            tasks.filter((task) => task.isDone).length + "/" + tasks.length + " tasks";
-    }
-
     getInputText(): string {
         return this.inputInsertTask.value;
     }
-    focusOnInput(): void {
+
+    clearInputAndFocus(): void {
+        this.inputInsertTask.value = "";
         this.inputInsertTask.focus();
     }
-    clearInput(): void {
-        this.inputInsertTask.value = "";
-    }
-    clearInputAndFocus(): void {
-        this.clearInput();
-        this.focusOnInput();
+
+    render(tasks: Task[]): void {
+        this.header.innerHTML = (tasks.length === 0) ? "Insert Your First Task" :
+            tasks.filter((task) => task.isDone).length + "/" + tasks.length + " tasks";
     }
 }
 

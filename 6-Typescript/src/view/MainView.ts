@@ -7,7 +7,7 @@ export class MainView {
 
     constructor() {
         this.insertTaskView = new InsertTaskView();
-        this.insertTaskView.focusOnInput();
+        this.insertTaskView.clearInputAndFocus();
         this.tasksView = new TasksView();
     }
     
