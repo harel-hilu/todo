@@ -1,16 +1,17 @@
 import { MainView } from "./view/MainView";
 import { sharedStyles } from "./sharedStyle";
-import { deleteTaskFromServer, getAllTasksFromServer, addTaskToServer, updateTaskOnServer } from "./dataAccess/server-api";
+import { deleteTaskFromServer, getAllTasksFromServer, addTaskToServer, updateTaskOnServer }
+    from "./dataAccess/server-api";
 import jss from "jss";
 import jssCamelCase from "jss-plugin-camel-case";
 import { renderTasksIfTasksChanged } from "./domUpdater";
-import { GUID, Task, TaskNoId, TasksHashMap } from "./intefaces/Tasks";
+import { Task, TaskNoId, TasksHashMap } from "./intefaces/Tasks";
 
 let tasks: TasksHashMap = {};
 const mainView: MainView = new MainView(); 
 setStyles();  
 
-(async function main() {
+(async function main(): Promise<void> {
     try {
         tasks = await getAllTasksFromServer();
     } catch (error) {
@@ -19,12 +20,13 @@ setStyles();
 })();
 
 mainView.insertTaskView.insertTaskAreaElement
-.addEventListener("userintentaddtask", async() => {
+.addEventListener("userintentaddtask", async(): Promise<void> => {
     try {
-        const taskToAdd: TaskNoId = { 
+        const task: TaskNoId = { 
             isDone: false, 
-            text: mainView.insertTaskView.getInputText() };
-        const taskWithId: Task = await addTaskToServer(taskToAdd);
+            text: mainView.insertTaskView.getInputText()
+        };
+        const taskWithId: Task = await addTaskToServer(task);
         tasks[taskWithId.id] = taskWithId;
     } catch (error) {
         alert("we cannot add your task");
@@ -33,7 +35,7 @@ mainView.insertTaskView.insertTaskAreaElement
 
 setInterval(() => renderTasksIfTasksChanged(tasks, mainView), 100);
 
-export const updateTaskDoneStatus = async (task: Task) => {
+export const updateTaskDoneStatus = async (task: Task): Promise<void> => {
     try {
         task.isDone = !task.isDone;
         await updateTaskOnServer(task);
@@ -42,7 +44,7 @@ export const updateTaskDoneStatus = async (task: Task) => {
     }
 }
 
-export const deleteTask = async (taskArea: HTMLElement) => {
+export const deleteTask = async (taskArea: HTMLElement): Promise<void> => {
     try {
         await deleteTaskFromServer(taskArea.id);
         taskArea.parentNode.removeChild(taskArea);
@@ -52,10 +54,10 @@ export const deleteTask = async (taskArea: HTMLElement) => {
     }
 }
 
-export const updateTaskText = async(taskRelated: Task, newText: string) => {
+export const updateTaskText = async(task: Task, newText: string): Promise<void> => {
     try {
-        taskRelated.text = newText;
-        await updateTaskOnServer(taskRelated);
+        task.text = newText;
+        await updateTaskOnServer(task);
     } catch (error) {
         alert("we cannot update your task");
     }

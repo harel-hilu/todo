@@ -37,8 +37,9 @@ export class TasksView {
             </div>
         `);
 
-        const taskArea = document.getElementById(taskAreaId);
-        const taskLabel = document.getElementById(labelId) as HTMLLabelElement;
+        const taskArea: HTMLElement = document.getElementById(taskAreaId);
+        const taskLabel: HTMLLabelElement = 
+            document.getElementById(labelId) as HTMLLabelElement;
 
         document.getElementById(checkboxId).addEventListener("click", 
             () => updateTaskDoneStatus(task));
