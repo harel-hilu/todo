@@ -1,0 +1,3 @@
+[submodule "todo-server"]
+	path = todo-server
+	url = git@github.com:harel-hilu/todo-server.git
