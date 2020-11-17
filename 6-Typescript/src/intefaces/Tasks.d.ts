@@ -5,7 +5,7 @@ export interface TaskNoId {
     isDone: boolean;
 }
 
-export interface Task extends TaskNoId{
+export interface Task extends TaskNoId {
     id: GUID;
 }
 

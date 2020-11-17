@@ -10,10 +10,4 @@ export class MainView {
         this.insertTaskView.clearInputAndFocus();
         this.tasksView = new TasksView();
     }
-    
-    render(tasks){
-        for (const iterator of Object.values(this)) {
-            iterator.render.call(iterator, tasks);
-        }
-    }
 }
