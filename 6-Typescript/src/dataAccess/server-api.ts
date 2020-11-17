@@ -1,7 +1,7 @@
 import axios, { AxiosPromise, AxiosResponse } from 'axios';
-import { Task, TaskNoId } from '../intefaces/Tasks';
+import { Task, TaskNoId, TasksHashMap } from '../intefaces/Tasks';
 
-export const getAllTasksFromServer = async (): Promise<Task[]> => {
+export const getAllTasksFromServer = async (): Promise<TasksHashMap> => {
     const response: AxiosResponse = await axios.get('/api/v1/tasks');
     return response.data;
 }

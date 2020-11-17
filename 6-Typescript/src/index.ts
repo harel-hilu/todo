@@ -8,12 +8,11 @@ import { GUID, Task, TaskNoId, TasksHashMap } from "./intefaces/Tasks";
 
 let tasks: TasksHashMap = {};
 const mainView: MainView = new MainView(); 
-setStyles();
+setStyles();  
 
 (async function main() {
     try {
-        const serverTasks: Task[] = await getAllTasksFromServer();        
-        serverTasks.forEach(task => tasks[task.id] = task);
+        tasks = await getAllTasksFromServer();
     } catch (error) {
         alert("we cannot get your tasks");
     }
