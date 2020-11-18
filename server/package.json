@@ -4,7 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node ./server.bundle.js"
+    "prestart": "webpack",
+    "start": "node ./server.bundle.js",
+    "hstart": "node ./server.bundle.js"
   },
   "keywords": [],
   "author": "",
