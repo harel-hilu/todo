@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { Task, NewTask, TasksById } from '../intefaces/Tasks';
+import { Task, NewTask, TasksById } from '../../../common/Tasks';
 
 export const getAllTasksFromServer = async(): Promise<TasksById> => {
     const response: AxiosResponse = await axios.get('/api/v1/tasks');

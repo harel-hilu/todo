@@ -5,7 +5,7 @@ import { deleteTaskFromServer, getAllTasksFromServer, addTaskToServer, updateTas
 import jss from "jss";
 import jssCamelCase from "jss-plugin-camel-case";
 import { renderTasksIfTasksChanged } from "./domUpdater";
-import { Task, NewTask, TasksById } from "./intefaces/Tasks";
+import { Task, NewTask, TasksById } from "../../common/Tasks";
 
 let tasks: TasksById = {};
 const mainView: MainView = new MainView(); 

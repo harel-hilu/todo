@@ -3,7 +3,7 @@ import cookieParser from 'cookie-parser';
 import redis from 'redis';
 import { validateUser } from "./services/auth.middleware";
 import { deleteTask, createTask, getAllTasks } from "./dao/tasks.dao";
-import { Task, TasksById } from "../../todo/6-Typescript/src/intefaces/Tasks";
+import { Task, TasksById } from "../common/Tasks";
 
 const client: redis.RedisClient = redis.createClient(process.env.REDIS_URL);
 

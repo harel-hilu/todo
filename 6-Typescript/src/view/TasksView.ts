@@ -1,4 +1,4 @@
-import { Task } from "../intefaces/Tasks";
+import { Task } from "../../../common/Tasks";
 import { sharedStyles } from "../sharedStyle";
 import jss from "jss";
 import jssCamelCase from "jss-plugin-camel-case";

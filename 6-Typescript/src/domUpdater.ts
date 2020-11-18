@@ -1,4 +1,4 @@
-import { Task, TasksById } from "./intefaces/Tasks";
+import { Task, TasksById } from "../../common/Tasks";
 import { MainView } from "./view/MainView";
 
 let previousTasks = "";

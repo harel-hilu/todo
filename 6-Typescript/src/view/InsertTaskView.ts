@@ -1,7 +1,7 @@
 import { sharedStyles } from "../sharedStyle";
 import jss from "jss";
 import jssCamelCase from "jss-plugin-camel-case";
-import { Task } from "../intefaces/Tasks";
+import { Task } from "../../../common/Tasks";
 
 export class InsertTaskView {
     private buttonAddTask: HTMLButtonElement;

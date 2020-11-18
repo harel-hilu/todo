@@ -1,6 +1,6 @@
 import { RedisClient } from 'redis';
 import { v4 } from 'uuid';
-import { Task, TasksById } from "../../../todo/6-Typescript/src/intefaces/Tasks";
+import { Task, TasksById } from "../../../todo/common/Tasks";
 
 type stringifiedTasks = {[key: string]: string};
 
