@@ -9,6 +9,7 @@ const client = redis.createClient(process.env.REDIS_URL);
 
 const app: Express = express();
 app.set('views', './');
+console.log(process.env.PORT );
 const port: string = (process.env.PORT || "3000");
 
 app.use(express.static(__dirname + "/public"));
