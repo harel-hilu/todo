@@ -1,12 +1,12 @@
 export type GUID = string;
 
-export interface TaskNoId {
+export interface NewTask {
     text: string;
     isDone: boolean;
 }
 
-export interface Task extends TaskNoId {
+export interface Task extends NewTask {
     id: GUID;
 }
 
-export type TasksHashMap = {[id: string]: Task};
+export type TasksById = {[id: string]: Task};

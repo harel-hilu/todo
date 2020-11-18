@@ -5,9 +5,9 @@ import { deleteTaskFromServer, getAllTasksFromServer, addTaskToServer, updateTas
 import jss from "jss";
 import jssCamelCase from "jss-plugin-camel-case";
 import { renderTasksIfTasksChanged } from "./domUpdater";
-import { Task, TaskNoId, TasksHashMap } from "./intefaces/Tasks";
+import { Task, NewTask, TasksById } from "./intefaces/Tasks";
 
-let tasks: TasksHashMap = {};
+let tasks: TasksById = {};
 const mainView: MainView = new MainView(); 
 setStyles();  
 
@@ -22,7 +22,7 @@ setStyles();
 mainView.insertTaskView.insertTaskAreaElement
 .addEventListener("userintentaddtask", async(): Promise<void> => {
     try {
-        const task: TaskNoId = { 
+        const task: NewTask = { 
             isDone: false, 
             text: mainView.insertTaskView.getInputText()
         };

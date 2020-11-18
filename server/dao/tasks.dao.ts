@@ -1,29 +1,45 @@
-import { Redis } from 'ioredis';
+import { RedisClient } from 'redis';
 import { v4 } from 'uuid';
-import { Task, TasksHashMap } from "../../../todo/6-Typescript/src/intefaces/Tasks";
+import { Task, TasksById } from "../../../todo/6-Typescript/src/intefaces/Tasks";
 
-export const getAllTasks = (client, userId: string): Promise<TasksHashMap> => {
-    return new Promise((res,rej) => client.hgetall(userId, (err, redisResponse) => 
-        err ? rej(err) : res(parseResponse(redisResponse))));
+type stringifiedTasks = {[key: string]: string};
+
+export const getAllTasks = 
+    async (client: RedisClient, userId: string): Promise<TasksById> => {
+
+    const stringifiedTasks: stringifiedTasks = 
+        await promisify(client.hgetall, client, userId); 
+        
+    return parseResponse(stringifiedTasks);
 };
 
-export const createTask = (client, userId: string, task: Task): Promise<Task> => {
+export const createTask = 
+    async (client: RedisClient, userId: string, task: Task): Promise<Task> => {
+
     task.id = task.id || v4();
+    await promisify(client.hset, client, userId, task.id, JSON.stringify(task));
 
-    return new Promise((res, rej) => client.hset(userId, task.id, JSON.stringify(task), 
-        (err, redisResponse) => err ? rej(err) : res(task)));
+    return task;
 }
 
-export const deleteTask = (client, userId: string, taskId: string) => {
-    return new Promise((res, rej) => client.hdel(userId, taskId,
-        (err, redisResponse) => err ? rej(err) : res()));
+export const deleteTask = 
+    (client: RedisClient, userId: string, taskId: string) => {
+        
+    return promisify(client.hdel, client, userId, taskId);
 }
 
-function parseResponse(res: [string, string]): TasksHashMap {
-    const parsedTasks: TasksHashMap = {};
+function parseResponse(res: stringifiedTasks): TasksById {
+    const parsedTasks: TasksById = {};
+
     for (const task in res) {
         parsedTasks[task] = JSON.parse(res[task])
     }
 
     return parsedTasks;
+}
+
+function promisify (funcToCall: Function, thisArg: any, ...args): Promise<any> {
+    return new Promise((res, rej) => {
+        funcToCall.call(thisArg, ...args, (err, redisRes) => err ? rej(err) : res(redisRes));
+    });
 }

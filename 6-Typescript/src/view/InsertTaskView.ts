@@ -23,7 +23,7 @@ export class InsertTaskView {
                 this.insertTaskAreaElement.dispatchEvent(this.userIntentAddTaskEvent);
             }
         });
-        this.inputInsertTask.addEventListener("keydown", (e): void => {
+        this.inputInsertTask.addEventListener("keydown", (e: KeyboardEvent): void => {
             if (e.code === "Enter" && this.getInputText() !== "") {
                 this.insertTaskAreaElement.dispatchEvent(this.userIntentAddTaskEvent);
             }

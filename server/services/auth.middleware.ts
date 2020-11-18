@@ -1,6 +1,7 @@
 import { v4 } from "uuid";
+import { Request, Response, NextFunction } from 'express';
 
-export const validateUser = (req: Express.Request, res: Express.Response, next): void => {
+export const validateUser = (req: Request, res: Response, next: NextFunction): void => {
     const userIdCookieName: string = "todoUserId";
     req.userId = req.cookies[userIdCookieName];
     

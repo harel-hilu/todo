@@ -1,10 +1,10 @@
-import { Task, TasksHashMap } from "./intefaces/Tasks";
+import { Task, TasksById } from "./intefaces/Tasks";
 import { MainView } from "./view/MainView";
 
 let previousTasks = "";
 
 export const renderTasksIfTasksChanged = 
-    (tasks: TasksHashMap, mainView: MainView): void => {
+    (tasks: TasksById, mainView: MainView): void => {
     const stringifiedTasks = JSON.stringify(tasks);
     
     if (previousTasks !== stringifiedTasks) {
