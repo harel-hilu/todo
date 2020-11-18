@@ -1,5 +1,5 @@
-### todo
-# how to make this work locally:
+# todo
+#### how to make this work locally:
 1. brew install redis
 2. in termial run redis-server
 3. npm install && npm start from "6-Typescript" folder
