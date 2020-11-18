@@ -5,9 +5,7 @@
   "main": "app.js",
   "scripts": {
     "prestart": "webpack",
-    "start": "node ./server.bundle.js",
-    "preherokustart": "npm install",
-    "herokustart": "node ./server.bundle.js"
+    "start": "node ./server.bundle.js"
   },
   "keywords": [],
   "author": "",
