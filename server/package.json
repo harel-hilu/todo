@@ -4,8 +4,10 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "prestart": "npm install",
-    "start": "node ./server.bundle.js"
+    "prestart": "webpack",
+    "start": "node ./server.bundle.js",
+    "preherokustart": "npm install",
+    "herokustart": "node ./server.bundle.js"
   },
   "keywords": [],
   "author": "",
