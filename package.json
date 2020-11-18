@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm herokustart --prefix server"
+    "start": "npm start --prefix server"
+    "herokustart": "npm herokustart --prefix server"
   },
   "repository": {
     "type": "git",
