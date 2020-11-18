@@ -4,7 +4,6 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "prestart": "webpack",
     "start": "node ./server.bundle.js"
   },
   "keywords": [],
