@@ -1,3 +1,4 @@
+import { Redis } from 'ioredis';
 import { v4 } from 'uuid';
 import { Task, TasksHashMap } from "../../../todo/6-Typescript/src/intefaces/Tasks";
 

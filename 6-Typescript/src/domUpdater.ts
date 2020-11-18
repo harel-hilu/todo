@@ -1,4 +1,3 @@
-import { TypeFlags } from "typescript";
 import { Task, TasksHashMap } from "./intefaces/Tasks";
 import { MainView } from "./view/MainView";
 
