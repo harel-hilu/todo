@@ -4,7 +4,8 @@ import jss from "jss";
 import jssCamelCase from "jss-plugin-camel-case";
 import { updateTaskDoneStatus, updateTaskText, deleteTask } from "../index";
 
-const classes = getStyles();
+type classNames = "checkbox" | "label" | "buttons" | "task";
+const classes: Record<classNames, string> = getStyles();
 
 export class TasksView {
     private tasksElements : HTMLElement;
@@ -52,7 +53,7 @@ export class TasksView {
     }
 }
 
-function getStyles() {
+function getStyles(): Record<classNames, string> {
     const style = {
         checkbox: {
             height: "18px",

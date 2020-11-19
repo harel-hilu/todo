@@ -6,7 +6,6 @@ import { deleteTask, createTask, getAllTasks } from "./dao/tasks.dao";
 import { Task, TasksById } from "../common/Tasks";
 
 const client: redis.RedisClient = redis.createClient(process.env.REDIS_URL);
-
 const app: Express = express();
 app.set('views', './');
 const port: string = (process.env.PORT || "3000");
@@ -20,17 +19,19 @@ app.get('/', (req: Request, res: Response): void => {
     res.render("index.ejs", {title: "Todo List"});
 });
 
-app.get('/api/v1/tasks',  async (req: Request, res: Response) =>  { 
+app.get('/api/v1/tasks',  async (req: Request, res: Response): Promise<void> => { 
     const tasks: TasksById = await getAllTasks(client, req.userId);
     res.send(tasks);
 });
 
-app.post('/api/v1/tasks',  async (req: Request, res: Response) => {
+app.post('/api/v1/tasks',  async (req: Request, res: Response): Promise<void> => {
     const task: Task = await createTask(client, req.userId, req.body);
     res.send(task);
 });
 
-app.delete('/api/v1/tasks/:taskId', async (req: Request, res: Response) => {
+app.delete('/api/v1/tasks/:taskId', 
+    async (req: Request, res: Response): Promise<void> => {
+
     await deleteTask(client, req.userId, req.params.taskId);
     res.send();    
 });

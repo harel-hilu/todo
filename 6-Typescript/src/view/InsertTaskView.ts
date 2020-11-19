@@ -45,7 +45,7 @@ export class InsertTaskView {
     }
 }
 
-function setStyles() {
+function setStyles(): void {
     const style = {
         container: {
             display: "flex",

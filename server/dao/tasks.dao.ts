@@ -8,7 +8,7 @@ export const getAllTasks =
     async (client: RedisClient, userId: string): Promise<TasksById> => {
 
     const stringifiedTasks: stringifiedTasks = 
-        await promisify(client.hgetall, client, userId); 
+        await client.hgetall.promisify(client, userId);
         
     return parseResponse(stringifiedTasks);
 };
@@ -17,15 +17,15 @@ export const createTask =
     async (client: RedisClient, userId: string, task: Task): Promise<Task> => {
 
     task.id = task.id || v4();
-    await promisify(client.hset, client, userId, task.id, JSON.stringify(task));
+    await client.hset.promisify(client, userId, task.id, JSON.stringify(task));
 
     return task;
 }
 
 export const deleteTask = 
     (client: RedisClient, userId: string, taskId: string) => {
-        
-    return promisify(client.hdel, client, userId, taskId);
+
+    return client.hdel.promisify(client, userId, taskId);
 }
 
 function parseResponse(res: stringifiedTasks): TasksById {
@@ -38,8 +38,8 @@ function parseResponse(res: stringifiedTasks): TasksById {
     return parsedTasks;
 }
 
-function promisify (funcToCall: Function, thisArg: any, ...args): Promise<any> {
+Function.prototype.promisify = function(thisArg: any, ...args: any[]): Promise<any> {
     return new Promise((res, rej) => {
-        funcToCall.call(thisArg, ...args, (err, redisRes) => err ? rej(err) : res(redisRes));
+        this.call(thisArg, ...args, (err, redisRes) => err ? rej(err) : res(redisRes));
     });
 }

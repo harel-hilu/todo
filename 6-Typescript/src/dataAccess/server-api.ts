@@ -1,12 +1,12 @@
 import axios, { AxiosResponse } from 'axios';
-import { Task, NewTask, TasksById } from '../../../common/Tasks';
+import { Task, NewTask, TasksById, GUID } from '../../../common/Tasks';
 
 export const getAllTasksFromServer = async(): Promise<TasksById> => {
     const response: AxiosResponse = await axios.get('/api/v1/tasks');
     return response.data;
 }
 
-export const deleteTaskFromServer = (taskId: string): Promise<void> => {
+export const deleteTaskFromServer = (taskId: GUID): Promise<void> => {
      return axios.delete('/api/v1/tasks/' + taskId);
 }
 
