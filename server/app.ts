@@ -4,7 +4,9 @@ import redis from 'redis';
 import { validateUser } from "./services/auth.middleware";
 import { deleteTask, createTask, getAllTasks } from "./dao/tasks.dao";
 import { Task, TasksById } from "../common/Tasks";
+import { config } from "dotenv";
 
+config();
 const client: redis.RedisClient = redis.createClient(process.env.REDIS_URL);
 const app: Express = express();
 app.set('views', './');

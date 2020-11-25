@@ -38,8 +38,10 @@ function parseResponse(res: stringifiedTasks): TasksById {
     return parsedTasks;
 }
 
+// Takes a function following the common error-first callback style, and returns a version that returns promises.
 Function.prototype.promisify = function(thisArg: any, ...args: any[]): Promise<any> {
     return new Promise((res, rej) => {
-        this.call(thisArg, ...args, (err, redisRes) => err ? rej(err) : res(redisRes));
+        this.call(thisArg, ...args, (error: any, success: any) => 
+            error ? rej(error) : res(success));
     });
 }
