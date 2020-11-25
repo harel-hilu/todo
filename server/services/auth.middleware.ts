@@ -1,6 +1,7 @@
 import { v4 } from "uuid";
 import { Request, Response, NextFunction } from 'express';
 import jwt from "jsonwebtoken";
+import "../extensions/function.extension";
 
 export const validateUser = 
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
