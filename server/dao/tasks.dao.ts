@@ -1,6 +1,6 @@
 import { RedisClient } from 'redis';
 import { v4 } from 'uuid';
-import { Task, TasksById } from "../../../todo/common/Tasks";
+import { Task, TasksById } from "../../common/Tasks";
 import "../extensions/function.extension";
 
 type stringifiedTasks = {[key: string]: string};
