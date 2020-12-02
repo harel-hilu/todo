@@ -1,9 +1,10 @@
 import React, { ChangeEvent, useState } from 'react';
+import {createUseStyles} from 'react-jss'
 
-function EditableLabel (props: any) {
+export default function EditableLabel (props: any) {
   const [isEditing, setEditing] = useState<boolean>(false);
   const [text, setText] = useState<string>(props.children);
-
+  const classes = useStyles();
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     (e.key === "Enter")  && setEditing(false);
   };
@@ -18,9 +19,9 @@ function EditableLabel (props: any) {
   }
   
   return (
-    <span>
+    <span className={classes.label}>
       {isEditing ? (
-        <input
+        <input className={classes.label}
           value={text}
           onChange={changeText}
           onBlur={doneEditing}
@@ -30,6 +31,7 @@ function EditableLabel (props: any) {
         />
       ) : (
         <label
+          className={classes.label}
           onClick={() => setEditing(true)}
         >
           {text}
@@ -39,4 +41,9 @@ function EditableLabel (props: any) {
   );
 };
 
-export default EditableLabel;
+const useStyles = createUseStyles({
+  label: {
+      display: "flex",
+      flexGrow: 1,
+      fontSize: "20px",
+}});

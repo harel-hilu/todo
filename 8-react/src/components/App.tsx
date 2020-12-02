@@ -4,11 +4,11 @@ import { Task, NewTask, TasksById } from '../../../common/Tasks';
 import Title from './Title';
 import TasksList from './TasksList';
 import { getAllTasksFromServer, deleteTaskFromServer, addTaskToServer, updateTaskOnServer } from '../data-access/server-api';
+import {createUseStyles} from 'react-jss';
 
-
-function App() {
+export default function App() {
   const [tasks, setTasks] = useState<TasksById>({});
-  
+  const classes = useStyles();  
   useEffect(() => {
     (async function getTasks() {
       try {
@@ -16,8 +16,7 @@ function App() {
       } catch (error) {
         alert("cannot get your tasks");
       }
-    })();    
-  }, []);
+  })()}, []);
 
   async function addTask(taskText: string){
     try {
@@ -49,7 +48,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className={classes.app}>
       <Title tasks={tasks} />
       <AddNewTask addTask={addTask} />
       <TasksList 
@@ -61,4 +60,10 @@ function App() {
   );
 }
 
-export default App;
+const useStyles = createUseStyles({
+  app: {
+    maxWidth: "600px",
+    minHeight: "400px",
+    padding: "10px",            
+    fontFamily: "Helvetica",
+}});
