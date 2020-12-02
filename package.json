@@ -21,8 +21,6 @@
   "homepage": "https://github.com/harel-hilu/todo#readme",
   "dependencies": {
     "@types/cookie-parser": "^1.4.2",
-    "@types/redis": "^2.8.28",
-    "webpack": "^5.5.0",
-    "webpack-cli": "^4.2.0"
+    "@types/redis": "^2.8.28"
   }
 }
