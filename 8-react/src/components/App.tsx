@@ -1,46 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import AddNewTask from './AddNewTask';
-import { Task, NewTask, TasksById } from '../../../common/Tasks';
+import { NewTask, Task, TasksById } from '../../../common/Tasks';
 import Title from './Title';
 import TasksList from './TasksList';
-import { getAllTasksFromServer, deleteTaskFromServer, addTaskToServer, updateTaskOnServer } from '../data-access/server-api';
+import {getAllTasksFromServer, deleteTaskFromServer, addTaskToServer, updateTaskOnServer}
+  from '../data-access/server-api';
 import {createUseStyles} from 'react-jss';
 
 export default function App() {
   const [tasks, setTasks] = useState<TasksById>({});
-  const classes = useStyles();  
-  useEffect(() => {
-    (async function getTasks() {
+  const classes: Record<string, string> = useStyles();  
+
+  useEffect((): void => {
+    (async (): Promise<void> => {
       try {
-        setTasks(await getAllTasksFromServer());
+        const tasksFromServer: TasksById = await getAllTasksFromServer();
+        setTasks(tasksFromServer);
       } catch (error) {
         alert("cannot get your tasks");
       }
-  })()}, []);
+    })()
+  }, []);
 
-  async function addTask(taskText: string){
+  async function addTask(taskText: string): Promise<void> {
     try {
-      const taskToAdd: Task = await addTaskToServer({text: taskText, isDone: false});
-      const newTasks = {...tasks};
-      newTasks[taskToAdd.id] = taskToAdd;
+      const newTask: NewTask = {text: taskText, isDone: false};
+      const taskToAdd: Task = await addTaskToServer(newTask);
+      const newTasks: TasksById = {...tasks, [taskToAdd.id]: taskToAdd};
       setTasks(newTasks);
     } catch (error) {
       alert("we cannot add your task!");
     }
   }
 
-  async function updateTask(task: Task) {
+  async function updateTask(updatedTask: Task): Promise<void> {
     try {
-      await updateTaskOnServer(task);
+      await updateTaskOnServer(updatedTask);
+      const newTasks: TasksById = {...tasks};
+      newTasks[updatedTask.id] = updatedTask;
+      setTasks(newTasks);
     } catch (error) {
       alert("cannot update task");
     }
   }
 
-  async function deleteTask (taskToDelete: Task) {
+  async function deleteTask (taskToDelete: Task): Promise<void> {
     try {
       await deleteTaskFromServer(taskToDelete.id);
-      let {[taskToDelete.id]: task, ...res } = tasks;
+      const {[taskToDelete.id]: task, ...res } = tasks;
       setTasks(res);
     } catch (error) {
       alert("we cannot delete your task");

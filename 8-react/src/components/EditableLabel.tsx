@@ -5,13 +5,6 @@ export default function EditableLabel (props: any) {
   const [isEditing, setEditing] = useState<boolean>(false);
   const [text, setText] = useState<string>(props.children);
   const classes = useStyles();
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    (e.key === "Enter")  && setEditing(false);
-  };
-
-  function changeText(e: ChangeEvent<HTMLInputElement>){
-    setText(e.target.value);
-  }
 
   function doneEditing() {
     setEditing(false);
@@ -23,17 +16,17 @@ export default function EditableLabel (props: any) {
       {isEditing ? (
         <input className={classes.label}
           value={text}
-          onChange={changeText}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
           onBlur={doneEditing}
-          onKeyDown={handleKeyDown}
+          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => 
+            (e.key === "Enter") && doneEditing()}
           autoFocus
-          onFocus={e => e.currentTarget.select()}
+          onFocus={(e: React.FocusEvent<HTMLInputElement>) => e.currentTarget.select()}
         />
       ) : (
         <label
           className={classes.label}
-          onClick={() => setEditing(true)}
-        >
+          onClick={() => setEditing(true)}>
           {text}
         </label>
       )}

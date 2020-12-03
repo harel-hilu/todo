@@ -3,11 +3,10 @@ import { Task } from '../../../common/Tasks';
 import TaskLine from './TaskLine';
 
 export default function TasksList(props: any) {
-    const rows: JSX.Element[] = [];
     const tasksArray: Task[] = Object.values(props.tasks);
     
-    tasksArray.forEach((task: Task) => {
-        rows.push(
+    const rows: JSX.Element[] = tasksArray.map((task: Task) => {
+        return (
             <div key={task.id}>
                 <TaskLine 
                     task={task} 

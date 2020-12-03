@@ -1,25 +1,15 @@
 import React, { ChangeEvent, useState } from 'react';
-import { Task, NewTask } from '../../../common/Tasks';
+import { Task } from '../../../common/Tasks';
 import EditableLabel from './EditableLabel';
 import {createUseStyles} from 'react-jss'
 
 export default function TaskLine(props: any) {
     const [task, setTask] = useState<Task>(props.task);
-    const classes = useStyles();
-    function handleCheckboxChange(e: ChangeEvent<HTMLInputElement>) {
-        const taskToUpdate = {
-            isDone: e.target.checked,
-            text: task.text,
-            id: task.id
-        };
-
-        setTask(taskToUpdate);
-        props.updateTask(taskToUpdate);
-    }
+    const classes: Record<string, string> = useStyles();
     
-    function handleTextChange(text: string) {
+    function handleTaskChange({isDone=task.isDone, text=task.text}) {
         const taskToUpdate = {
-            isDone: task.isDone,
+            isDone: isDone,
             text: text,
             id: task.id
         };
@@ -34,12 +24,20 @@ export default function TaskLine(props: any) {
                 className={classes.checkbox}
                 type="checkbox" 
                 checked={task.isDone}
-                onChange={handleCheckboxChange}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => 
+                    handleTaskChange({isDone: e.target.checked})}
             />
-            <EditableLabel saveText={handleTextChange}>
+
+            <EditableLabel 
+                saveText={(newText: string) => handleTaskChange({text: newText})}>
                 {task.text}
             </EditableLabel>
-            <button className={classes.button} onClick={() => props.deleteTask(task)}>Delete</button>
+
+            <button 
+                className={classes.button} 
+                onClick={() => props.deleteTask(task)}> 
+                Delete
+            </button>
         </div>
     );
 }

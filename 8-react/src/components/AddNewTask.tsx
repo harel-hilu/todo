@@ -2,36 +2,28 @@ import React, { ChangeEvent, useState } from 'react';
 import {createUseStyles} from 'react-jss'
 
 export default function AddNewTask(props: any) {
-    const [text, setText] = useState('');
-    const classes = useStyles();
+    const [text, setText] = useState<string>('');
+    const classes: Record<string, string> = useStyles();
 
-    function handleTextChange(e: ChangeEvent<HTMLInputElement>){
-        setText(e.target.value);
-    }
-
-    function handleAddTaskClick(e: React.MouseEvent<HTMLButtonElement>) {
+    function addTaskIfNotEmpty(): void {
         if (text != '') {
             props.addTask(text);
             setText('');
         }
     }
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-        if (e.key === "Enter" && text != '') {
-            props.addTask(text);
-            setText('');
-        }
-    };
-
     return (
         <div className={classes.container}>
             <input className={classes.taskInput}
                 autoFocus 
                 value={text} 
-                onChange={handleTextChange} 
-                onKeyDown={handleKeyDown} 
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
+                onKeyDown={(e: React.KeyboardEvent<HTMLDivElement>) => 
+                    (e.key === "Enter" && addTaskIfNotEmpty())} 
             />
-            <button className={classes.addButton} onClick={handleAddTaskClick}>Add Task</button>
+            <button className={classes.addButton} onClick={addTaskIfNotEmpty}>
+                Add Task
+            </button>
         </div>
     );  
 }
@@ -48,12 +40,12 @@ const useStyles = createUseStyles({
         paddingLeft: "5px",
     },
     addButton: {
-        color: "black",
+        color: "white",
         alignSelf: "flex-end",
         marginRight: "5px",
         marginLeft: "auto",
         border: "none",
-        backgroundColor: "red",
+        backgroundColor: "black",
         borderRadius: "5px",
         height: 24,
     },

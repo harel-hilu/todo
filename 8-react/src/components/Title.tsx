@@ -1,21 +1,22 @@
-import { Task } from '../../../common/Tasks';
+import { Task, TasksById } from '../../../common/Tasks';
 import React from 'react';
 import {createUseStyles} from 'react-jss';
 
 export default function Title(props: any) {
-    const classes = useStyles();
+    const classes: Record<string, string> = useStyles();
     const tasksArray: Task[] = Object.values(props.tasks);
-    const numOfTasks = tasksArray.length;
-
-    const element: JSX.Element = (numOfTasks > 0) ? 
-        <h1 className={classes.header}>
-            {tasksArray.filter(task => task.isDone).length}/{numOfTasks} tasks
-        </h1> :
-        <h1 className={classes.header}>Create your first task!</h1>;
+    const numOfTasks: number = tasksArray.length;
 
     return (
         <div>
-            {element}
+            <h1 className={classes.header}>
+                {
+                    (numOfTasks > 0) ?
+                    tasksArray.filter(task => task.isDone).length + 
+                    "/" + numOfTasks + " tasks" :
+                    "Create your first task!"
+                }
+            </h1> 
         </div>
     );
 }
