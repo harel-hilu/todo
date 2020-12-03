@@ -9,9 +9,13 @@ import {createUseStyles} from 'react-jss';
 
 export default function App() {
   const [tasks, setTasks] = useState<TasksById>({});
+  const [isShowCompleted, setShowCompleted] = useState<boolean>(true);
   const classes: Record<string, string> = useStyles();  
 
   useEffect((): void => {
+    const storageShowCompleted = localStorage.getItem("todo_isShowCompleted");
+    storageShowCompleted && setShowCompleted(JSON.parse(storageShowCompleted));
+
     (async (): Promise<void> => {
       try {
         const tasksFromServer: TasksById = await getAllTasksFromServer();
@@ -21,6 +25,10 @@ export default function App() {
       }
     })()
   }, []);
+
+  useEffect(() => {
+      localStorage.setItem("todo_isShowCompleted", JSON.stringify(isShowCompleted));
+  }, [isShowCompleted]);
 
   async function addTask(taskText: string): Promise<void> {
     try {
@@ -56,12 +64,18 @@ export default function App() {
 
   return (
     <div className={classes.app}>
-      <Title tasks={tasks} />
+      <Title tasks={tasks} showCompleted={isShowCompleted} />
       <AddNewTask addTask={addTask} />
+      <button 
+        onClick={() => setShowCompleted(!isShowCompleted)}
+        className={classes.button}>
+        {isShowCompleted ? "Hide completed" : "Show completed"}
+      </button>
       <TasksList 
         tasks={tasks} 
         updateTask={updateTask}
         deleteTask={deleteTask}
+        showCompleted={isShowCompleted} 
       />
     </div>
   );
@@ -73,4 +87,13 @@ const useStyles = createUseStyles({
     minHeight: "400px",
     padding: "10px",            
     fontFamily: "Helvetica",
-}});
+  },
+  button: {
+    backgroundColor: "white",
+    textColor: "black",
+    marginBottom: "10px",
+    marginRight: 0,
+    marginLeft: 0,
+    border: "none"
+  }
+});

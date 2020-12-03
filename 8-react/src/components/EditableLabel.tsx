@@ -2,14 +2,14 @@ import React, { ChangeEvent, useState } from 'react';
 import {createUseStyles} from 'react-jss'
 import PropTypes from 'prop-types';
 
-export default function EditableLabel (props: any) {
+export default function EditableLabel ({initialValue, saveText}: any) {
   const [isEditing, setEditing] = useState<boolean>(false);
-  const [text, setText] = useState<string>(props.children);
+  const [text, setText] = useState<string>(initialValue);
   const classes = useStyles();
 
   function doneEditing() {
     setEditing(false);
-    props.saveText(text);
+    saveText(text);
   }
   
   return (
@@ -36,8 +36,8 @@ export default function EditableLabel (props: any) {
 };
 
 EditableLabel.propTypes = {
-  children: PropTypes.string,
-  saveText: PropTypes.func
+  initialValue: PropTypes.string,
+  saveText: PropTypes.func,
 }
 
 const useStyles = createUseStyles({

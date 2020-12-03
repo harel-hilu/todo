@@ -2,13 +2,13 @@ import React, { ChangeEvent, useState } from 'react';
 import {createUseStyles} from 'react-jss'
 import PropTypes from 'prop-types';
 
-export default function AddNewTask(props: any) {
+export default function AddNewTask({addTask}: any) {
     const [text, setText] = useState<string>('');
     const classes: Record<string, string> = useStyles();
 
     function addTaskIfNotEmpty(): void {
         if (text !== '') {
-            props.addTask(text);
+            addTask(text);
             setText('');
         }
     }
