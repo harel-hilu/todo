@@ -32,12 +32,7 @@ export default function TaskLine(props: any) {
             <EditableLabel saveText={(newText: string) => handleTaskChange({text: newText})}>
                 {task.text}
             </EditableLabel>
-
-            <button 
-                className={classes.button} 
-                onClick={() => props.deleteTask(task)}> 
-                Edit
-            </button>
+            
             <button 
                 className={classes.button} 
                 onClick={() => props.deleteTask(task)}> 
