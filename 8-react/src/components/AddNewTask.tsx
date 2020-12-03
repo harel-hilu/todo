@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import {createUseStyles} from 'react-jss'
+import PropTypes from 'prop-types';
 
 export default function AddNewTask(props: any) {
     const [text, setText] = useState<string>('');
@@ -26,6 +27,10 @@ export default function AddNewTask(props: any) {
             </button>
         </div>
     );  
+}
+
+AddNewTask.propTypes = {
+    addTask: PropTypes.func
 }
 
 const useStyles = createUseStyles({

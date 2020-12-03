@@ -1,6 +1,7 @@
-import { Task } from '../../../common/Tasks';
+import { Task, TasksById } from '../../../common/Tasks';
 import React from 'react';
 import {createUseStyles} from 'react-jss';
+import PropTypes from 'prop-types';
 
 export default function Title(props: any) {
     const classes: Record<string, string> = useStyles();
@@ -19,6 +20,10 @@ export default function Title(props: any) {
             </h1> 
         </div>
     );
+}
+
+Title.propTypes = {
+    tasks: PropTypes.object
 }
 
 const useStyles = createUseStyles({

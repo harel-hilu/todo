@@ -1,6 +1,7 @@
 import React from 'react';
 import { Task } from '../../../common/Tasks';
 import TaskLine from './TaskLine';
+import PropTypes from 'prop-types';
 
 export default function TasksList(props: any) {
     const tasksArray: Task[] = Object.values(props.tasks);
@@ -22,4 +23,10 @@ export default function TasksList(props: any) {
             {rows}
         </div>
     );
+}
+
+TasksList.propTypes = {
+    tasks: PropTypes.object,
+    updateTask: PropTypes.func,
+    deleteTask: PropTypes.func
 }

@@ -1,7 +1,8 @@
 import React, { ChangeEvent, useState } from 'react';
 import { Task } from '../../../common/Tasks';
 import EditableLabel from './EditableLabel';
-import {createUseStyles} from 'react-jss'
+import {createUseStyles} from 'react-jss';
+import PropTypes from 'prop-types';
 
 export default function TaskLine(props: any) {
     const [task, setTask] = useState<Task>(props.task);
@@ -28,11 +29,15 @@ export default function TaskLine(props: any) {
                     handleTaskChange({isDone: e.target.checked})}
             />
 
-            <EditableLabel 
-                saveText={(newText: string) => handleTaskChange({text: newText})}>
+            <EditableLabel saveText={(newText: string) => handleTaskChange({text: newText})}>
                 {task.text}
             </EditableLabel>
 
+            <button 
+                className={classes.button} 
+                onClick={() => props.deleteTask(task)}> 
+                Edit
+            </button>
             <button 
                 className={classes.button} 
                 onClick={() => props.deleteTask(task)}> 
@@ -40,6 +45,12 @@ export default function TaskLine(props: any) {
             </button>
         </div>
     );
+}
+
+TaskLine.propTypes = {
+    task: PropTypes.object,
+    updateTask: PropTypes.func,
+    deleteTask: PropTypes.func
 }
 
 const useStyles = createUseStyles({

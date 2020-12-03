@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import {createUseStyles} from 'react-jss'
+import PropTypes from 'prop-types';
 
 export default function EditableLabel (props: any) {
   const [isEditing, setEditing] = useState<boolean>(false);
@@ -33,6 +34,11 @@ export default function EditableLabel (props: any) {
     </span>
   );
 };
+
+EditableLabel.propTypes = {
+  children: PropTypes.string,
+  saveText: PropTypes.func
+}
 
 const useStyles = createUseStyles({
   label: {
