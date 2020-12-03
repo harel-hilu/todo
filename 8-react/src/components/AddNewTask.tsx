@@ -6,7 +6,7 @@ export default function AddNewTask(props: any) {
     const classes: Record<string, string> = useStyles();
 
     function addTaskIfNotEmpty(): void {
-        if (text != '') {
+        if (text !== '') {
             props.addTask(text);
             setText('');
         }

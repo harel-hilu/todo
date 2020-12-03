@@ -1,4 +1,4 @@
-import { Task, TasksById } from '../../../common/Tasks';
+import { Task } from '../../../common/Tasks';
 import React from 'react';
 import {createUseStyles} from 'react-jss';
 
