@@ -14,12 +14,11 @@ export default function App() {
 
   function getShowCompletedPreference() {
     const storageShowCompleted = localStorage.getItem("todo_isShowCompleted");
-    
     return storageShowCompleted ? JSON.parse(storageShowCompleted) : true;
   }
 
   useEffect(() => {
-    return localStorage.setItem("todo_isShowCompleted", JSON.stringify(isShowCompleted));
+    localStorage.setItem("todo_isShowCompleted", JSON.stringify(isShowCompleted));
   }, [isShowCompleted]);
 
   useEffect((): void => {
