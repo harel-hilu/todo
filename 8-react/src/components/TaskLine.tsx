@@ -8,10 +8,6 @@ export default function TaskLine({ taskToRender, updateTask, deleteTask }: any) 
     const [task, setTask] = useState<Task>(taskToRender);
     const [isEditing, setEditing] = useState<boolean>(false);
     const classes: Record<string, string> = useStyles();
-    
-    function saveText(newText: string) {
-        handleTaskChange({text: newText})
-    }
 
     function handleTaskChange({isDone=task.isDone, text=task.text}) {
         const taskToUpdate = {
@@ -36,15 +32,17 @@ export default function TaskLine({ taskToRender, updateTask, deleteTask }: any) 
 
             <EditableLabel 
                 parentForceEdit={isEditing}
+                updateParentForceEdit={(isSonEditing: boolean) => setEditing(isSonEditing)}
                 initialValue={task.text} 
-                saveText={saveText} 
+                saveText={(newText: string) => handleTaskChange({text: newText})} 
             />
  
             <button 
                 className={classes.button} 
-                onClick={() => setEditing(!isEditing)}> 
-                {isEditing ? "Save" : "Edit"}
+                onClick={() => setEditing(true)}> 
+                Edit
             </button>
+
             <button 
                 className={classes.button} 
                 onClick={() => deleteTask(task)}> 
