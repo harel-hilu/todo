@@ -3,19 +3,26 @@ import AddNewTask from './AddNewTask';
 import { NewTask, Task, TasksById } from '../../../common/Tasks';
 import Title from './Title';
 import TasksList from './TasksList';
-import {getAllTasksFromServer, deleteTaskFromServer, addTaskToServer, updateTaskOnServer}
-  from '../data-access/server-api';
 import {createUseStyles} from 'react-jss';
+import {getAllTasksFromServer, deleteTaskFromServer, addTaskToServer, updateTaskOnServer} from '../data-access/server-api';
 
 export default function App() {
   const [tasks, setTasks] = useState<TasksById>({});
-  const [isShowCompleted, setShowCompleted] = useState<boolean>(true);
+  const [isShowCompleted, setShowCompleted] = 
+    useState<boolean>(getShowCompletedPreference());
   const classes: Record<string, string> = useStyles();  
 
-  useEffect((): void => {
+  function getShowCompletedPreference() {
     const storageShowCompleted = localStorage.getItem("todo_isShowCompleted");
-    storageShowCompleted && setShowCompleted(JSON.parse(storageShowCompleted));
+    
+    return storageShowCompleted ? JSON.parse(storageShowCompleted) : true;
+  }
 
+  useEffect(() => {
+    return localStorage.setItem("todo_isShowCompleted", JSON.stringify(isShowCompleted));
+  }, [isShowCompleted]);
+
+  useEffect((): void => {
     (async (): Promise<void> => {
       try {
         const tasksFromServer: TasksById = await getAllTasksFromServer();
@@ -25,10 +32,6 @@ export default function App() {
       }
     })()
   }, []);
-
-  useEffect(() => {
-      localStorage.setItem("todo_isShowCompleted", JSON.stringify(isShowCompleted));
-  }, [isShowCompleted]);
 
   async function addTask(taskText: string): Promise<void> {
     try {

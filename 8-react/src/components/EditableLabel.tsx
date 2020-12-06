@@ -2,8 +2,8 @@ import React, { ChangeEvent, useState } from 'react';
 import {createUseStyles} from 'react-jss'
 import PropTypes from 'prop-types';
 
-export default function EditableLabel ({initialValue, saveText}: any) {
-  const [isEditing, setEditing] = useState<boolean>(false);
+export default function EditableLabel ({initialValue, saveText, parentForceEdit=false}: any) {
+  const [isEditing, setEditing] = useState<boolean>(parentForceEdit);
   const [text, setText] = useState<string>(initialValue);
   const classes = useStyles();
 
@@ -14,7 +14,7 @@ export default function EditableLabel ({initialValue, saveText}: any) {
   
   return (
     <span className={classes.label}>
-      {isEditing ? (
+      {parentForceEdit || isEditing ? (
         <input className={classes.label}
           value={text}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
@@ -38,6 +38,7 @@ export default function EditableLabel ({initialValue, saveText}: any) {
 EditableLabel.propTypes = {
   initialValue: PropTypes.string,
   saveText: PropTypes.func,
+  parentForceEdit: PropTypes.bool
 }
 
 const useStyles = createUseStyles({

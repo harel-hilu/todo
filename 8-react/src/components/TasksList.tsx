@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 
 export default function TasksList({tasks, updateTask, deleteTask, showCompleted}: any){
     const tasksArray: Task[] = Object.values(tasks);
-    
     const rows: JSX.Element[] = tasksArray
         .filter((task: Task) => showCompleted || !task.isDone).map((task: Task) =>
             <div key={task.id}>

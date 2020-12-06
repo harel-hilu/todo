@@ -6,8 +6,13 @@ import PropTypes from 'prop-types';
 
 export default function TaskLine({ taskToRender, updateTask, deleteTask }: any) {
     const [task, setTask] = useState<Task>(taskToRender);
+    const [isEditing, setEditing] = useState<boolean>(false);
     const classes: Record<string, string> = useStyles();
     
+    function saveText(newText: string) {
+        handleTaskChange({text: newText})
+    }
+
     function handleTaskChange({isDone=task.isDone, text=task.text}) {
         const taskToUpdate = {
             isDone: isDone,
@@ -30,10 +35,16 @@ export default function TaskLine({ taskToRender, updateTask, deleteTask }: any) 
             />
 
             <EditableLabel 
+                parentForceEdit={isEditing}
                 initialValue={task.text} 
-                saveText={(newText: string) => handleTaskChange({text: newText})} 
+                saveText={saveText} 
             />
  
+            <button 
+                className={classes.button} 
+                onClick={() => setEditing(!isEditing)}> 
+                {isEditing ? "Save" : "Edit"}
+            </button>
             <button 
                 className={classes.button} 
                 onClick={() => deleteTask(task)}> 

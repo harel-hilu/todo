@@ -5,18 +5,18 @@ import PropTypes from 'prop-types';
 
 export default function Title({tasks, showCompleted}: any) {
     const classes: Record<string, string> = useStyles();
+    let textToShow = "Create a task";
     const tasksArray: Task[] = Object.values(tasks);
     const numOfTasks: number = tasksArray.length;
     const numOfDoneTasks: number = tasksArray.filter(task => task.isDone).length;
     const uncompletedTasks: number = numOfTasks - numOfDoneTasks;
-    let textToShow = "Create a task";
     
     if (showCompleted) {
         if (numOfTasks > 0) {
             textToShow = `${numOfDoneTasks}/${numOfTasks} tasks`
         }
     } else if(uncompletedTasks > 0) {
-        textToShow = `0/${uncompletedTasks} tasks`;
+        textToShow = `${uncompletedTasks} tasks`;
     }
 
     return (
