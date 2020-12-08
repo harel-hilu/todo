@@ -1,32 +1,26 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import {createUseStyles} from 'react-jss'
 import PropTypes from 'prop-types';
 
 export default function EditableLabel (
-  {initialValue, saveText, parentForceEdit=false, updateParentForceEdit}: any) {
-
-  const [isEditing, setEditing] = useState<boolean>(parentForceEdit);
-  const [text, setText] = useState<string>(initialValue);
+  { saveText, initialText, setEditing, isEditing }: any) {
+  const [text, setText] = useState(initialText);
   const classes = useStyles();
 
-  useEffect(() => {
-    setEditing(parentForceEdit);
-  }, [parentForceEdit]);
+  const finishEditing = () => {
+    saveText(text); 
+    setEditing(false);
+  }
 
-  useEffect(() => {
-    updateParentForceEdit(isEditing);
-    saveText(text);
-  }, [isEditing]);
-  
   return (
     <span className={classes.label}>
       {isEditing ? (
         <input className={classes.label}
           value={text}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
-          onBlur={() => setEditing(false)}
+          onBlur={finishEditing}
           onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => 
-            (e.key === "Enter") && setEditing(false)}
+            (e.key === "Enter") && finishEditing()}
           autoFocus
           onFocus={(e: React.FocusEvent<HTMLInputElement>) => e.currentTarget.select()}
         />
@@ -42,10 +36,10 @@ export default function EditableLabel (
 };
 
 EditableLabel.propTypes = {
-  initialValue: PropTypes.string,
-  saveText: PropTypes.func,
-  parentForceEdit: PropTypes.bool,
-  updateParentForceEdit: PropTypes.func
+  initialText: PropTypes.string,
+  isEditing: PropTypes.bool,
+  setEditing: PropTypes.func,
+  saveText: PropTypes.func
 }
 
 const useStyles = createUseStyles({

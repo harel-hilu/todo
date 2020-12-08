@@ -5,22 +5,14 @@ import Title from './Title';
 import TasksList from './TasksList';
 import {createUseStyles} from 'react-jss';
 import {getAllTasksFromServer, deleteTaskFromServer, addTaskToServer, updateTaskOnServer} from '../data-access/server-api';
+import {useStorage} from '../effects/useStorage';
 
 export default function App() {
   const [tasks, setTasks] = useState<TasksById>({});
   const [isShowCompleted, setShowCompleted] = 
-    useState<boolean>(getShowCompletedPreference());
-  const classes: Record<string, string> = useStyles();  
-
-  function getShowCompletedPreference() {
-    const storageShowCompleted = localStorage.getItem("todo_isShowCompleted");
-    return storageShowCompleted ? JSON.parse(storageShowCompleted) : true;
-  }
-
-  useEffect(() => {
-    localStorage.setItem("todo_isShowCompleted", JSON.stringify(isShowCompleted));
-  }, [isShowCompleted]);
-
+    useStorage<boolean>("todo_shouldShowCompleted", true);
+  const classes: Record<string, string> = useStyles();    
+  
   useEffect((): void => {
     (async (): Promise<void> => {
       try {
@@ -32,10 +24,10 @@ export default function App() {
     })()
   }, []);
 
-  async function addTask(taskText: string): Promise<void> {
+  const addTask = async (taskText: string): Promise<void> => {
     try {
       const newTask: NewTask = {text: taskText, isDone: false};
-      const taskToAdd: Task = await addTaskToServer(newTask);
+      const taskToAdd = await addTaskToServer(newTask);
       const newTasks: TasksById = {...tasks, [taskToAdd.id]: taskToAdd};
       setTasks(newTasks);
     } catch (error) {
@@ -43,18 +35,18 @@ export default function App() {
     }
   }
 
-  async function updateTask(updatedTask: Task): Promise<void> {
+  const updateTask = async({id, text, isDone}: Task): Promise<void> => {
     try {
-      await updateTaskOnServer(updatedTask);
-      const newTasks: TasksById = {...tasks};
-      newTasks[updatedTask.id] = updatedTask;
+      await updateTaskOnServer({id, text, isDone});
+      const newTasks = {...tasks};
+      newTasks[id] = {id, text, isDone};
       setTasks(newTasks);
     } catch (error) {
       alert("cannot update task");
     }
   }
 
-  async function deleteTask (taskToDelete: Task): Promise<void> {
+  const deleteTask = async (taskToDelete: Task): Promise<void> => {
     try {
       await deleteTaskFromServer(taskToDelete.id);
       const {[taskToDelete.id]: task, ...res } = tasks;
@@ -64,20 +56,22 @@ export default function App() {
     }
   }
 
+  const filteredTasks = () => Object.values(tasks)
+    .filter((task: Task) => isShowCompleted || !task.isDone);
+
   return (
     <div className={classes.app}>
       <Title tasks={tasks} showCompleted={isShowCompleted} />
-      <AddNewTask addTask={addTask} />
+      <AddNewTask addTask={addTask}  />
       <button 
         onClick={() => setShowCompleted(!isShowCompleted)}
         className={classes.button}>
         {isShowCompleted ? "Hide completed" : "Show completed"}
       </button>
       <TasksList 
-        tasks={tasks} 
+        tasks={filteredTasks()} 
         updateTask={updateTask}
         deleteTask={deleteTask}
-        showCompleted={isShowCompleted} 
       />
     </div>
   );

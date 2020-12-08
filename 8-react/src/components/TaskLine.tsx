@@ -1,24 +1,11 @@
-import React, { ChangeEvent, useState } from 'react';
-import { Task } from '../../../common/Tasks';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import EditableLabel from './EditableLabel';
 import {createUseStyles} from 'react-jss';
 import PropTypes from 'prop-types';
 
-export default function TaskLine({ taskToRender, updateTask, deleteTask }: any) {
-    const [task, setTask] = useState<Task>(taskToRender);
+export default function TaskLine({ task, updateTask, deleteTask }: any) {
     const [isEditing, setEditing] = useState<boolean>(false);
     const classes: Record<string, string> = useStyles();
-
-    function handleTaskChange({isDone=task.isDone, text=task.text}) {
-        const taskToUpdate = {
-            isDone: isDone,
-            text: text,
-            id: task.id
-        };
-
-        setTask(taskToUpdate);
-        updateTask(taskToUpdate);
-    }
 
     return (
         <div className={classes.task}>
@@ -26,15 +13,16 @@ export default function TaskLine({ taskToRender, updateTask, deleteTask }: any) 
                 className={classes.checkbox}
                 type="checkbox" 
                 checked={task.isDone}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => 
-                    handleTaskChange({isDone: e.target.checked})}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    updateTask({isDone: e.target.checked, id: task.id, text: task.text})}
             />
-
+            
             <EditableLabel 
-                parentForceEdit={isEditing}
-                updateParentForceEdit={(isSonEditing: boolean) => setEditing(isSonEditing)}
-                initialValue={task.text} 
-                saveText={(newText: string) => handleTaskChange({text: newText})} 
+                isEditing={isEditing}
+                setEditing={setEditing}
+                initialText={task.text} 
+                saveText={(textToUpdate) => 
+                    updateTask({text: textToUpdate, isDone: task.isDone, id: task.id})}
             />
  
             <button 
@@ -53,7 +41,7 @@ export default function TaskLine({ taskToRender, updateTask, deleteTask }: any) 
 }
 
 TaskLine.propTypes = {
-    taskToRender: PropTypes.object,
+    task: PropTypes.object,
     updateTask: PropTypes.func,
     deleteTask: PropTypes.func
 }

@@ -22,5 +22,6 @@
   "dependencies": {
     "@types/cookie-parser": "^1.4.2",
     "@types/redis": "^2.8.28"
-  }
+  },
+  "devDependencies": {}
 }

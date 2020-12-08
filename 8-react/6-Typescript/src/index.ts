@@ -4,7 +4,7 @@ import { deleteTaskFromServer, getAllTasksFromServer, addTaskToServer, updateTas
     from "./dataAccess/server-api";
 import jss from "jss";
 import jssCamelCase from "jss-plugin-camel-case";
-import { Task, NewTask, TasksById } from "../../common/Tasks";
+import { Task, NewTask, TasksById } from "../../../common/Tasks";
 
 let tasks: TasksById = {};
 const mainView: MainView = new MainView(); 

@@ -6,7 +6,7 @@ export default function AddNewTask({addTask}: any) {
     const [text, setText] = useState<string>('');
     const classes: Record<string, string> = useStyles();
 
-    function addTaskIfNotEmpty(): void {
+    const addTaskIfNotEmpty = () => {
         if (text !== '') {
             addTask(text);
             setText('');
@@ -16,8 +16,8 @@ export default function AddNewTask({addTask}: any) {
     return (
         <div className={classes.container}>
             <input className={classes.taskInput}
-                autoFocus 
                 value={text} 
+                autoFocus
                 onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
                 onKeyDown={(e: React.KeyboardEvent<HTMLDivElement>) => 
                     (e.key === "Enter" && addTaskIfNotEmpty())} 

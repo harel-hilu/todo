@@ -1,4 +1,4 @@
-import { TasksById, Task } from "../../../common/Tasks";
+import { TasksById, Task } from "../../../../common/Tasks";
 import { InsertTaskView } from "./InsertTaskView";
 import { TasksView } from "./TasksView";
 

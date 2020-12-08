@@ -19,6 +19,10 @@ app.get('/', (req: Request, res: Response): void => {
     res.render("index.html");
 });
 
+app.get('https://api.sportsdata.io/v3/mlb/scores/json/AreAnyGamesInProgress', (games) => {
+    
+})
+
 app.get('/api/v1/tasks',  async (req: Request, res: Response): Promise<void> => { 
     const tasks: TasksById = await getAllTasks(client, req.userId);
     res.send(tasks);
