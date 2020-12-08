@@ -1,8 +1,8 @@
 import { Task } from "../../../../common/Tasks";
-import { sharedStyles } from "../sharedStyle";
+import { sharedStyles } from "../../sharedStyle";
 import jss from "jss";
 import jssCamelCase from "jss-plugin-camel-case";
-import { updateTaskDoneStatus, updateTaskText, deleteTask } from "../index";
+import { updateTaskDoneStatus, updateTaskText, deleteTask } from "../../index";
 
 type classNames = "checkbox" | "label" | "buttons" | "task";
 const classes: Record<classNames, string> = getStyles();

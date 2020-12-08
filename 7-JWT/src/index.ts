@@ -1,4 +1,4 @@
-import { MainView } from "./view/MainView";
+import { MainView } from "./dataAccess/view/MainView";
 import { sharedStyles } from "./sharedStyle";
 import { deleteTaskFromServer, getAllTasksFromServer, addTaskToServer, updateTaskOnServer }
     from "./dataAccess/server-api";
