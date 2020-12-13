@@ -4,6 +4,7 @@ import TaskLine from './TaskLine';
 import PropTypes from 'prop-types';
 
 export default function TasksList({tasks, updateTask, deleteTask}: any){
+    console.log(tasks.map((task: Task)=>task.id));
     const rows: JSX.Element[] = tasks.map((task: Task) =>
         <TaskLine 
             key={task.id}

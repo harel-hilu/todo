@@ -10,7 +10,8 @@ config();
 const client: RedisClient = createClient(process.env.REDIS_URL);
 const app: Express = express();
 const port: string = (process.env.PORT || "3300");
-app.use(express.static(__dirname + '/../8-react/build'))
+
+app.use(express.static(__dirname + '/public'))
 app.use(express.json());
 app.use(cookieParser());
 app.use(validateUser);
@@ -18,10 +19,6 @@ app.use(validateUser);
 app.get('/', (req: Request, res: Response): void => {
     res.render("index.html");
 });
-
-app.get('https://api.sportsdata.io/v3/mlb/scores/json/AreAnyGamesInProgress', (games) => {
-    
-})
 
 app.get('/api/v1/tasks',  async (req: Request, res: Response): Promise<void> => { 
     const tasks: TasksById = await getAllTasks(client, req.userId);

@@ -38,9 +38,9 @@ export default function App() {
   const updateTask = async({id, text, isDone}: Task): Promise<void> => {
     try {
       await updateTaskOnServer({id, text, isDone});
-      const newTasks = {...tasks};
-      newTasks[id] = {id, text, isDone};
-      setTasks(newTasks);
+      // const newTasks = {...tasks};
+      tasks[id] = {id, text, isDone};
+      setTasks(tasks);
     } catch (error) {
       alert("cannot update task");
     }
@@ -56,8 +56,8 @@ export default function App() {
     }
   }
 
-  const filteredTasks = () => Object.values(tasks)
-    .filter((task: Task) => isShowCompleted || !task.isDone);
+  const filteredTasks = () => tasks;
+  // Object.values(tasks).filter((task: Task) => isShowCompleted || !task.isDone);
 
   return (
     <div className={classes.app}>
@@ -69,7 +69,7 @@ export default function App() {
         {isShowCompleted ? "Hide completed" : "Show completed"}
       </button>
       <TasksList 
-        tasks={filteredTasks()} 
+        tasks={Object.values(tasks)} 
         updateTask={updateTask}
         deleteTask={deleteTask}
       />
