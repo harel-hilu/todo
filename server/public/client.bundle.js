@@ -52136,7 +52136,7 @@ function AddNewTask({ addTask }) {
         setText('');
     };
     return (react_1.default.createElement("div", { className: classes.container },
-        react_1.default.createElement("input", { id: "addTaskInput", className: classes.taskInput, value: text, onChange: e => setText(e.target.value), onKeyPress: e => e.key === "Enter" && addNewTask(), autoFocus: true }),
+        react_1.default.createElement("input", { id: "addTaskInput", value: text, onChange: e => setText(e.target.value), onKeyPress: e => e.key === "Enter" && addNewTask(), autoFocus: true, className: classes.taskInput }),
         react_1.default.createElement("button", { id: "addTaskButton", className: classes.addButton, onClick: addNewTask }, "Add Task!")));
 }
 exports.default = AddNewTask;
@@ -52175,6 +52175,8 @@ const useStyles = react_jss_1.createUseStyles({
   \************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: top-level-this-exports, __webpack_exports__, __webpack_require__ */
+/*! CommonJS bailout: this is used directly at 2:17-21 */
+/*! CommonJS bailout: this is used directly at 11:23-27 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -52197,6 +52199,7 @@ const AddNewTask_1 = __importDefault(__webpack_require__(/*! ../AddNewTask/AddNe
 const useTasks_1 = __importDefault(__webpack_require__(/*! ../effects/useTasks */ "./src/components/effects/useTasks.tsx"));
 const Title_1 = __importDefault(__webpack_require__(/*! ../Title/Title */ "./src/components/Title/Title.tsx"));
 const TasksList_1 = __importDefault(__webpack_require__(/*! ../TasksList/TasksList */ "./src/components/TasksList/TasksList.tsx"));
+const EmptyState_1 = __importDefault(__webpack_require__(/*! ../EmptyState/EmptyState */ "./src/components/EmptyState/EmptyState.tsx"));
 const react_jss_1 = __webpack_require__(/*! react-jss */ "./node_modules/react-jss/dist/react-jss.esm.js");
 const server_api_1 = __webpack_require__(/*! ../../dataAccess/server-api */ "./src/dataAccess/server-api.ts");
 function App() {
@@ -52239,7 +52242,10 @@ function App() {
     return (react_1.default.createElement("div", { className: classes.app },
         react_1.default.createElement(Title_1.default, { doneTasks: doneTasks(), totalTasks: totalTasks() }),
         react_1.default.createElement(AddNewTask_1.default, { addTask: addTask }),
-        react_1.default.createElement(TasksList_1.default, { tasks: Object.values(tasks), updateTask: updateTask, deleteTask: deleteTask })));
+        totalTasks() === 0 ?
+            react_1.default.createElement(EmptyState_1.default, { addTask: addTask })
+            :
+                react_1.default.createElement(TasksList_1.default, { tasks: Object.values(tasks), updateTask: updateTask, deleteTask: deleteTask })));
 }
 exports.default = App;
 const useStyles = react_jss_1.createUseStyles({
@@ -52262,16 +52268,53 @@ const useStyles = react_jss_1.createUseStyles({
 
 /***/ }),
 
+/***/ "./src/components/EmptyState/EmptyState.tsx":
+/*!**************************************************!*\
+  !*** ./src/components/EmptyState/EmptyState.tsx ***!
+  \**************************************************/
+/*! unknown exports (runtime-defined) */
+/*! runtime requirements: top-level-this-exports, __webpack_exports__, __webpack_require__ */
+/*! CommonJS bailout: this is used directly at 2:23-27 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const prop_types_1 = __importDefault(__webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js"));
+const react_jss_1 = __webpack_require__(/*! react-jss */ "./node_modules/react-jss/dist/react-jss.esm.js");
+function EmptyState({ addTask }) {
+    const classes = useStyles();
+    return (react_1.default.createElement("div", { className: classes.container },
+        react_1.default.createElement("h4", null, "Break your goals into simple tasks"),
+        react_1.default.createElement("p", null, "Most of us set ambitious goals for ourselves. These could be over different periods, be it a month, quarter or a year. However, while goals are the result, the tasks that go into channeling the effort towards the goal have a higher probability of getting done when they find their way on a to-do list.")));
+}
+exports.default = EmptyState;
+EmptyState.propTypes = {
+    addTask: prop_types_1.default.func
+};
+const useStyles = react_jss_1.createUseStyles({
+    container: {
+        borderStyle: "solid",
+        borderWidth: "1px",
+        borderRadius: "5px",
+        borderColor: "black",
+        padding: "5px",
+    }
+});
+
+
+/***/ }),
+
 /***/ "./src/components/TaskLine/TaskLine.tsx":
 /*!**********************************************!*\
   !*** ./src/components/TaskLine/TaskLine.tsx ***!
   \**********************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: top-level-this-exports, __webpack_exports__, __webpack_require__ */
-/*! CommonJS bailout: this is used directly at 2:23-27 */
-/*! CommonJS bailout: this is used directly at 9:26-30 */
-/*! CommonJS bailout: this is used directly at 14:20-24 */
-/*! CommonJS bailout: this is used directly at 21:23-27 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -52307,24 +52350,22 @@ function TaskLine({ task, updateTask, deleteTask }) {
     const [isDone, setDone] = react_1.useState(task.isDone);
     const [text, setText] = react_1.useState(task.text);
     const classes = useStyles();
-    const handleEditTextFinish = (e) => {
-        if (text !== task.text) {
-            const taskToUpdate = { id: task.id, isDone: task.isDone, text: text };
-            updateTask(taskToUpdate);
+    react_1.useEffect(() => {
+        if (task.text === text && task.isDone === isDone) {
+            return;
         }
-        setEditing(false);
-    };
-    const handleCheckboxChange = (e) => {
-        setDone(isDone => !isDone);
-        const taskToUpdate = { id: task.id, isDone: e.target.checked, text: text };
-        updateTask(taskToUpdate);
-    };
+        updateTask({
+            id: task.id,
+            text: text,
+            isDone: isDone
+        });
+    }, [isEditing, isDone]);
     return (react_1.default.createElement("div", { className: classes.task, "data-hook": "task" },
-        react_1.default.createElement("input", { "data-hook": "taskCheckbox", className: classes.checkbox, checked: isDone, type: "checkbox", onChange: handleCheckboxChange }),
+        react_1.default.createElement("input", { checked: isDone, onChange: (e) => setDone(e.target.checked), type: "checkbox", "data-hook": "taskCheckbox", className: classes.checkbox }),
         (!isEditing) ?
-            react_1.default.createElement("label", { className: classes.label, onClick: () => setEditing(true), "data-hook": "taskLabel" }, text)
+            react_1.default.createElement("label", { onClick: () => setEditing(true), className: classes.label, "data-hook": "taskLabel" }, text)
             :
-                react_1.default.createElement("input", { className: classes.label, value: text, onBlur: handleEditTextFinish, onChange: (e) => setText(e.target.value), autoFocus: true, "data-hook": "taskInput" }),
+                react_1.default.createElement("input", { value: text, onBlur: () => setEditing(false), onChange: (e) => setText(e.target.value), autoFocus: true, "data-hook": "taskInput", className: classes.label }),
         react_1.default.createElement("button", { onClick: () => setEditing(true), className: classes.button, "data-hook": "taskEditButton" }, "Edit"),
         react_1.default.createElement("button", { onClick: () => deleteTask(task), className: classes.button, "data-hook": "taskDeleteButton" }, "Delete")));
 }
@@ -52367,7 +52408,6 @@ const useStyles = react_jss_1.createUseStyles({
   \************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: top-level-this-exports, __webpack_exports__, __webpack_require__ */
-/*! CommonJS bailout: this is used directly at 2:23-27 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -52525,7 +52565,8 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const react_dom_1 = __importDefault(__webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js"));
 const App_1 = __importDefault(__webpack_require__(/*! ./components/App/App */ "./src/components/App/App.tsx"));
-react_dom_1.default.render(react_1.default.createElement(App_1.default, null), document.getElementById("root"));
+react_dom_1.default.render(react_1.default.createElement(react_1.default.Fragment, null,
+    react_1.default.createElement(App_1.default, null)), document.getElementById("root"));
 
 
 /***/ })

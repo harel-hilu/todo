@@ -4,6 +4,7 @@ import AddNewTask from '../AddNewTask/AddNewTask';
 import useTasks from '../effects/useTasks';
 import Title from '../Title/Title';
 import TasksList from '../TasksList/TasksList';
+import EmptyState from '../EmptyState/EmptyState';
 import { createUseStyles } from 'react-jss';
 import { addTaskToServer, 
          deleteTaskFromServer, 
@@ -55,11 +56,15 @@ export default function App() {
         <div className={classes.app}>
             <Title doneTasks={doneTasks()} totalTasks={totalTasks()} />
             <AddNewTask addTask={addTask} />
-            <TasksList 
-                tasks={Object.values(tasks)} 
-                updateTask={updateTask}
-                deleteTask={deleteTask}
-            />
+            {totalTasks() === 0 ? 
+                <EmptyState addTask={addTask}/>
+                :
+                <TasksList 
+                    tasks={Object.values(tasks)} 
+                    updateTask={updateTask}
+                    deleteTask={deleteTask}
+                />
+            }
         </div>
     );
 }

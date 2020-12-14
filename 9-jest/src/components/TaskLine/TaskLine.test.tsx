@@ -5,97 +5,82 @@ import Adapter from 'enzyme-adapter-react-16';
 
 Enzyme.configure({ adapter: new Adapter() })
 
+const taskText = "hello world";
 const updateTask = jest.fn(() => {});
 const deleteTask = jest.fn(() => {});
+const TaskElement: JSX.Element = 
+    <TaskLine 
+        task={{id: "1", text: taskText, isDone: false}} 
+        updateTask={updateTask}
+        deleteTask={deleteTask}
+    />
+
+let wrapper: Enzyme.ReactWrapper;
+beforeEach(() => wrapper = mount(TaskElement));
+
+const getInput = (text=taskText) => wrapper.find(`input[value="${text}"]`).at(0);
+const getInputValue = (text=taskText) => getInput(text).prop("value");
+const getLabel = (text=taskText) => wrapper.find(`label[children="${text}"]`).at(0);
+const getEditButton = () => wrapper.find('button[children="Edit"]').at(0);
+export const getCheckbox = (inputWrapper = wrapper) => 
+    inputWrapper.find('input[type="checkbox"]').at(0);    
+export const getDeleteButton = (inputWrapper = wrapper) => 
+    inputWrapper.find('button[children="Delete"]').at(0);
 
 it('find all task line elements', () => {
-    const wrapper = mount(<TaskLine task={{id: "1", text: "wow", isDone: true}} />);
-    
-    expect(wrapper.find("input").prop("checked")).toBeTruthy();
-    expect(wrapper.find('label[children="wow"]')).toHaveLength(1);
-    expect(wrapper.find('button[children="Edit"]').text()).toBe("Edit");
-    expect(wrapper.find('button[children="Delete"]').text()).toBe("Delete");
+    expect(getCheckbox().prop("checked")).toBeFalsy();
+    expect(getLabel().text()).toBe(taskText);
+    expect(getEditButton().text()).toBe("Edit");
+    expect(getDeleteButton().text()).toBe("Delete");
 });
 
 it('click to change to edit mode', () => {
-    const wrapper = mount(<TaskLine task={{id: "1", text: "wow", isDone: true}} />);
-    wrapper.find('button[children="Edit"]').simulate("click");
-    expect(wrapper.find('label[children="wow"]')).toHaveLength(0);
-    expect(wrapper.find('input[value="wow"]')).toHaveLength(1);
+    expect(getLabel().text()).toBe(taskText);
+    getEditButton().simulate("click");
+    expect(getInputValue()).toBe(taskText);
 });
 
 it('edit with label click', () => {
-    const wrapper = mount(<TaskLine task={{id: "1", text: "wow", isDone: true}} />);
-    wrapper.find('label[children="wow"]').simulate("click");
-    expect(wrapper.find('label[children="wow"]')).toHaveLength(0);
-    expect(wrapper.find('input[value="wow"]')).toHaveLength(1);
+    getLabel().simulate("click");
+    expect(getLabel()).toHaveLength(0);
+    expect(getInputValue()).toBe(taskText);
 });
 
 it('focus in and out the label', () => {
-    const wrapper = mount(<TaskLine task={{id: "1", text: "wow", isDone: true}} />);
-    wrapper.find('label[children="wow"]').simulate("click");
-    wrapper.find('input[value="wow"]').simulate("blur");
-    expect(wrapper.find('label[children="wow"]')).toHaveLength(1);
+    getLabel().simulate("click");
+    getInput().simulate("blur");
+    expect(getLabel().text()).toBe(taskText);
 });
 
 it('check delete button', () => {
-    const wrapper = mount(
-        <TaskLine 
-            task={{id: "1", text: "wow", isDone: true}} 
-            deleteTask={deleteTask}
-        />);
-
-    wrapper.find('button[children="Delete"]').simulate("click");
+    getDeleteButton().simulate("click");
     expect(deleteTask).toBeCalledTimes(1);
 });
 
 it('check edit function by pressing checkbox', () => {
-    const wrapper = mount(
-        <TaskLine 
-            task={{id: "1", text: "wow", isDone: false}} 
-            updateTask={updateTask}
-        />);
-
-    wrapper.find('input[type="checkbox"]').simulate("change", {target: {checked: true}});    
+    getCheckbox().simulate("change", {target: {checked: true}});    
     expect(updateTask).toBeCalledTimes(1);
 });
 
 it('not call edit function after no edit', () => {
-    const wrapper = mount(
-        <TaskLine 
-            task={{id: "1", text: "wow", isDone: false}} 
-            updateTask={updateTask}
-        />);
-
-    wrapper.find('label[children="wow"]').simulate("click");
-    wrapper.find('input[value="wow"]').simulate("blur");
-    
+    getLabel().simulate("click");
+    getInput().simulate("blur")
     expect(updateTask).toBeCalledTimes(0);
 });
 
 it('trigger change event without changing text wont call edit', () => {
-    const wrapper = mount(
-        <TaskLine 
-            task={{id: "1", text: "wow", isDone: false}} 
-            updateTask={updateTask}
-        />);
-
-    wrapper.find('label[children="wow"]').simulate("click");
-    wrapper.find('input[value="wow"]').simulate("change", {target: {value: "wow"}});
-    wrapper.find('input[value="wow"]').simulate("blur");
+    getLabel().simulate("click");
+    getInput().simulate("change", {target: {value: taskText}});
+    getInput().simulate("blur");
+    getCheckbox().simulate("change", {target: {checked: false}});
     expect(updateTask).toBeCalledTimes(0);
 });
 
-it('call edit func after text change', () => {
-    const wrapper = mount(
-        <TaskLine 
-            task={{id: "1", text: "wow", isDone: false}} 
-            updateTask={updateTask}
-        />);
-
-    wrapper.find('label[children="wow"]').simulate("click");
-    wrapper.find('input[value="wow"]').simulate("change", {target: {value: "!!!"}});
-    expect(wrapper.find('input[value="wow"]')).toHaveLength(0);
-    wrapper.find('input[value="!!!"]').simulate("blur");
+it('call edit func after text change', () => {  
+    const newTaskText = "new task!";
+    getLabel().simulate("click");
+    getInput().simulate("change", {target: {value: newTaskText}});
+    getInput(newTaskText).simulate("blur");
+    expect(getLabel).toHaveLength(0);
     expect(updateTask).toBeCalledTimes(1);
 });

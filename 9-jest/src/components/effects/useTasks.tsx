@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TasksById } from '../../../../common/Tasks';
 import { getAllTasksFromServer } from '../../dataAccess/server-api';
 

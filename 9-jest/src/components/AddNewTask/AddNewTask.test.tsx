@@ -4,35 +4,54 @@ import Enzyme, { mount, ReactWrapper } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import ReactTestUtils from 'react-dom/test-utils'; 
 import { Task } from '../../../../common/Tasks';
+import { create } from 'jss';
 
 Enzyme.configure({ adapter: new Adapter() })
 
+let wrapper: Enzyme.ReactWrapper;
 const addTask = jest.fn(() => {});
+const createWrapper = () => { wrapper = mount(<AddNewTask addTask={addTask} />) };
 
-it('renders button and input', () => {
-    const wrapper = mount(<AddNewTask addTask={addTask} />);
-    expect(wrapper.find('button').text()).toBe("Add Task!");
-    expect(wrapper.find('input').prop('value')).toBe("");
+export const getAddTaskButton = (inputWrapper = wrapper) => 
+    inputWrapper.find('button[children="Add Task!"]');
+export const getAddTaskInput = (inputWrapper = wrapper) => 
+    inputWrapper.find("#addTaskInput");
+export const getAddTaskInputText = (inputWrapper = wrapper) => 
+    inputWrapper.find("#addTaskInput").prop("value");
+
+it('renders button and an empty input', () => {
+    createWrapper();
+    expect(getAddTaskButton()).toHaveLength(1);
+    expect(getAddTaskInputText()).toBe("");
     expect(addTask).toBeCalledTimes(0);
 });
 
 it('clears input after add task click', () => {
-    const wrapper = mount(<AddNewTask addTask={addTask} />);
-    wrapper.find('input').simulate('change', { target: { value: "WOW" } });
-    expect(wrapper.find('input').prop('value')).toBe("WOW");
+    createWrapper();
+    const newText = "WOW";
+    getAddTaskInput().simulate('change', { target: { value: newText } });
+    expect(getAddTaskInputText()).toBe(newText);
 
-    wrapper.find('button').simulate("click");
-    expect(wrapper.find('input').text()).toBe("");
+    getAddTaskButton().simulate("click");
+    expect(getAddTaskInputText()).toBe("");
     expect(addTask).toBeCalledTimes(1);
 });
 
 it('clears input after add task enter', () => {
-    const wrapper = mount(<AddNewTask addTask={addTask} />);
+    createWrapper();
+    const newText = "WOW";
+    getAddTaskInput().simulate('change', { target: { value: newText } });
 
-    wrapper.find('input').simulate('change', { target: { value: "WOW" } });
-    expect(wrapper.find('input').prop('value')).toBe("WOW");
-
-    wrapper.find('input').simulate("keypress", {key: "Enter"});
-    expect(wrapper.find('input').text()).toBe("");
+    getAddTaskInput().simulate("keypress", {key: "Enter"});
+    expect(getAddTaskInputText()).toBe("");
     expect(addTask).toBeCalledTimes(1);
+});
+
+it('empty task cannot be added', () => {
+    createWrapper();
+    const newText = "";
+    getAddTaskInput().simulate('change', { target: { value: newText } });
+
+    getAddTaskInput().simulate("keypress", {key: "Enter"});
+    expect(addTask).toBeCalledTimes(0);
 });

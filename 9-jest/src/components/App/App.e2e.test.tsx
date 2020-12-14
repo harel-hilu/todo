@@ -63,7 +63,3 @@ describe("CRUD tasks", () => {
 afterAll(() => {
   browser.close();
 });
-
-// test('renders app', () => {
-//   const wrapper = mount(<App/>);
-// });

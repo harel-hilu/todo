@@ -6,8 +6,8 @@ import { createUseStyles } from 'react-jss';
 export default function AddNewTask({addTask}: any) {
     const [text, setText] = useState('');
     const classes = useStyles();
-    const addNewTask = () => {
-        
+
+    const addNewTask = () => {    
         if (text === "") {
             return;
         }
@@ -20,11 +20,11 @@ export default function AddNewTask({addTask}: any) {
     return (
         <div className={classes.container}>
             <input id="addTaskInput"
-                className={classes.taskInput}
                 value={text}
                 onChange={e => setText(e.target.value)}
                 onKeyPress={e => e.key === "Enter" && addNewTask()}
                 autoFocus
+                className={classes.taskInput}
             />
             <button id="addTaskButton"
                 className={classes.addButton}

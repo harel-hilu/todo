@@ -7,33 +7,41 @@ import { act } from 'react-dom/test-utils';
 
 Enzyme.configure({ adapter: new Adapter() })
 
+let wrapper = mount(<div />);
+const tasksData = {data: {id:"1", text: "wow", isDone: true}};
+
 function HookWarpper({hook}: any) {
     const hookResults: any = hook();
-
     return <div data-hook={hookResults} />;
 }
-
 jest.spyOn(axios, "get").mockImplementationOnce((url) => {
     return (url === '/api/v1/tasks') ? 
-        Promise.resolve({data: {id:"1", text: "wow", isDone: true}}) :
+        Promise.resolve(tasksData) :
         Promise.resolve(null);
 })
-
-it('get all tasks in render', async() => {    
-    await act(async ()=>{
-        const wrapper = await mount(<HookWarpper hook={useTasks}/>);
+beforeEach(async () => {
+    await act(async() => {
+        wrapper = await mount(<HookWarpper hook={useTasks}/>);   
     });
+});
+const updateWrapper = () => { act(() => { wrapper.update() }) };  
+const getStateTasks = () => (wrapper.find("div").prop("data-hook") as any)[0];
+const getStateSetTasks = () => (wrapper.find("div").prop("data-hook") as any)[1];
 
+it('get all tasks in render', () => {    
     expect(axios.get).toBeCalledTimes(1);
+    updateWrapper();
+    expect(getStateTasks()).toStrictEqual(tasksData.data);
 });
 
-it('Change component state but get all tasks shouldnt be called again', async() => {    
-    let wrapper = mount(<div/>);
-
+it('check get and set state and make sure "get" is called once', async() => {    
+    const tasksNewData = {"1": {id:"1", text: "wow2", isDone: false}}
+    
     await act(async()=>{
-        wrapper = await mount(<HookWarpper hook={useTasks}/>);
-        await (wrapper.find("div").prop("data-hook") as any)[1]({"1": {id:"1", text: "wow", isDone: true}});
+        await getStateSetTasks()(tasksNewData);
     });
 
+    updateWrapper();
     expect(axios.get).toBeCalledTimes(1);
+    expect(getStateTasks()).toStrictEqual(tasksNewData)
 });

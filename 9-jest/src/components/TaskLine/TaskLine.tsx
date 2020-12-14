@@ -1,5 +1,5 @@
 import { Task } from "../../../../common/Tasks";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {createUseStyles} from 'react-jss';
 
@@ -9,46 +9,44 @@ export default function TaskLine({task, updateTask, deleteTask}: any) {
     const [text, setText] = useState(task.text as string)
     const classes = useStyles();
 
-    const handleEditTextFinish = (e: React.FocusEvent<HTMLInputElement>) => {
-        if (text !== task.text) {
-            const taskToUpdate: Task = {id: task.id, isDone: task.isDone, text: text};
-            updateTask(taskToUpdate);
+    useEffect(() => {
+        if (task.text === text && task.isDone === isDone) {
+            return;
         }
-        setEditing(false);
-    }
 
-    const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setDone(isDone => !isDone);
-        const taskToUpdate: Task = {id: task.id, isDone: e.target.checked, text: text};
-        updateTask(taskToUpdate);
-    }
+        updateTask({
+            id: task.id,
+            text: text,
+            isDone: isDone
+        });
+    }, [isEditing, isDone]);
 
     return (
         <div className={classes.task} data-hook="task">
             <input 
+                checked={isDone}
+                onChange={(e) => setDone(e.target.checked)}
+                type="checkbox"
                 data-hook="taskCheckbox"
                 className={classes.checkbox}
-                checked={isDone}
-                type="checkbox"
-                onChange={handleCheckboxChange}
             />
 
             {(!isEditing) ?
                 <label 
-                    className={classes.label} 
                     onClick={() => setEditing(true)}
+                    className={classes.label} 
                     data-hook="taskLabel"
                 >
                     {text}
                 </label>
                 :
                 <input
-                    className={classes.label}
                     value={text}
-                    onBlur={handleEditTextFinish}
+                    onBlur={() => setEditing(false)}
                     onChange={(e) => setText(e.target.value)}
                     autoFocus
                     data-hook="taskInput"
+                    className={classes.label}
                 />
             }
             
