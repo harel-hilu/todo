@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-prebuild": "npm install --prefix server && npm install --prefix 9-jest",
-    "heroku-postbuild": "npm run build --prefix 9-jest",
+    "preinstall": "npm install --prefix server && npm install --prefix 9-jest",
+    "heroku-prebuild": "npm run build --prefix 9-jest",
     "start": "npm start --prefix server"
   },
   "repository": {
