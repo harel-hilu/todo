@@ -54,17 +54,14 @@ export default function App() {
     
     return (
         <div className={classes.app}>
+            {totalTasks() === 0 && <EmptyState />}
             <Title doneTasks={doneTasks()} totalTasks={totalTasks()} />
             <AddNewTask addTask={addTask} />
-            {totalTasks() === 0 ? 
-                <EmptyState />
-                :
-                <TasksList 
-                    tasks={Object.values(tasks)} 
-                    updateTask={updateTask}
-                    deleteTask={deleteTask}
-                />
-            }
+            <TasksList 
+                tasks={Object.values(tasks)} 
+                updateTask={updateTask}
+                deleteTask={deleteTask}
+            />
         </div>
     );
 }
