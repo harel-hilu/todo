@@ -30,3 +30,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+server/public/client.bundle.js.map
+server/public/client.bundle.js.LICENSE.txt
+server/public/client.bundle.js

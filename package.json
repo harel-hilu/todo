@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "preinstall": "npm install --prefix server",
+    "preinstall": "npm install --prefix server && npm install --prefix 9-jest",
+    "prestart": "npm start --prefix 9-jest",
     "start": "npm start --prefix server"
   },
   "repository": {
