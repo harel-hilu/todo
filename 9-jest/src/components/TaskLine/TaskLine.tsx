@@ -1,12 +1,13 @@
 import { Task } from "../../../../common/Tasks";
+import { TaskLineProps } from "../../types/props";
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {createUseStyles} from 'react-jss';
 
-export default function TaskLine({task, updateTask, deleteTask}: any) {
+export default function TaskLine({task, updateTask, deleteTask}: TaskLineProps) {
     const [isEditing, setEditing] = useState(false);
-    const [isDone, setDone] = useState(task.isDone as boolean);
-    const [text, setText] = useState(task.text as string)
+    const [isDone, setDone] = useState(task.isDone);
+    const [text, setText] = useState(task.text)
     const classes = useStyles();
 
     useEffect(() => {

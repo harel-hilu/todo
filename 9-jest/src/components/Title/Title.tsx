@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {createUseStyles} from 'react-jss';
+import { TitleProps } from "../../types/props"
 
-export default function Title({doneTasks, totalTasks}: any) {
+export default function Title({doneTasks, totalTasks}: TitleProps) {
     const classes = useStyles();
 
     return (

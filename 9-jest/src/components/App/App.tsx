@@ -57,7 +57,7 @@ export default function App() {
             <Title doneTasks={doneTasks()} totalTasks={totalTasks()} />
             <AddNewTask addTask={addTask} />
             {totalTasks() === 0 ? 
-                <EmptyState addTask={addTask}/>
+                <EmptyState />
                 :
                 <TasksList 
                     tasks={Object.values(tasks)} 

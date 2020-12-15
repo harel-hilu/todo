@@ -52243,7 +52243,7 @@ function App() {
         react_1.default.createElement(Title_1.default, { doneTasks: doneTasks(), totalTasks: totalTasks() }),
         react_1.default.createElement(AddNewTask_1.default, { addTask: addTask }),
         totalTasks() === 0 ?
-            react_1.default.createElement(EmptyState_1.default, { addTask: addTask })
+            react_1.default.createElement(EmptyState_1.default, null)
             :
                 react_1.default.createElement(TasksList_1.default, { tasks: Object.values(tasks), updateTask: updateTask, deleteTask: deleteTask })));
 }
@@ -52274,7 +52274,6 @@ const useStyles = react_jss_1.createUseStyles({
   \**************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: top-level-this-exports, __webpack_exports__, __webpack_require__ */
-/*! CommonJS bailout: this is used directly at 2:23-27 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -52284,18 +52283,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const prop_types_1 = __importDefault(__webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js"));
 const react_jss_1 = __webpack_require__(/*! react-jss */ "./node_modules/react-jss/dist/react-jss.esm.js");
-function EmptyState({ addTask }) {
+function EmptyState() {
     const classes = useStyles();
     return (react_1.default.createElement("div", { className: classes.container },
         react_1.default.createElement("h4", null, "Break your goals into simple tasks"),
         react_1.default.createElement("p", null, "Most of us set ambitious goals for ourselves. These could be over different periods, be it a month, quarter or a year. However, while goals are the result, the tasks that go into channeling the effort towards the goal have a higher probability of getting done when they find their way on a to-do list.")));
 }
 exports.default = EmptyState;
-EmptyState.propTypes = {
-    addTask: prop_types_1.default.func
-};
 const useStyles = react_jss_1.createUseStyles({
     container: {
         borderStyle: "solid",
@@ -52554,6 +52549,7 @@ exports.updateTaskOnServer = (task) => __awaiter(void 0, void 0, void 0, functio
   \***********************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: top-level-this-exports, __webpack_exports__, __webpack_require__ */
+/*! CommonJS bailout: this is used directly at 2:23-27 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";

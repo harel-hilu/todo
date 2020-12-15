@@ -2,8 +2,9 @@ import { Task } from "../../../../common/Tasks";
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {createUseStyles} from 'react-jss';
+import { EmptyState } from "../../types/props";
 
-export default function EmptyState({addTask}: any) {
+export default function EmptyState() {
     const classes = useStyles();
 
     return (
@@ -16,10 +17,6 @@ export default function EmptyState({addTask}: any) {
             </p>
         </div>
     );
-}
-
-EmptyState.propTypes = {
-    addTask: PropTypes.func
 }
 
 const useStyles = createUseStyles({

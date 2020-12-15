@@ -1,9 +1,10 @@
-import { NewTask } from "../../../../common/Tasks";
+import { Task, NewTask } from "../../../../common/Tasks";
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
+import { AddNewTaskProps } from "../../types/props";
 
-export default function AddNewTask({addTask}: any) {
+export default function AddNewTask({addTask}: AddNewTaskProps) {
     const [text, setText] = useState('');
     const classes = useStyles();
 
