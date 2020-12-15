@@ -18,6 +18,7 @@
     "webpack": "^5.10.2",
     "ts-loader": "^8.0.11",
     "typescript": "^4.0.5",
+    "axios": "^0.21.0",
     "webpack-cli": "^4.2.0"
   },
   "devDependencies": {
@@ -42,7 +43,6 @@
     "@testing-library/dom": "^7.28.1",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.5.0",
-    "axios": "^0.21.0",
     "babel-jest": "^26.6.3",
     "jest": "^26.6.3",
     "jss-plugin-camel-case": "^10.4.0",
