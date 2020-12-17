@@ -8,7 +8,7 @@ export default function EmptyState() {
     const classes = useStyles();
 
     return (
-        <div className={classes.container} >
+        <div className={classes.container} data-hook="EmptyState" >
             <h4>
                 Break your goals into simple tasks
             </h4>

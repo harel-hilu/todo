@@ -1,15 +1,17 @@
-import { EmptyStateDriver } from './EmptyState.driver';
+import { emptyStateDriver } from './EmptyState.driver';
 
 describe('EmptyState: ', () => {
+    const { given, then } = emptyStateDriver();
+
     it("should render a title", () => {
-        const driver = new EmptyStateDriver();
+        given.createEmptyStateWrapper();
         
-        expect(driver.hasTitle()).toBeTruthy();
+        expect(then.hasTitle()).toBeTruthy();
     });
 
     it("should render a paragraph", () => {
-        const driver = new EmptyStateDriver();
+        given.createEmptyStateWrapper();
         
-        expect(driver.hasParagraph()).toBeTruthy();
+        expect(then.hasParagraph()).toBeTruthy();
     });
 });

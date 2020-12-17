@@ -46,6 +46,3 @@ describe("App e2e: ", () => {
     expect(await getNumOfTasks()).toBe(0);
   });
 });
-
-  
-          

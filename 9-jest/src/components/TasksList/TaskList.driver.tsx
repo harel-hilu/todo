@@ -13,11 +13,15 @@ export const taskListDriver = () => {
     const deleteTask = jest.fn(() => {});
 
     return {
-        createTaskList: (tasks: Task[]) => wrapper = mount(
-            <TasksList tasks={tasks} 
-                       updateTask={updateTask} 
-                       deleteTask={deleteTask} 
-            />),
-        getNumberOfTasks: () => wrapper.find(TaskLine).length,        
+        given: {
+            createTaskListWrapper: (tasks: Task[]) => wrapper = mount(
+                <TasksList tasks={tasks} 
+                           updateTask={updateTask} 
+                           deleteTask={deleteTask} 
+                />)
+        },
+        then: {
+            getNumberOfTasks: () => wrapper.find(TaskLine).length
+        }
     }
 }

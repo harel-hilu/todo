@@ -9,9 +9,13 @@ export const addNewTaskDriver = () => {
     let wrapper: Enzyme.ReactWrapper;
 
     return {
-        getTitleText: (inputWrapper = wrapper) => inputWrapper.find("h1").text(),
-        createTitle: (doneTasks: number, totalTasks: number) => {
-            wrapper = mount(<Title totalTasks={totalTasks} doneTasks={doneTasks} />);
+        given: {
+            createTitleWrapper: (doneTasks: number, totalTasks: number) => {
+                wrapper = mount(<Title totalTasks={totalTasks} doneTasks={doneTasks} />);
+            }
+        },
+        then: {
+            getTitleText: (inputWrapper = wrapper) => inputWrapper.find("h1").text(),
         }
     }
 }

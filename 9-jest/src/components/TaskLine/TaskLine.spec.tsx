@@ -1,77 +1,64 @@
 import { taskLineDriver } from "./TaskLine.driver";
 
 describe("TaskLine: ", () => {
-    const {
-        updateTask,
-        deleteTask,
-        setCheckboxValue,
-        clickOnDeleteButton,
-        blurTaskInput,
-        createTaskWrapper,
-        clickOnEditButton,
-        isTaskEditMode,
-        getLabelText,
-        clickOnLabel,
-        getEditButtonText,
-        getCheckboxValue,
-        getDeleteButtonText        
-    } = taskLineDriver();
+    const {given, when, then} = taskLineDriver();
 
     it('should render a task with checkbox, label, edit and delete buttons', () => {
-        createTaskWrapper("wow", false);
+        const taskText = "wow";
+        given.createTaskWrapper(taskText, false);
 
-        expect(getCheckboxValue()).toBeFalsy();
-        expect(getLabelText()).toBe("wow");
-        expect(getEditButtonText()).toBe("Edit");
-        expect(getDeleteButtonText()).toBe("Delete");
+        expect(then.getCheckboxValue()).toBeFalsy();
+        expect(then.getLabelText()).toBe(taskText);
+        expect(then.getEditButtonText()).toBe("Edit");
+        expect(then.getDeleteButtonText()).toBe("Delete");
     });
     
     it('should render task in edit mode after click on task label', () => {
-        createTaskWrapper("wow", false);
+        given.createTaskWrapper("wow", false);
 
-        clickOnLabel();
+        when.clickOnLabel();
 
-        expect(isTaskEditMode()).toBeTruthy();
+        expect(then.isTaskEditMode()).toBeTruthy();
     });
     
     it('should render task in edit mode after click on edit button', () => {
-        createTaskWrapper("wow", false);
+        given.createTaskWrapper("wow", false);
 
-        clickOnEditButton();
+        when.clickOnEditButton();
 
-        expect(isTaskEditMode()).toBeTruthy();
+        expect(then.isTaskEditMode()).toBeTruthy();
     });
     
     it('should render task not in edit mode after blurring task input', () => {
-        createTaskWrapper("wow", false);
+        given.createTaskWrapper("wow", false);
 
-        clickOnLabel();
-        blurTaskInput();
+        when.clickOnLabel();
+        when.blurTaskInput();
 
-        expect(isTaskEditMode()).toBeFalsy();
+        expect(then.isTaskEditMode()).toBeFalsy();
     });
     
     it('should call deleteTask func after clicking delete button', () => {
-        createTaskWrapper("wow", false);
+        given.createTaskWrapper("wow", false);
 
-        clickOnDeleteButton();
+        when.clickOnDeleteButton();
 
-        expect(deleteTask).toBeCalledTimes(1);
+        expect(then.deleteTask).toBeCalledTimes(1);
     });
     
     it('should call updateTask after pressing on checkbox', () => {
-        createTaskWrapper("wow", false);
+        given.createTaskWrapper("wow", false);
 
-        setCheckboxValue(true);
+        when.setCheckboxValue(true);
 
-        expect(updateTask).toBeCalledTimes(1);
+        expect(then.updateTask).toBeCalledTimes(1);
     });
     
     it('should NOT call update task after not changing task values', () => {
-        createTaskWrapper("wow", false);
+        given.createTaskWrapper("wow", false);
 
-        setCheckboxValue(false);
+        when.setCheckboxValue(false);
 
-        expect(updateTask).toBeCalledTimes(0);
+        expect(then.updateTask).toBeCalledTimes(0);
     });
 })

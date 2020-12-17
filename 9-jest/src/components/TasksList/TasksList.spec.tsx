@@ -1,17 +1,17 @@
 import { taskListDriver } from "./TaskList.driver";
 
 describe("TaskList: ", () => {
-    const { createTaskList, getNumberOfTasks } = taskListDriver();
+    const { given, then } = taskListDriver();
     
     it('should render TaskList without tasks', () => {
-        createTaskList([]);
+        given.createTaskListWrapper([]);
 
-        expect(getNumberOfTasks()).toBe(0);
+        expect(then.getNumberOfTasks()).toBe(0);
     });
     
     it('should render TaskList with one task', () => {
-        createTaskList([{id: "1", text: "hi", isDone: false}]);
+        given.createTaskListWrapper([{id: "1", text: "hi", isDone: false}]);
 
-        expect(getNumberOfTasks()).toBe(1);
+        expect(then.getNumberOfTasks()).toBe(1);
     });
 })

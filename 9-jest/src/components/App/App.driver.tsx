@@ -13,23 +13,33 @@ import puppeteer from "puppeteer";
 
 Enzyme.configure({ adapter: new Adapter() })
 
-export const AppDriver = () => {
+export const AppEnzymeDriver = () => {
     let wrapper: Enzyme.ReactWrapper;
 
+    const updateWrapper = () => act(() => { wrapper.update() });
+    const createWrapper = async () => await act(async() => {
+            wrapper = await mount(<App />);
+    });
+    
     return {
-        createAppWrapper: async () => {
-            await act(async() => {
-                wrapper = await mount(<App />);
-            });
+        given: {
+            createAppWrapper: async () => {
+                await createWrapper();
+                updateWrapper();
+            },
+            mockServerTasks: (tasks: TasksById) => 
+                jest.spyOn(serverApi, 'getAllTasksFromServer')
+                .mockImplementation(() => Promise.resolve(tasks)),
         },
-        update: () => {wrapper.update()},
-        mockServerTasks: (tasks: TasksById) => 
-            jest.spyOn(serverApi, 'getAllTasksFromServer')
-            .mockImplementation(() => Promise.resolve(tasks)),
-        numOfEmptyStateComponents: () => wrapper.find(EmptyState).length,
-        numOfTaskLineComponents: () => wrapper.find(TaskLine).length,
-        numOfTaskListComponents: () => wrapper.find(TasksList).length,
-        numOfTitleComponents: () => wrapper.find(Title).length,
+        when: {
+            
+        },
+        then: {
+            numOfEmptyStateComponents: () => wrapper.find(EmptyState).length,
+            numOfTaskLineComponents: () => wrapper.find(TaskLine).length,
+            numOfTaskListComponents: () => wrapper.find(TasksList).length,
+            numOfTitleComponents: () => wrapper.find(Title).length,
+        }
     }
 }
 

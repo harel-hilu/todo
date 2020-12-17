@@ -11,19 +11,25 @@ export const addNewTaskDriver = () => {
     const addTask = jest.fn(() => {});
     
     return {
-        addTask: addTask,
-        createAddNewTaskWrapper: () =>
-            wrapper = mount(<AddNewTask addTask={addTask} />),
-        getAddTaskButtonText: () => 
-            wrapper.find('button[children="Add Task!"]').text(),
-        getAddTaskInputText: () => 
-            wrapper.find("#addTaskInput").prop("value"),
-        simulateInputChange: (text = "") =>
-            wrapper.find("#addTaskInput")
-            .simulate('change', { target: { value: text } }),
-        simulateAddTaskClick: () => 
-            wrapper.find('button[children="Add Task!"]').simulate("click"),
-        simulateEnterPress: () =>
-            wrapper.find("#addTaskInput").simulate("keypress", {key: "Enter"})
+        given: {
+            createAddNewTaskWrapper: () =>
+                wrapper = mount(<AddNewTask addTask={addTask} />)
+        },
+        when: {
+            simulateInputChange: (text = "") =>
+                wrapper.find("#addTaskInput")
+                .simulate('change', { target: { value: text } }),
+            simulateAddTaskClick: () => 
+                wrapper.find('button[children="Add Task!"]').simulate("click"),
+            simulateEnterPress: () =>
+                wrapper.find("#addTaskInput").simulate("keypress", {key: "Enter"})
+        },
+        then: {
+            addTask: addTask,
+            getAddTaskButtonText: () => 
+                wrapper.find('button[children="Add Task!"]').text(),
+            getAddTaskInputText: () => 
+                wrapper.find("#addTaskInput").prop("value")
+        }
     }
 }

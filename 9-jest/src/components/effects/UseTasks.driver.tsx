@@ -15,20 +15,36 @@ export const useTasksDriver = () => {
         const hookResults: any = hook();
         return <div data-hook={hookResults} />;
     }   
+
+    const createWrapper = async() => await act(async() => {
+        wrapper = await mount(<HookWarpper hook={useTasks}/>);   
+    });
+
+    const setTasks = (tasks: TasksById) => 
+        act(() => (wrapper.find("div").prop("data-hook") as any)[1](tasks));
+
+    const updateWrapper = () => act(() => { wrapper.update() });
     
     return {
-        mockServerTasks: (tasks: TasksById) => 
-            jest.spyOn(axios, "get").mockImplementationOnce((url) => 
-                (url === '/api/v1/tasks') ? 
-                Promise.resolve({data: tasks}) :
-                Promise.resolve(null)),
-        createWrapper: async () => await act(async() => {
-            wrapper = await mount(<HookWarpper hook={useTasks}/>);   
-        }),
-        updateState: () => act(() => { wrapper.update() }),
-        getTasks : () => (wrapper.find("div").prop("data-hook") as any)[0],
-        setTasks : (tasks: TasksById) => {
-            act(() => (wrapper.find("div").prop("data-hook") as any)[1](tasks));            
+        given: {
+            mockServerTasks: (tasks: TasksById) => 
+                jest.spyOn(axios, "get").mockImplementationOnce((url) => 
+                    (url === '/api/v1/tasks') ? 
+                    Promise.resolve({data: tasks}) :
+                    Promise.resolve(null)),
+            createWrapper: async () => {
+                await createWrapper();
+                updateWrapper();
+            }
         },
+        when: {
+            setTasks : (tasks: TasksById) => {
+                setTasks(tasks);
+                updateWrapper();
+            }
+        },
+        then: {
+            getTasks : () => (wrapper.find("div").prop("data-hook") as any)[0]
+        }
     }
 }

@@ -1,60 +1,50 @@
 import { addNewTaskDriver } from "./AddNewTask.driver";
 
 describe("AddNewTask: ", () => {
-    const { 
-        createAddNewTaskWrapper, 
-        getAddTaskButtonText, 
-        getAddTaskInputText,
-        simulateInputChange,
-        simulateAddTaskClick,
-        simulateEnterPress,
-        addTask,
-    } = addNewTaskDriver();
-
-    it("", () => expect(true).toBeTruthy());
+    const { given, when, then } = addNewTaskDriver();
 
     it('should render a button and an empty input', () => {
-        createAddNewTaskWrapper();
+        given.createAddNewTaskWrapper();
 
-        expect(getAddTaskButtonText()).toBe("Add Task!");
-        expect(getAddTaskInputText()).toBe("");
+        expect(then.getAddTaskButtonText()).toBe("Add Task!");
+        expect(then.getAddTaskInputText()).toBe("");
     });
     
     it('should clear input after adding a task', () => {
-        createAddNewTaskWrapper();
+        given.createAddNewTaskWrapper();
 
         const newText = "WOW";
-        simulateInputChange(newText)
-        simulateAddTaskClick();
+        when.simulateInputChange(newText)
+        when.simulateAddTaskClick();
 
-        expect(getAddTaskInputText()).toBe("");
+        expect(then.getAddTaskInputText()).toBe("");
     });
 
     it('should call addTask once after adding a task', () => {
-        createAddNewTaskWrapper();
+        given.createAddNewTaskWrapper();
 
         const newText = "WOW";
-        simulateInputChange(newText)
-        simulateAddTaskClick();
+        when.simulateInputChange(newText)
+        when.simulateAddTaskClick();
 
-        expect(addTask).toBeCalledTimes(1);
+        expect(then.addTask).toBeCalledTimes(1);
     });
     
     it('should NOT call addTask when clicking add task with empty input', () => {
-        createAddNewTaskWrapper();
+        given.createAddNewTaskWrapper();
 
-        simulateAddTaskClick();
+        when.simulateAddTaskClick();
     
-        expect(addTask).toBeCalledTimes(0);
+        expect(then.addTask).toBeCalledTimes(0);
     });
 
-    it('should add a task with enter click', () => {
-        createAddNewTaskWrapper();
+    it('should call addTask with enter click', () => {
+        given.createAddNewTaskWrapper();
 
         const newText = "WOW";
-        simulateInputChange(newText)
-        simulateEnterPress();
+        when.simulateInputChange(newText)
+        when.simulateEnterPress();
 
-        expect(addTask).toBeCalledTimes(1);
+        expect(then.addTask).toBeCalledTimes(1);
     });
 });

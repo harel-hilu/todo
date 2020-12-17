@@ -5,13 +5,16 @@ import Adapter from 'enzyme-adapter-react-16';
 
 Enzyme.configure({ adapter: new Adapter() })
 
-export class EmptyStateDriver {
-    private wrapper: Enzyme.ReactWrapper;
+export const emptyStateDriver = () => {
+    let wrapper: Enzyme.ReactWrapper;
 
-    constructor() {
-        this.wrapper = mount(<EmptyState />)
+    return {
+        given: {
+            createEmptyStateWrapper: () => wrapper = mount(<EmptyState />)
+        },
+        then: {
+            hasTitle: () => wrapper.find("h4").text() !== "",
+            hasParagraph: () => wrapper.find("p").text() !== ""
+        }
     }
-
-    hasTitle = () => this.wrapper.find("h4").text() !== "";
-    hasParagraph = () => this.wrapper.find("p").text() !== "";
 }

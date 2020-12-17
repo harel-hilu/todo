@@ -1,42 +1,33 @@
-import { AppDriver } from "./App.driver";
+import { AppEnzymeDriver } from "./App.driver";
 
 describe("App: ", () => {
-    const { 
-        createAppWrapper, 
-        update,
-        numOfTaskListComponents,
-        numOfEmptyStateComponents, 
-        numOfTitleComponents,
-        mockServerTasks,
-     } = AppDriver();    
+    const { given, when, then } = AppEnzymeDriver();    
 
      it('should render Title once', async () => {
-        mockServerTasks({});
-        await createAppWrapper();
+        given.mockServerTasks({});
+        await given.createAppWrapper();
 
-        expect(numOfTitleComponents()).toBe(1);
+        expect(then.numOfTitleComponents()).toBe(1);
     });
 
     it('should render TaskLine once', async () => {
-        mockServerTasks({});
-        await createAppWrapper();
+        given.mockServerTasks({});
+        await given.createAppWrapper();
 
-        expect(numOfTaskListComponents()).toBe(1);
+        expect(then.numOfTaskListComponents()).toBe(1);
     });
     
     it('should render empty state once', async() => {
-        mockServerTasks({});
-        await createAppWrapper();
+        given.mockServerTasks({});
+        await given.createAppWrapper();
 
-        expect(numOfEmptyStateComponents()).toBe(1);
+        expect(then.numOfEmptyStateComponents()).toBe(1);
     });
 
     it('should NOT render empty state when server has tasks', async() => {
-        mockServerTasks({"1": {id: "1", text: "wow", isDone: true}});
-        await createAppWrapper();
-        
-        update();
+        given.mockServerTasks({"1": {id: "1", text: "wow", isDone: true}});
+        await given.createAppWrapper();
 
-        expect(numOfEmptyStateComponents()).toBe(0);
+        expect(then.numOfEmptyStateComponents()).toBe(0);
     });
 });
