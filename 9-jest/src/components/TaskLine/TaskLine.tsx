@@ -1,4 +1,3 @@
-import { Task } from "../../../../common/Tasks";
 import { TaskLineProps } from "../../types/props";
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
