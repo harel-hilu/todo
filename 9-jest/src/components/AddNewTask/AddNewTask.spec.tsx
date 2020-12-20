@@ -10,30 +10,30 @@ describe("AddNewTask: ", () => {
         expect(then.getAddTaskInputText()).toBe("");
     });
     
-    it('should clear input after adding a task', () => {
+    it('should clear input after adding a task', async () => {
         given.createAddNewTaskWrapper();
 
         const newText = "WOW";
         when.simulateInputChange(newText)
-        when.simulateAddTaskClick();
+        await when.simulateAddTaskClick();
 
         expect(then.getAddTaskInputText()).toBe("");
     });
 
-    it('should call addTask once after adding a task', () => {
+    it('should call addTask once after adding a task', async () => {
         given.createAddNewTaskWrapper();
 
         const newText = "WOW";
         when.simulateInputChange(newText)
-        when.simulateAddTaskClick();
+        await when.simulateAddTaskClick();
 
         expect(then.addTask).toBeCalledTimes(1);
     });
     
-    it('should NOT call addTask when clicking add task with empty input', () => {
+    it('should NOT call addTask when clicking add task with empty input', async () => {
         given.createAddNewTaskWrapper();
 
-        when.simulateAddTaskClick();
+        await when.simulateAddTaskClick();
     
         expect(then.addTask).toBeCalledTimes(0);
     });

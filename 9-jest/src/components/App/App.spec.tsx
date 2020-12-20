@@ -30,4 +30,15 @@ describe("App: ", () => {
 
         expect(then.numOfEmptyStateComponents()).toBe(0);
     });
+
+    it('should render TaskLine after adding a task', async () => {
+        given.mockServerTasks({});
+        await given.createAppWrapper();
+
+        await when.addTask("hi1");
+        await when.addTask("hi2");
+        await when.addTask("hi3");
+
+        expect(then.numOfTaskLineComponents()).toBe(3);
+    })
 });
