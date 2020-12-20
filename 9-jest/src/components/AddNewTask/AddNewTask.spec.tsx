@@ -12,9 +12,10 @@ describe("AddNewTask: ", () => {
     
     it('should clear input after adding a task', async () => {
         given.createAddNewTaskWrapper();
-
         const newText = "WOW";
-        when.simulateInputChange(newText)
+        await when.simulateInputChange(newText);
+        expect(then.getAddTaskInputText()).toBe(newText);
+
         await when.simulateAddTaskClick();
 
         expect(then.getAddTaskInputText()).toBe("");
@@ -24,7 +25,7 @@ describe("AddNewTask: ", () => {
         given.createAddNewTaskWrapper();
 
         const newText = "WOW";
-        when.simulateInputChange(newText)
+        await when.simulateInputChange(newText)
         await when.simulateAddTaskClick();
 
         expect(then.addTask).toBeCalledTimes(1);
@@ -38,12 +39,12 @@ describe("AddNewTask: ", () => {
         expect(then.addTask).toBeCalledTimes(0);
     });
 
-    it('should call addTask with enter click', () => {
+    it('should call addTask with enter click', async() => {
         given.createAddNewTaskWrapper();
 
         const newText = "WOW";
-        when.simulateInputChange(newText)
-        when.simulateEnterPress();
+        await when.simulateInputChange(newText)
+        await when.simulateEnterPress();
 
         expect(then.addTask).toBeCalledTimes(1);
     });

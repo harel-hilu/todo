@@ -27,7 +27,6 @@ export const AppEnzymeDriver = () => {
     jest.spyOn(serverApi, 'addTaskToServer').mockImplementation((newTask: NewTask) => 
         Promise.resolve({id: (i++).toString(), text: "text", isDone: true}));
 
-    const updateWrapper = () => act(() => { wrapper.update() });
     const createWrapper = async () => await act(async() => {
             wrapper = await mount(<App />);
     });
@@ -39,7 +38,7 @@ export const AppEnzymeDriver = () => {
                 wrapper.update();
                 addNewTaskGiven.setParentWrapper(wrapper);
             },
-            mockServerTasks: (tasks: TasksById) => 
+            tasks: (tasks: TasksById) => 
                 jest.spyOn(serverApi, 'getAllTasksFromServer')
                 .mockImplementation(() => Promise.resolve(tasks)),
         },
@@ -65,7 +64,7 @@ export const AppPuppeteerDriver = () => {
 
     return {
         given: {
-            goToTasksSite: async() => {
+            load: async() => {
                 browser = await puppeteer.launch({
                     headless: false
                 });
@@ -80,7 +79,7 @@ export const AppPuppeteerDriver = () => {
                 await page.click("#addTaskButton");
                 await page.waitForTimeout(100);
             },
-            addTextToTask: async (text: string) => {
+            addTextToFirstTask: async (text: string) => {
                 await page.click('[data-hook="taskLabel"]');
                 await page.type('[data-hook="taskInput"]', text);
                 await page.$eval('[data-hook="taskInput"]', (e: any) => e.blur());

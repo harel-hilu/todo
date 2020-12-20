@@ -6,12 +6,12 @@ describe('EmptyState: ', () => {
     it("should render a title", () => {
         given.createEmptyStateWrapper();
         
-        expect(then.hasTitle()).toBeTruthy();
+        expect(then.hasTitle()).toBe(true);
     });
 
     it("should render a paragraph", () => {
         given.createEmptyStateWrapper();
         
-        expect(then.hasParagraph()).toBeTruthy();
+        expect(then.hasParagraph()).toBe(true);
     });
 });

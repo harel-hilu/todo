@@ -13,17 +13,21 @@ export const addNewTaskDriver = () => {
     
     return {
         given: {
-            setParentWrapper: (inputWrapper: Enzyme.ReactWrapper) => 
-                wrapper = inputWrapper.find(AddNewTask),
+            setParentWrapper: (parent: Enzyme.ReactWrapper) => 
+                wrapper = parent.find(AddNewTask),
             createAddNewTaskWrapper: () =>
                 wrapper = mount(<AddNewTask addTask={addTask} />),
             updateWrapper: () => wrapper.update()
         },
         when: {
-            simulateInputChange: async (text = "") => await act(async () => {
-                await wrapper.find("#addTaskInput")
-                    .simulate('change', { target: { value: text } });
-            }),
+            simulateInputChange: async (text = "") => {
+                await act(async () => {
+                    await wrapper.find("#addTaskInput")
+                        .simulate('change', { target: { value: text } });
+                    });
+
+                await wrapper.update();
+            },
             simulateAddTaskClick: async () => {
                 await act(async () => {
                     await wrapper.find('button[children="Add Task!"]').simulate("click");

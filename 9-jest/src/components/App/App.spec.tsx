@@ -1,38 +1,43 @@
 import { AppEnzymeDriver } from "./App.driver";
+import {Chance} from 'chance';
+import { Task } from "../../../../common/Tasks";
 
 describe("App: ", () => {
     const { given, when, then } = AppEnzymeDriver();    
+    const chance = new Chance();
 
      it('should render Title once', async () => {
-        given.mockServerTasks({});
+         aTask();
+        given.tasks({});
         await given.createAppWrapper();
 
         expect(then.numOfTitleComponents()).toBe(1);
     });
 
     it('should render TaskLine once', async () => {
-        given.mockServerTasks({});
+        given.tasks({});
         await given.createAppWrapper();
 
         expect(then.numOfTaskListComponents()).toBe(1);
     });
     
     it('should render empty state once', async() => {
-        given.mockServerTasks({});
+        given.tasks({});
         await given.createAppWrapper();
 
         expect(then.numOfEmptyStateComponents()).toBe(1);
     });
 
     it('should NOT render empty state when server has tasks', async() => {
-        given.mockServerTasks({"1": {id: "1", text: "wow", isDone: true}});
+        const task = aTask();
+        given.tasks({[task.id]: task});
         await given.createAppWrapper();
 
         expect(then.numOfEmptyStateComponents()).toBe(0);
     });
 
     it('should render TaskLine after adding a task', async () => {
-        given.mockServerTasks({});
+        given.tasks({});
         await given.createAppWrapper();
 
         await when.addTask("hi1");
@@ -40,5 +45,13 @@ describe("App: ", () => {
         await when.addTask("hi3");
 
         expect(then.numOfTaskLineComponents()).toBe(3);
-    })
+    });
+
+    function aTask(): Task {
+        return {
+            id: chance.guid(),
+            text: chance.string(),
+            isDone: chance.bool()
+        }
+    }
 });
