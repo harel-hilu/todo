@@ -48,33 +48,39 @@ export const AppPuppeteerDriver = () => {
     let page: puppeteer.Page;
 
     return {
-        goToTasksSite: async() => {
-            browser = await puppeteer.launch({
-                headless: false
-            });
-            page = await browser.newPage();
-            await page.goto("http://localhost:3300/");
-            await page.waitForSelector("#root");
+        given: {
+            goToTasksSite: async() => {
+                browser = await puppeteer.launch({
+                    headless: false
+                });
+                page = await browser.newPage();
+                await page.goto("http://localhost:3300/");
+                await page.waitForSelector("#root");
+            }
         },
-        closeBrowser: () => browser.close(),
-        addTask: async (text: string) => {
-            await page.type("#addTaskInput", text);
-            await page.click("#addTaskButton");
-            await page.waitForTimeout(100);
-        },
-        addTextToTask: async (text: string) => {
-            await page.click('[data-hook="taskLabel"]');
-            await page.type('[data-hook="taskInput"]', text);
-            await page.$eval('[data-hook="taskInput"]', (e: any) => e.blur());
-            await page.waitForTimeout(100);
-        },
-        getFirstTaskText: async() => 
-            await page.$eval('[data-hook="taskLabel"]', e => e.innerHTML),
-        getNumOfTasks: async() => 
-            await page.$$eval('[data-hook="taskLabel"]', e => e.length),
-        deleteFirstTask: async () => {
-            await page.click('[data-hook="taskDeleteButton"]');
-            await page.waitForTimeout(100);
+        when: {
+            addTask: async (text: string) => {
+                await page.type("#addTaskInput", text);
+                await page.click("#addTaskButton");
+                await page.waitForTimeout(100);
+            },
+            addTextToTask: async (text: string) => {
+                await page.click('[data-hook="taskLabel"]');
+                await page.type('[data-hook="taskInput"]', text);
+                await page.$eval('[data-hook="taskInput"]', (e: any) => e.blur());
+                await page.waitForTimeout(100);
+            },
+            deleteFirstTask: async () => {
+                await page.click('[data-hook="taskDeleteButton"]');
+                await page.waitForTimeout(100);
+            }
+        }, 
+        then: {
+            closeBrowser: () => browser.close(),
+            getFirstTaskText: async() => 
+                await page.$eval('[data-hook="taskLabel"]', e => e.innerHTML),
+            getNumOfTasks: async() => 
+                await page.$$eval('[data-hook="taskLabel"]', e => e.length)
         }
     }
 }

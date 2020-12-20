@@ -1,48 +1,40 @@
 import { AppPuppeteerDriver } from "./App.driver";
 
 describe("App e2e: ", () => {
-  const {
-    goToTasksSite,
-    deleteFirstTask,
-    getFirstTaskText,
-    closeBrowser,
-    addTask,
-    getNumOfTasks,
-    addTextToTask,
-  } = AppPuppeteerDriver();
+  const { given, when, then } = AppPuppeteerDriver();
 
   afterEach(() => {
-    closeBrowser();
+    then.closeBrowser();
   });
 
   it("should render one task after adding a task", async () => {
-      await goToTasksSite();
+      await given.goToTasksSite();
 
       const newText = "wow";
-      await addTask(newText);
+      await when.addTask(newText);
       
-      expect(await getFirstTaskText()).toBe(newText);
-      expect(await getNumOfTasks()).toBe(1);
+      expect(await then.getFirstTaskText()).toBe(newText);
+      expect(await then.getNumOfTasks()).toBe(1);
   });
   
   it("should render task with the new text after updating the text", async () => {
-    await goToTasksSite();
+    await given.goToTasksSite();
       
     const newText = "hello";
-    await addTask(newText);
-    await addTextToTask(" world")
+    await when.addTask(newText);
+    await when.addTextToTask(" world")
     
-    expect(await getFirstTaskText()).toBe("hello world");
-    expect(await getNumOfTasks()).toBe(1);
+    expect(await then.getFirstTaskText()).toBe("hello world");
+    expect(await then.getNumOfTasks()).toBe(1);
   });
   
   it("should render no tasks after adding and deleting a task", async () => {
-    await goToTasksSite();
+    await given.goToTasksSite();
 
     const newText = "hello";
-    await addTask(newText);
-    await deleteFirstTask();
+    await when.addTask(newText);
+    await when.deleteFirstTask();
 
-    expect(await getNumOfTasks()).toBe(0);
+    expect(await then.getNumOfTasks()).toBe(0);
   });
 });
